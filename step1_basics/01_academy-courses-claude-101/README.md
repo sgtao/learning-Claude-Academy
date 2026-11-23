@@ -21,5 +21,5 @@
 | 1-12 | [Claudeを活用するその他の方法](12_other-ways-to-work-with-claude/README.md) | 15 | 学習・ビジネス | 完了 |  |  |
 | 1-13 | [次のステップ](13_what-s-next/README.md) | 2 | 学習・ビジネス | 完了 |  |  |
 | 1-14 | [コースクイズ](14_certificate-of-completion/README.md) | 8 | 学習・ビジネス | 薄いページ |  | 本文なし（題名とクイズ 8 分だけ） |
-| 1-15 | [修了バッジ](15_badge/README.md) | － | 学習・ビジネス | 失敗 |  | JS で描画されるため取得できない（--force は使わない） |
+| 1-15 | [修了バッジ](15_badge/README.md) | － | 学習・ビジネス | 失敗 |  | 取得できない: REASON=JS_RENDERED |
 <!-- ledger:end -->

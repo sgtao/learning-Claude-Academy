@@ -6,12 +6,12 @@
 
 | 状態 | 件数 |
 |---|---|
-| 未着手 | 49 |
+| 未着手 | 42 |
 | 取得済 | 0 |
 | 作成中 | 0 |
-| 完了 | 21 |
-| 薄いページ | 2 |
-| 重複 | 0 |
+| 完了 | 24 |
+| 薄いページ | 5 |
+| 重複 | 1 |
 | 失敗 | 1 |
 | 要確認 | 0 |
 
@@ -57,14 +57,14 @@
 | 1-12 | [Claudeを活用するその他の方法](step1_basics/01_academy-courses-claude-101/12_other-ways-to-work-with-claude/README.md) | 15 | 学習・ビジネス | 完了 |  |  |
 | 1-13 | [次のステップ](step1_basics/01_academy-courses-claude-101/13_what-s-next/README.md) | 2 | 学習・ビジネス | 完了 |  |  |
 | 1-14 | [コースクイズ](step1_basics/01_academy-courses-claude-101/14_certificate-of-completion/README.md) | 8 | 学習・ビジネス | 薄いページ |  | 本文なし（題名とクイズ 8 分だけ） |
-| 1-15 | [修了バッジ](step1_basics/01_academy-courses-claude-101/15_badge/README.md) | － | 学習・ビジネス | 失敗 |  | JS で描画されるため取得できない（--force は使わない） |
+| 1-15 | [修了バッジ](step1_basics/01_academy-courses-claude-101/15_badge/README.md) | － | 学習・ビジネス | 失敗 |  | 取得できない: REASON=JS_RENDERED |
 
 ## ステップ 2：道具を整える（`step2_tools/`）
 
 | ID | ページ | 分 | 種類 | 状態 | 学習済みの日 | 備考 |
 |---|---|---|---|---|---|---|
-| 2-1 | Claudeをカスタマイズする | 7 | 技術・ハウツー | 未着手 |  | 重複予定（実体は 0-6）。README だけ置く |
-| 2-2 | Projectsの概要 | 7 | 技術・ハウツー | 未着手 |  | 動画のみで本文が薄い可能性 |
+| 2-1 | [Claudeをカスタマイズする](step2_tools/01_academy-tutorials/01_customize-claude-cowork/README.md) | 7 | 技術・ハウツー | 重複 |  | 0-6 と同じページ（実体は 0-6）。解説は作らない |
+| 2-2 | [Projectsの概要](step2_tools/01_academy-tutorials/02_intro-to-projects/README.md) | 7 | 技術・ハウツー | 薄いページ |  | 本文 111 字（薄いページ。解説は作らない） |
 | 2-3 | [Skillsを使ってClaudeにあなたの仕事の進め方を教える](step2_tools/01_academy-tutorials/03_teach-claude-your-way-of-working-using-skills/README.md) | － | 技術・ハウツー | 完了 |  | M1 の実例。本文に分数なし（学習メモの目安は 11） |
 
 ## ステップ 3：職種で習熟（`step3_roles/`）
@@ -118,11 +118,11 @@
 
 | ID | ページ | 分 | 種類 | 状態 | 学習済みの日 | 備考 |
 |---|---|---|---|---|---|---|
-| 4-1 | AI Fluency: Framework and foundations | 240 | 学習・ビジネス | 未着手 |  | コースのトップだけ（4 時間・14 レッスン） |
-| 4-2 | AI capabilities and limitations | 210 | 学習・ビジネス | 未着手 |  | コースのトップだけ（3.5 時間・13 レッスン） |
-| 4-3 | Introduction to Claude Cowork | 150 | 学習・ビジネス | 未着手 |  | 有料機能を含む。プラン条件を照合する |
-| 4-4 | Claude for personal use（コレクション） | － | 学習・ビジネス | 未着手 |  | 日本語版なし。英語版を取り、解説は日本語で書く |
-| 4-5 | Claude for work（コレクション） | － | 学習・ビジネス | 未着手 |  | 日本語版なし |
+| 4-1 | [AI Fluency: Framework and foundations](step4_advanced/01_academy-courses/01_ai-fluency-framework-foundations/README.md) | 240 | 学習・ビジネス | 完了 |  | 本文 2051 字（解説はこれから作る） |
+| 4-2 | [AI capabilities and limitations](step4_advanced/01_academy-courses/02_ai-capabilities-and-limitations/README.md) | 210 | 学習・ビジネス | 完了 |  | 本文 1314 字（解説はこれから作る） |
+| 4-3 | [Introduction to Claude Cowork](step4_advanced/01_academy-courses/03_introduction-to-claude-cowork/README.md) | 150 | 学習・ビジネス | 完了 |  | 本文 313 字（解説はこれから作る） |
+| 4-4 | [Claude for personal use（コレクション）](step4_advanced/02_academy-collections/01_claude-for-you/README.md) | － | 学習・ビジネス | 薄いページ |  | 本文 182 字（薄いページ。解説は作らない） |
+| 4-5 | [Claude for work（コレクション）](step4_advanced/02_academy-collections/02_claude-for-work/README.md) | － | 学習・ビジネス | 薄いページ |  | 本文 180 字（薄いページ。解説は作らない） |
 
 ## ステップ 9：追加（台帳の対象外で、URL を渡して作ったもの）（`step9_added/`）
 
