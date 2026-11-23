@@ -60,7 +60,7 @@ def main():
         fails.append("00_index.md が無い")
     else:
         t = INDEX.read_text(encoding="utf-8")
-        n = len(re.findall(r"^\| \d-[\d-]+ \|", t, re.M))
+        n = len(re.findall(r"^\| \d+-[^ |]+ \|", t, re.M))  # ページ行（ID は 1-1・3-01-02・9-add-072 の形）
         if n != len(rows):
             fails.append(f"索引の行数 {n} が台帳の行数 {len(rows)} と違う")
         r = subprocess.run([sys.executable, str(Path(__file__).with_name("build_index.py")), "--check"], capture_output=True, text=True)

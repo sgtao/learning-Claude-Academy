@@ -2,15 +2,15 @@
 
 > このファイルは `tools/build_index.py` が `ledger.csv` から作る。手で直さない（直すなら `ledger.csv`）。
 
-## 状態の数（全 71 ページ）
+## 状態の数（全 73 ページ）
 
 | 状態 | 件数 |
 |---|---|
 | 未着手 | 49 |
 | 取得済 | 0 |
 | 作成中 | 0 |
-| 完了 | 20 |
-| 薄いページ | 1 |
+| 完了 | 21 |
+| 薄いページ | 2 |
 | 重複 | 0 |
 | 失敗 | 1 |
 | 要確認 | 0 |
@@ -123,3 +123,10 @@
 | 4-3 | Introduction to Claude Cowork | 150 | 学習・ビジネス | 未着手 |  | 有料機能を含む。プラン条件を照合する |
 | 4-4 | Claude for personal use（コレクション） | － | 学習・ビジネス | 未着手 |  | 日本語版なし。英語版を取り、解説は日本語で書く |
 | 4-5 | Claude for work（コレクション） | － | 学習・ビジネス | 未着手 |  | 日本語版なし |
+
+## ステップ 9：追加（台帳の対象外で、URL を渡して作ったもの）（`step9_added/`）
+
+| ID | ページ | 分 | 種類 | 状態 | 学習済みの日 | 備考 |
+|---|---|---|---|---|---|---|
+| 9-add-072 | [creating-your-first-skill](step9_added/01_added/01_creating-your-first-skill/README.md) | － | 技術・ハウツー | 薄いページ |  | 本文 138 字（ナビとフッターを除く。動画のみ）。薄いページのため、解説は作らない |
+| 9-add-073 | [configuration-and-multi-file-skills](step9_added/01_added/03_configuration-and-multi-file-skills/README.md) | － | 技術・ハウツー | 完了 |  | 本文 380 字（ナビを除く。訂正の注記を含む）。動画が中心。【本文が短い】 |

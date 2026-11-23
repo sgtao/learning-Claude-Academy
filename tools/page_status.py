@@ -8,7 +8,7 @@
 import json, re, shutil, subprocess, sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import body_of, find_checker, run_py
+from common import body_text_chars, find_checker, run_py
 from check_numbers import missing_numbers
 from check_links import broken_links
 
@@ -20,7 +20,8 @@ def page_status(page):
         return s
     orig = sorted((page / "00_originals").glob("*.md"))
     s["has_original"] = bool(orig)
-    s["thin"] = bool(orig) and len(re.sub(r"\s", "", body_of(orig[0]))) < 300
+    s["thin"] = bool(orig) and body_text_chars(orig[0]) < 300
+    s["body_chars"] = body_text_chars(orig[0]) if orig else None
     expl = sorted(page.glob("*_explained"))
     s["memo"] = ""
     if expl:
