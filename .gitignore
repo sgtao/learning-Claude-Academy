@@ -1,0 +1,51 @@
+# .gitignore（2026-11-24 に _tools/gitignore.py が作成。選び方: テンプレートの .gitignore）
+# 直してよい。作り直すときは python3 _tools/gitignore.py --dir 03_outputs --langs <言語> --force（今の版は 04_logs/ に写される）
+
+# ---- テンプレート: 秘密の情報と個人設定 ----
+# 秘密の情報
+.env
+.env.*
+!.env.example
+secrets/
+
+# Claude Code の個人設定（共有する設定は .claude/settings.json）
+.claude/settings.local.json
+CLAUDE.local.md
+
+# ---- テンプレート: 一時ファイル・大きな生成物・OS とエディタ ----
+# 検査や審査の一時ファイル
+.playwright-mcp/
+test-results/
+_to_delete/
+*.tmp
+
+# 大きな生成物（必要なものだけ、行を消して追跡する）
+renders/
+*.mp4
+*.mov
+*.wav
+*.blend1
+
+# OS とエディタ
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# ---- テンプレート: Python と Node の基本 ----
+# Python（スクリプトや検査を書くときの基本）
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+
+# Node
+node_modules/
+dist/
+build/
+*.log
+.work
+out
