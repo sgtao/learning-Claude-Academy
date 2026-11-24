@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 本文：Claudeの活用例：職種別ユースケース（Claude 101 レッスン 11）
 - `title`: Claudeの活用例：職種別ユースケース（Claude 101 レッスン 11）

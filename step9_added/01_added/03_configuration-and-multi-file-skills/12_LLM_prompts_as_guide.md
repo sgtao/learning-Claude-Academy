@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # LLM 用プロンプト：設定とマルチファイルSkills
 - `title`: 設定とマルチファイルSkills

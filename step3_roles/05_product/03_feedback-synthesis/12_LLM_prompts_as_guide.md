@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # LLM 用プロンプト：プロダクト：フィードバック統合（★2）
 - `title`: プロダクト：フィードバック統合（★2）

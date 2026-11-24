@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 本文：学ぶ（Claude Academy のコース、チュートリアル、活用事例）
 - `title`: 学ぶ（Claude Academy のコース、チュートリアル、活用事例）

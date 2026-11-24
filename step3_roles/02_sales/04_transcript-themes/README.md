@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 資料：営業：通話記録テーマ抽出（★3）
 - `title`: 営業：通話記録テーマ抽出（★3）
@@ -7,6 +7,14 @@
 - `retrieved_at`: 2026-11-24T09:49:40+09:00
 - `profile`: article
 - `content_type`: 技術・ハウツー
+
+-----
+[toTop](#totoppage)
+<!-- slides:start -->
+## 解説資料
+- [解説スライド](./docs/transcript-themes-explained-slides.html)
+- [スライド原稿](./docs/transcript-themes-explained-slides.md)
+<!-- slides:end -->
 
 -----
 [toTop](#totoppage)
@@ -54,9 +62,8 @@ Salesプラグインの /call-summary を出発点に、通話のトランスク
 [toTop](#totoppage)
 <!-- page-status:start -->
 ## 状態と関連資料
-- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 9 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 状態: 検査済み（2026-11-25 時点。解説メモ 11 PASS／1 FAIL／スライド 9 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
 - 原本: [00_originals/transcript-themes.md](./00_originals/transcript-themes.md)
-- 解説スライド: [docs/transcript-themes-explained-slides.html](./docs/transcript-themes-explained-slides.html)（原稿: [docs/transcript-themes-explained-slides.md](./docs/transcript-themes-explained-slides.md)）
 - 確認していないこと（要約）: 原本のリンク先の中身、画像・動画／手順を実際に自分のアカウントで操作した結果／読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
 - 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
 <!-- page-status:end -->

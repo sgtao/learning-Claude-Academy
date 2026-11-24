@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # LLM 用プロンプト：プロダクト：メトリクスのナラティブ化（★3）
 - `title`: プロダクト：メトリクスのナラティブ化（★3）

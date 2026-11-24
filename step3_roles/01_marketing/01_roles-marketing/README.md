@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 資料：マーケティングの役割ページ（Claude Academy）
 - `title`: マーケティングの役割ページ（Claude Academy）
@@ -7,6 +7,14 @@
 - `retrieved_at`: 2026-11-24
 - `profile`: article
 - `content_type`: 学習・ビジネス
+
+-----
+[toTop](#totoppage)
+<!-- slides:start -->
+## 解説資料
+- [解説スライド](./docs/roles-marketing-explained-slides.html)
+- [スライド原稿](./docs/roles-marketing-explained-slides.md)
+<!-- slides:end -->
 
 -----
 [toTop](#totoppage)
@@ -54,9 +62,8 @@ Claude Academy のマーケティングの役割ページ（2026-11-24 取得）
 [toTop](#totoppage)
 <!-- page-status:start -->
 ## 状態と関連資料
-- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 9 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 状態: 検査済み（2026-11-25 時点。解説メモ 11 PASS／1 FAIL／スライド 9 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
 - 原本: [00_originals/roles-marketing.md](./00_originals/roles-marketing.md)
-- 解説スライド: [docs/roles-marketing-explained-slides.html](./docs/roles-marketing-explained-slides.html)（原稿: [docs/roles-marketing-explained-slides.md](./docs/roles-marketing-explained-slides.md)）
 - 確認していないこと（要約）: 原本のリンク先の中身、画像・動画／手順を実際に自分のアカウントで操作した結果／読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
 - 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
 <!-- page-status:end -->

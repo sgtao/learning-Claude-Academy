@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # LLM 用プロンプト：Claudeとの最初の会話（Claude 101 レッスン 2）
 - `title`: Claudeとの最初の会話（Claude 101 レッスン 2）

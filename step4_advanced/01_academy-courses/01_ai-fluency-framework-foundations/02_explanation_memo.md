@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 解説メモ：謝辞とライセンス
 - `title`: 謝辞とライセンス

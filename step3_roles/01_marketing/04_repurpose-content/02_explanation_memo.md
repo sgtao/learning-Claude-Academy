@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 解説メモ：マーケティング：チャネル横断で再利用（★3）
 - `title`: マーケティング：チャネル横断で再利用（★3）

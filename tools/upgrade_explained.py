@@ -58,7 +58,7 @@ def fix_summary(path, dry):
 
 def fix_nav(path, dry):
     t = path.read_text(encoding="utf-8")
-    t2 = re.sub(r"\A###### \[toTopPage\]\([^)]*\)", "###### [toTopPage](./README.md)", t, count=1)
+    t2 = re.sub(r"\A###### \[toTopPage\]\([^)]*\)", "###### [toTopPage](../README.md)", t, count=1)
     if path.name == "README.md" and "## LLM 用プロンプト" not in t2:
         add = ("-----\n[toTop](#totoppage)\n## LLM 用プロンプト\n"
                "- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)\n\n")

@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 解説メモ：人事：新ポジション開設（★2）
 - `title`: 人事：新ポジション開設（★2）

@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # LLM 用プロンプト：プロダクトの役割ページ（Claude Academy）
 - `title`: プロダクトの役割ページ（Claude Academy）

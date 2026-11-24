@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # FAQ：財務：差異を説明（★1）
 - `title`: 財務：差異を説明（★1）

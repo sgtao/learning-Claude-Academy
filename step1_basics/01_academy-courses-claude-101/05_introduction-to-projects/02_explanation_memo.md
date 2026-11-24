@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 解説メモ：プロジェクト入門（Claude 101 レッスン 5）
 - `title`: プロジェクト入門（Claude 101 レッスン 5）

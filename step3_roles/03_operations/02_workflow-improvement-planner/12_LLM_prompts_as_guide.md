@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # LLM 用プロンプト：オペレーション：ワークフロー改善プランナー（★1）
 - `title`: オペレーション：ワークフロー改善プランナー（★1）

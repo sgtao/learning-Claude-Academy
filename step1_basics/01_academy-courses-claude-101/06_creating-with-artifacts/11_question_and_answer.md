@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # FAQ：アーティファクトで作成する（Claude 101 レッスン 6）
 - `title`: アーティファクトで作成する（Claude 101 レッスン 6）

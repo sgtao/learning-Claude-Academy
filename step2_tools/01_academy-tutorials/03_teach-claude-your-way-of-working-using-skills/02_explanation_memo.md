@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 解説メモ：Skillsを使ってClaudeにあなたの仕事の進め方を教える
 - `title`: Skillsを使ってClaudeにあなたの仕事の進め方を教える

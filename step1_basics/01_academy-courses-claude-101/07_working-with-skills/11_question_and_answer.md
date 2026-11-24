@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # FAQ：スキルを活用する（Claude 101 レッスン 7）
 - `title`: スキルを活用する（Claude 101 レッスン 7）

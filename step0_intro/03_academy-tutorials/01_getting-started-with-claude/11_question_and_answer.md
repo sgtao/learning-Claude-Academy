@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # FAQ：Claudeを使い始める（Intro to Claude）
 - `title`: Claudeを使い始める（Intro to Claude）

@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 解説メモ：法務：Projects で法務ワークフロー整理（★3）
 - `title`: 法務：Projects で法務ワークフロー整理（★3）

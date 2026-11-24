@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 解説メモ：マーケティング：キャンペーンブリーフ（★1）
 - `title`: マーケティング：キャンペーンブリーフ（★1）

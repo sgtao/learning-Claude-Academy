@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 本文：Claude 101（コースのトップ）
 - `title`: Claude 101（コースのトップ）

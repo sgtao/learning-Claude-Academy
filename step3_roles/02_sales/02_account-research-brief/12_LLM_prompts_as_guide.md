@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # LLM 用プロンプト：営業：アカウントリサーチ（★1）
 - `title`: 営業：アカウントリサーチ（★1）

@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 解説メモ：法務の役割ページ（Claude Academy）
 - `title`: 法務の役割ページ（Claude Academy）

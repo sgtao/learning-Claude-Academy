@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # FAQ：オペレーション：ベンダー交渉の準備（★2）
 - `title`: オペレーション：ベンダー交渉の準備（★2）

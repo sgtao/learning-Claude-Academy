@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # LLM 用プロンプト：財務の役割ページ（Claude Academy）
 - `title`: 財務の役割ページ（Claude Academy）

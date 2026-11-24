@@ -190,9 +190,10 @@ class CoverTests(unittest.TestCase):
     def setUp(self):
         self._td = tempfile.TemporaryDirectory()
         self.page = Path(self._td.name) / "step1_basics/01_g/07_alpha"
-        w(self.page / "README.md", "# 資料：アルファ\n- `title`: アルファ\n\n-----\n[toTop](#totoppage)\n## 概要\nOVERVIEW\n\n" + SEP + "\n")
+        nav = "###### [toTopPage](./README.md)\n###### [toREADME](./README.md)\n"
+        w(self.page / "README.md", nav + "# 資料：アルファ\n- `title`: アルファ\n\n-----\n[toTop](#totoppage)\n## セクション\n分割なし\n\n-----\n[toTop](#totoppage)\n## 概要\nOVERVIEW\n\n" + SEP + "\n")
         for n in ("01_source.md", "02_explanation_memo.md", "11_question_and_answer.md", "12_LLM_prompts_as_guide.md"):
-            w(self.page / n, "【補足】x 【推測】y" if n == "02_explanation_memo.md" else "x")
+            w(self.page / n, nav + ("【補足】x 【推測】y" if n == "02_explanation_memo.md" else "x"))
         w(self.page / "00_originals/alpha.md", "x")
         w(self.page / "docs/alpha-explained-slides.md", "s")
         w(self.page / "docs/alpha-explained-slides.html", "h")
@@ -216,15 +217,55 @@ class CoverTests(unittest.TestCase):
         self.assertTrue(t.endswith(SEP + "\n"))
         self.assertIn("## 状態と関連資料", t)
         self.assertIn("- 状態: 検査済み", t)
-        self.assertIn("[docs/alpha-explained-slides.html](./docs/alpha-explained-slides.html)", t)
+        self.assertIn("- [解説スライド](./docs/alpha-explained-slides.html)", t)
+        self.assertIn("- [スライド原稿](./docs/alpha-explained-slides.md)", t)
         self.assertIn("[.work/working-log.md](./.work/working-log.md)", t)
         self.assertIn("OVERVIEW", t)                                                    # 元の本文は残る
 
-    def test_cover_links_stay_inside_page_folder(self):
-        """check_docs の C-5：表紙の相対リンクは、ページのフォルダの外を指さない。"""
+    def test_nav_links_unified_in_all_five_files(self):
+        """toTopPage＝../README.md、toREADME＝./README.md（README 自身も自分を指す）。5 本すべて。"""
+        page_readme.update_cover(self.row, self.page)
+        for n in ("README.md", "01_source.md", "02_explanation_memo.md", "11_question_and_answer.md", "12_LLM_prompts_as_guide.md"):
+            head = (self.page / n).read_text(encoding="utf-8").split("\n")[:2]
+            self.assertEqual(head, ["###### [toTopPage](../README.md)", "###### [toREADME](./README.md)"], n)
+        self.assertEqual((self.page / "02_explanation_memo.md").read_text(encoding="utf-8").split("\n", 2)[2], "【補足】x 【推測】y")   # 本文は変えない
+
+    def test_slides_section_comes_right_after_the_title_block(self):
+        page_readme.update_cover(self.row, self.page)
+        t = self.cover()
+        self.assertLess(t.index("## 解説資料"), t.index("## セクション"))
+        self.assertGreater(t.index("## 解説資料"), t.index("- `title`: アルファ"))
+        self.assertIn("-----\n[toTop](#totoppage)\n<!-- slides:start -->\n## 解説資料\n- [解説スライド](./docs/alpha-explained-slides.html)\n"
+                      "- [スライド原稿](./docs/alpha-explained-slides.md)\n<!-- slides:end -->\n\n-----\n[toTop](#totoppage)\n## セクション", t)
+        self.assertEqual(t.count("## 解説資料"), 1)
+        self.assertNotIn("解説スライド", t[t.index("page-status:start"):])             # 状態ブロックには、スライドのリンクを重ねて書かない
+
+    def test_slides_section_follows_slide_files_and_is_removed_when_none(self):
+        page_readme.update_cover(self.row, self.page)
+        for f in (self.page / "docs").iterdir():
+            f.unlink()
+        page_readme.update_cover(self.row, self.page)
+        self.assertNotIn("解説資料", self.cover())
+        self.assertIn("-----\n[toTop](#totoppage)\n## セクション", self.cover())       # 元の形に戻る
+
+    def test_checker_view_restores_what_check_docs_expects(self):
+        """check_docs には、冒頭リンクと「解説資料」の節だけを元に戻した写しを渡す。それ以外は変えない。"""
+        from common import checker_view_text
+        page_readme.update_cover(self.row, self.page)
+        v = checker_view_text(self.cover())
+        self.assertTrue(v.startswith("###### [toTopPage](./README.md)\n###### [toREADME](./README.md)\n# 資料："))
+        self.assertNotIn("解説資料", v)
+        self.assertNotIn("slides:start", v)
+        self.assertIn("page-status:start", v)                                              # 状態ブロックは残す（これも検査の対象）
+        orig = "###### [toTopPage](./README.md)\n###### [toREADME](./README.md)\n# 資料：アルファ\n- `title`: アルファ\n\n-----\n[toTop](#totoppage)\n## セクション\n分割なし\n\n-----\n[toTop](#totoppage)\n## 概要\nOVERVIEW\n\n"
+        self.assertTrue(v.startswith(orig))                                                # 元のファイルと、冒頭と節以外は同じ
+
+    def test_cover_links_stay_within_page_folder_except_top_nav(self):
+        """表紙の本文のリンクは、ページのフォルダの中だけ（冒頭の toTopPage だけが、1 つ上のまとまりの README を指す）。"""
         import re
         page_readme.update_cover(self.row, self.page)
-        for m in re.finditer(r"\]\((\.[^)]*)\)", self.cover()):
+        body = "\n".join(self.cover().split("\n")[2:])
+        for m in re.finditer(r"\]\((\.[^)]*)\)", body):
             self.assertFalse(m.group(1).startswith("../"), m.group(1))
 
     def test_idempotent(self):
@@ -270,6 +311,63 @@ class CoverTests(unittest.TestCase):
         w(self.page / "README.md", "# 解説メモの表紙ではない\n本文\n")
         with self.assertRaises(ValueError):
             page_readme.update_cover(self.row, self.page)
+
+
+class CheckerViewTests(unittest.TestCase):
+    """check_docs には写しを渡す。冒頭リンクと「解説資料」の節の違いは許し、ほかの不具合は見逃さない。"""
+
+    PAGE = "step1_basics/01_academy-courses-claude-101/07_working-with-skills"
+
+    @classmethod
+    def setUpClass(cls):
+        from common import find_checker
+        cls.chk = find_checker()
+        if not cls.chk or not (REAL_ROOT / cls.PAGE / ".work/intermediate").is_dir():
+            raise unittest.SkipTest("check_docs か中間ファイルが無い")
+
+    def setUp(self):
+        self._td = tempfile.TemporaryDirectory()
+        self.page = Path(self._td.name) / "p"
+        shutil.copytree(REAL_ROOT / self.PAGE, self.page)
+
+    def tearDown(self):
+        self._td.cleanup()
+
+    def check(self):
+        from common import run_check_docs
+        r = run_check_docs(self.page, self.chk)
+        return r.stdout
+
+    def test_real_page_passes_with_new_nav_and_slides_section(self):
+        head = (self.page / "README.md").read_text(encoding="utf-8").split("\n")[:2]
+        self.assertEqual(head, ["###### [toTopPage](../README.md)", "###### [toREADME](./README.md)"])
+        self.assertIn("## 解説資料", (self.page / "README.md").read_text(encoding="utf-8"))
+        self.assertIn("12 PASS / 0 FAIL", self.check())
+
+    def test_broken_link_in_memo_is_still_caught(self):
+        f = self.page / "02_explanation_memo.md"
+        f.write_text(f.read_text(encoding="utf-8").replace("-----\n[toTop](#totoppage)", "[x](./missing.md)\n\n-----\n[toTop](#totoppage)", 1), encoding="utf-8")
+        self.assertIn("FAIL", self.check())
+
+    def test_broken_link_in_slides_section_is_not_hidden_by_removal_only_when_marked(self):
+        """印の間（解説資料の節）は検査から外すので、リンクの存在は別の検査（check_links.py・VitePress）で確かめる。"""
+        for f in (self.page / "docs").iterdir():
+            f.unlink()
+        self.assertIn("12 PASS / 0 FAIL", self.check())                                    # 検査の写しでは節が外れる
+        from check_links import broken_links
+        self.assertTrue([b for b in broken_links(self.page) if "explained-slides" in b[2]])   # リンク切れは check_links が見つける
+
+    def test_other_defects_are_still_caught(self):
+        f = self.page / "README.md"
+        t = f.read_text(encoding="utf-8")
+        f.write_text(t.replace("## FAQ", "## FAQ（壊した）", 1), encoding="utf-8")
+        self.assertIn("FAIL", self.check())
+
+    def test_nav_other_than_the_standard_is_not_accepted_in_a_wrong_place(self):
+        f = self.page / "01_source.md"
+        t = f.read_text(encoding="utf-8")
+        f.write_text(t.replace("###### [toREADME](./README.md)", "###### [toREADME](./README.md)\n###### 余計な行", 1), encoding="utf-8")
+        self.assertIn("FAIL", self.check())
 
 
 class RealToolsTests(unittest.TestCase):

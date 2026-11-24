@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 本文：プロダクト：PRD 作成（★1）
 - `title`: プロダクト：PRD 作成（★1）

@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 本文：デザイン：デザイン仕様書（★2）
 - `title`: デザイン：デザイン仕様書（★2）

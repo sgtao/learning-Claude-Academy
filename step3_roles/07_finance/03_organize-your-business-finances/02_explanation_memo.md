@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 解説メモ：財務：ビジネスの財務を整理（★2）
 - `title`: 財務：ビジネスの財務を整理（★2）

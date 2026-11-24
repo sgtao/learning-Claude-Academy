@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # LLM 用プロンプト：人事の役割ページ（Claude Academy）
 - `title`: 人事の役割ページ（Claude Academy）

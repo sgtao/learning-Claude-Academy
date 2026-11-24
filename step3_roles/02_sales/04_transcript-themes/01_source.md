@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 本文：営業：通話記録テーマ抽出（★3）
 - `title`: 営業：通話記録テーマ抽出（★3）

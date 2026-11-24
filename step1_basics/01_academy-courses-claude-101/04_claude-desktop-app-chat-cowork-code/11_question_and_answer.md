@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # FAQ：デスクトップでClaudeとどのように仕事をするか（Claude 101 レッスン 4）
 - `title`: デスクトップでClaudeとどのように仕事をするか（Claude 101 レッスン 4）

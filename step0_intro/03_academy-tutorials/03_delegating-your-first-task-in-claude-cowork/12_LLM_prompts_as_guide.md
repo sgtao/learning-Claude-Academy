@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # LLM 用プロンプト：Claude Coworkで最初のタスクを委任する
 - `title`: Claude Coworkで最初のタスクを委任する

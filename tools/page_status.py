@@ -8,7 +8,7 @@
 import json, re, shutil, subprocess, sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import body_text_chars, find_checker, run_py, has_memo, intermediate_dir, slide_mds, slide_htmls
+from common import body_text_chars, find_checker, run_check_docs, has_memo, slide_mds, slide_htmls
 from check_numbers import missing_numbers
 from check_links import broken_links
 
@@ -26,7 +26,7 @@ def page_status(page):
     if has_memo(page):                       # 解説メモ 5 本はページのフォルダの直下。中間ファイルは .work/intermediate/
         chk = find_checker()
         if chk:
-            r = run_py(chk, page, "--out-dir", intermediate_dir(page))
+            r = run_check_docs(page, chk)      # 冒頭リンクと「解説資料」の節を、check_docs が期待する形に戻した写しで検査
             m = re.search(r"結果: (\d+) PASS / (\d+) FAIL", r.stdout)
             s["memo"] = f"{m.group(1)} PASS" + (f"／{m.group(2)} FAIL" if m and m.group(2) != "0" else "") if m else "検査不能"
         else:

@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 本文：人事の役割ページ（Claude Academy）
 - `title`: 人事の役割ページ（Claude Academy）

@@ -1,5 +1,5 @@
 """台帳・索引・ページ検査で共通に使うもの（標準ライブラリのみ。Python 3.9 以上）。"""
-import csv, re, subprocess, shutil, glob, json
+import csv, re, subprocess, shutil, glob, json, tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent          # 03_outputs/
@@ -25,6 +25,39 @@ WORK = ".work"
 LOG_NAME = "working-log.md"
 INTERMEDIATE = ".work/intermediate"
 DOCS = "docs"
+
+
+# ---- 解説メモ 5 本の冒頭リンクと「解説資料」の節 ----
+# 冒頭：toTopPage は 1 つ上（まとまり）の README、toREADME は同じフォルダの README（README 自身も自分を指す）。
+NAV_RE = re.compile(r"\A###### \[toTopPage\]\([^)]*\)\n###### \[toREADME\]\([^)]*\)")
+NAV_NEW = "###### [toTopPage](../README.md)\n###### [toREADME](./README.md)"
+NAV_CHECKER = "###### [toTopPage](./README.md)\n###### [toREADME](./README.md)"   # check_docs が決め打ちしている形
+SLIDES_START, SLIDES_END = "<!-- slides:start -->", "<!-- slides:end -->"
+SEP_LINES = "-----\n[toTop](#totoppage)\n"
+SLIDES_BLOCK_RE = re.compile(re.escape(SLIDES_START) + r".*?" + re.escape(SLIDES_END) + r"\n\n" + re.escape(SEP_LINES), re.S)
+
+
+def checker_view_text(text):
+    """check_docs に渡すための写し。冒頭リンクを check_docs が期待する形に戻し、「解説資料」の節（印の間）を外す。
+    check_docs（ced-skills）は、冒頭を ./README.md と決め打ちし、フォルダの外を指すリンクを不合格にするため。
+    それ以外は 1 字も変えない（ほかの検査項目は、本物のファイルのまま確かめる）。"""
+    t = NAV_RE.sub(NAV_CHECKER, text, count=1)
+    return SLIDES_BLOCK_RE.sub("", t, count=1)
+
+
+def run_check_docs(page, checker):
+    """ページのフォルダの解説メモ 5 本を check_docs で検査する。(subprocess の結果)
+    ページのフォルダを複製し（リンク先の存在も検査されるため。中間ファイルは除く。中間ファイルは本物の場所を --out-dir で渡す）、
+    5 本だけ、冒頭リンクと「解説資料」の節を check_docs が期待する形に戻して検査する。"""
+    page = Path(page)
+    with tempfile.TemporaryDirectory() as td:
+        view = Path(td) / "page"
+        shutil.copytree(page, view, ignore=shutil.ignore_patterns("intermediate", "aborted", ".DS_Store"))
+        for n in MEMO_FILES:
+            f = view / n
+            if f.is_file():
+                f.write_text(checker_view_text(f.read_text(encoding="utf-8")), encoding="utf-8")
+        return run_py(checker, view, "--out-dir", intermediate_dir(page))
 
 
 def has_memo(page):

@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 本文：Enterprise Search（Claude 101 レッスン 9）
 - `title`: Enterprise Search（Claude 101 レッスン 9）

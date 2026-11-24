@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # FAQ：デザイン：インタビュー統合（★3）
 - `title`: デザイン：インタビュー統合（★3）

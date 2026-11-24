@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 解説メモ：ツールを接続する（Claude 101 レッスン 8）
 - `title`: ツールを接続する（Claude 101 レッスン 8）

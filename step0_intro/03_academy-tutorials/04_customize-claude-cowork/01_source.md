@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 本文：Claudeをカスタマイズする
 - `title`: Claudeをカスタマイズする

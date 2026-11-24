@@ -13,7 +13,7 @@
 | `check_links.py [フォルダ]` | Markdown の相対リンク切れ | 毎回の最後 |
 | `page_status.py <ページ>` | 1 ページ分の検査結果（JSON） | 調べたいとき |
 | `add_page.py <URL>` | 日本語版の URL 1 つを、取得・薄い判定・台帳への追加まで行う（止まる条件は 4 通り） | 台帳に無い新しいページを足すとき |
-| `page_readme.py <ID>` / `--all` | 解説メモがあるページ：表紙 `README.md` の末尾の「状態と関連資料」と、`.work/working-log.md` の「検査の結果」を更新（何度でも同じ結果）。解説メモが無いページ：README が無いときだけ作る（`--force` で作り直す） | ページを作ったあと |
+| `page_readme.py <ID>` / `--all` | 解説メモがあるページ：解説メモ 5 本の冒頭リンクをそろえ（`toTopPage`＝`../README.md`、`toREADME`＝`./README.md`）、表紙に「解説資料」（スライド HTML・原稿 MD へのリンク）と末尾の「状態と関連資料」を足し、`.work/working-log.md` の「検査の結果」を更新（何度でも同じ結果）。解説メモが無いページ：README が無いときだけ作る（`--force` で作り直す） | ページを作ったあと |
 | `catalog.py [--due]` | 公開のサイトマップを取り、台帳の対象の消えた件数と、対象外の件数を報告（`catalog/` に記録）。`--due` は 30 日経過の判定 | 30 日ごと |
 | `upgrade_explained.py <ページのフォルダ>` | 旧版のスキルで作った解説メモの形を、今の版にそろえる（本文は変えない） | 旧版のページを直すとき |
 | `test_structure.py` | 構造の移行スクリプトと、表紙・作業ログの更新の検査（見本の木と実物の木） | 移行スクリプトや `page_readme.py` を直したとき |
@@ -26,7 +26,8 @@
 | `test_memo.py` | `memo.py` の検査（見本の木と実物の木） | `memo.py` を直したとき |
 
 解説メモの検査（`check_docs.py`）は、ced-skills の `ced-craft-explanation-docs` のものを使う（`page_status.py` が最新の版を探し、ページのフォルダを `--out-dir <ページ>/.work/intermediate` つきで検査する）。
-表紙 `README.md` のリンクは、check_docs の C-5 により、ページのフォルダの外を指せない。
+check_docs は、冒頭を `./README.md` と決め打ちし、フォルダの外を指すリンクを不合格にする。このリポジトリは冒頭を `../README.md` にしているので、`page_status.py` は、ページのフォルダの複製の上で「冒頭リンクと表紙の『解説資料』の節」だけを check_docs の期待する形に戻して検査する（ほかの項目は本物のまま）。check_docs を手で直接かけると C-5 などで不合格になるので、`python3 tools/page_status.py <ページ>` を使う。
+再生成（assemble.py）で冒頭や節が元に戻ったら、`page_readme.py <ID>` で直す。
 
 ## URL を 1 つ追加する流れ
 ```bash

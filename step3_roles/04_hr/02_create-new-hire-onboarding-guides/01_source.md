@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 本文：人事：オンボーディングガイド（★1）
 - `title`: 人事：オンボーディングガイド（★1）

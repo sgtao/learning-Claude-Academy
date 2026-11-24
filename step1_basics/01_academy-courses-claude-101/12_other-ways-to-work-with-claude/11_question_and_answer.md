@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # FAQ：Claudeを活用するその他の方法（Claude 101 レッスン 12）
 - `title`: Claudeを活用するその他の方法（Claude 101 レッスン 12）

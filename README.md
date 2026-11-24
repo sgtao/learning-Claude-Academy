@@ -33,7 +33,7 @@ Claude の公式学習ページ（claude.ai/learning、実体は Claude Academy�
 step1_basics/                          ← ステップ
 └── 01_academy-courses-claude-101/     ← まとまり（関連するページ。README に一覧）
     └── 07_working-with-skills/        ← ページ（1 ページ分）
-        ├── README.md                  表紙（タイトル、概要、AI の総括、各資料へのリンク、状態 1 行、確認していないことの要約）
+        ├── README.md                  表紙（タイトル、解説資料＝スライド HTML・原稿 MD へのリンク、概要、AI の総括、各資料へのリンク、状態 1 行、確認していないことの要約）
         ├── 00_originals/              原本（取得したままの本文。frontmatter 付き）
         ├── 01_source.md               解説メモ一式（本文の複製）
         ├── 02_explanation_memo.md     解説メモ
@@ -47,6 +47,7 @@ step1_basics/                          ← ステップ
             └── intermediate/          スキルで作成した中間ファイル（git では追跡しない）
 ```
 
+解説メモ 5 本の冒頭リンクは統一：`toTopPage` は 1 つ上（まとまり）の `../README.md`、`toREADME` は同じフォルダの `./README.md`（README 自身も自分を指す）。
 解説メモがないページ（薄いページ・取得失敗・重複）は、`README.md`（ページの説明）と `00_originals/` だけを置く。
 
 番号（`01_`、`02_`…）は並び順で、学ぶ順と台帳の順にそろえてある。ステップの番号とフォルダ名は台帳の `step` 列と同じ。

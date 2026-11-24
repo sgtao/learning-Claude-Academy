@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # FAQ：営業：アカウントリサーチ（★1）
 - `title`: 営業：アカウントリサーチ（★1）

@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 解説メモ：プロダクト：メトリクスのナラティブ化（★3）
 - `title`: プロダクト：メトリクスのナラティブ化（★3）

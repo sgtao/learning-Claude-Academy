@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 資料：アーティファクトで作成する（Claude 101 レッスン 6）
 - `title`: アーティファクトで作成する（Claude 101 レッスン 6）
@@ -7,6 +7,14 @@
 - `retrieved_at`: 2026-11-15T17:45:06+09:00
 - `profile`: article
 - `content_type`: 学習・ビジネス
+
+-----
+[toTop](#totoppage)
+<!-- slides:start -->
+## 解説資料
+- [解説スライド](./docs/creating-with-artifacts-explained-slides.html)
+- [スライド原稿](./docs/creating-with-artifacts-explained-slides.md)
+<!-- slides:end -->
 
 -----
 [toTop](#totoppage)
@@ -53,9 +61,8 @@ Claude と一緒に作る成果物「アーティファクト」の解説（Clau
 [toTop](#totoppage)
 <!-- page-status:start -->
 ## 状態と関連資料
-- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 状態: 検査済み（2026-11-25 時点。解説メモ 11 PASS／1 FAIL／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
 - 原本: [00_originals/creating-with-artifacts.md](./00_originals/creating-with-artifacts.md)
-- 解説スライド: [docs/creating-with-artifacts-explained-slides.html](./docs/creating-with-artifacts-explained-slides.html)（原稿: [docs/creating-with-artifacts-explained-slides.md](./docs/creating-with-artifacts-explained-slides.md)）
 - 確認していないこと（要約）: リンク先（アーティファクトの紹介ページなど）の中身／Pro・Max での Design・Slides・Docs の利用可否／【推測】
 - 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
 <!-- page-status:end -->

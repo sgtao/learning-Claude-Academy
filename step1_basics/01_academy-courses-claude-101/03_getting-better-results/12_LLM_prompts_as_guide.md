@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # LLM 用プロンプト：より良い結果を得る（Claude 101 レッスン 3）
 - `title`: より良い結果を得る（Claude 101 レッスン 3）

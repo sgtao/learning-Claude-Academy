@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # LLM 用プロンプト：マーケティング：ブランドに沿ったコンテンツ（★2）
 - `title`: マーケティング：ブランドに沿ったコンテンツ（★2）

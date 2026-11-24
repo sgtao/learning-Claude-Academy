@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # LLM 用プロンプト：オペレーション：ベンダー交渉の準備（★2）
 - `title`: オペレーション：ベンダー交渉の準備（★2）

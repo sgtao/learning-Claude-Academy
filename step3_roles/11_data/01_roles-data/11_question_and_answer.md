@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # FAQ：データの役割ページ（Claude Academy）
 - `title`: データの役割ページ（Claude Academy）

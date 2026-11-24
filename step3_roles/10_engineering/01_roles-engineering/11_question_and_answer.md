@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # FAQ：エンジニアリングの役割ページ（Claude Academy）
 - `title`: エンジニアリングの役割ページ（Claude Academy）

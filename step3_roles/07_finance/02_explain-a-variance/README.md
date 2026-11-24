@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 資料：財務：差異を説明（★1）
 - `title`: 財務：差異を説明（★1）
@@ -7,6 +7,14 @@
 - `retrieved_at`: 2026-11-24T09:49:51+09:00
 - `profile`: article
 - `content_type`: 技術・ハウツー
+
+-----
+[toTop](#totoppage)
+<!-- slides:start -->
+## 解説資料
+- [解説スライド](./docs/explain-a-variance-explained-slides.html)
+- [スライド原稿](./docs/explain-a-variance-explained-slides.md)
+<!-- slides:end -->
 
 -----
 [toTop](#totoppage)
@@ -53,9 +61,8 @@ Claude の Finance プラグインにある `/variance-analysis` を使い、月
 [toTop](#totoppage)
 <!-- page-status:start -->
 ## 状態と関連資料
-- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 状態: 検査済み（2026-11-25 時点。解説メモ 11 PASS／1 FAIL／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
 - 原本: [00_originals/explain-a-variance.md](./00_originals/explain-a-variance.md)
-- 解説スライド: [docs/explain-a-variance-explained-slides.html](./docs/explain-a-variance-explained-slides.html)（原稿: [docs/explain-a-variance-explained-slides.md](./docs/explain-a-variance-explained-slides.md)）
 - 確認していないこと（要約）: 原本のリンク先の中身、画像・動画／手順を実際に自分のアカウントで操作した結果／読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
 - 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
 <!-- page-status:end -->

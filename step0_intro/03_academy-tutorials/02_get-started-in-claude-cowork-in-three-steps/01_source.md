@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 本文：Claude Coworkを3つのステップで始める
 - `title`: Claude Coworkを3つのステップで始める

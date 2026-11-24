@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 本文：研究：生データから統計を検証（★2）
 - `title`: 研究：生データから統計を検証（★2）

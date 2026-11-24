@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # LLM 用プロンプト：研究：文献レビュー計画（★1）
 - `title`: 研究：文献レビュー計画（★1）

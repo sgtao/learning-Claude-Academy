@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # FAQ：研究：助成金の選択肢（★3）
 - `title`: 研究：助成金の選択肢（★3）

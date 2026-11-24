@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 本文：マーケティングの役割ページ（Claude Academy）
 - `title`: マーケティングの役割ページ（Claude Academy）

@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 解説メモ：設定とマルチファイルSkills
 - `title`: 設定とマルチファイルSkills

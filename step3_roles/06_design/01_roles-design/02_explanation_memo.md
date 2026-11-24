@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 解説メモ：デザインの役割ページ（Claude Academy）
 - `title`: デザインの役割ページ（Claude Academy）

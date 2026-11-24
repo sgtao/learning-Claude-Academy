@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 解説メモ：深掘り調査のためのリサーチ機能（Claude 101 レッスン 10）
 - `title`: 深掘り調査のためのリサーチ機能（Claude 101 レッスン 10）

@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 本文：マーケティング：ブランドに沿ったコンテンツ（★2）
 - `title`: マーケティング：ブランドに沿ったコンテンツ（★2）

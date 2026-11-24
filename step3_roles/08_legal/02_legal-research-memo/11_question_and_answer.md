@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # FAQ：法務：法律リサーチ（★1）
 - `title`: 法務：法律リサーチ（★1）

@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 本文：一貫した品質のために[Skill（新しいタブで開きます）](https://www.anthropic.com/news/skills)を作成する
 - `title`: 一貫した品質のためにSkill（新しいタブで開きます）を作成する

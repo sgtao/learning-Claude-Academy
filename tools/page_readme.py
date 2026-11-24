@@ -2,7 +2,9 @@
 """ページの README.md と、作業ログ（.work/working-log.md）を作る・更新する。
 
 ページのフォルダの形（解説メモがあるページ）:
-  README.md        表紙（解説メモの入口。ced-craft-explanation-docs が作る）。末尾に「状態と関連資料」を足す（このスクリプト）
+  README.md        表紙（解説メモの入口。ced-craft-explanation-docs が作る）。冒頭のリンクを直し、「解説資料」（スライドへのリンク）と
+                   末尾の「状態と関連資料」を足す（このスクリプト）
+  解説メモ 5 本    冒頭は toTopPage＝../README.md（1 つ上のまとまりの README）、toREADME＝./README.md（README 自身も自分を指す）
   .work/working-log.md   状態・検査の結果・確認していないこと・作業の経緯（検査の結果の節は、このスクリプトが更新する）
 解説メモが無いページ（薄いページ・失敗・重複・取得済み）は、README.md をこのスクリプトの render が作る（ページ README）。
 
@@ -16,7 +18,8 @@
 import os, re, sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import (ROOT, read_ledger, today, has_memo, working_log, slide_mds, slide_htmls, MEMO_FILES, LOG_NAME)
+from common import (ROOT, read_ledger, today, has_memo, working_log, slide_mds, slide_htmls, MEMO_FILES, LOG_NAME,
+                    NAV_RE, NAV_NEW, SLIDES_START, SLIDES_END, SEP_LINES, SLIDES_BLOCK_RE)
 from page_status import page_status
 
 STATUS_START, STATUS_END = "<!-- page-status:start -->", "<!-- page-status:end -->"
@@ -168,13 +171,54 @@ def status_block(r, page, st, summary):
     L = [STATUS_START, "## 状態と関連資料", line]
     if o:
         L.append(f"- 原本: [00_originals/{o[0].name}](./00_originals/{o[0].name})")
-    sm, sh = slide_mds(page), slide_htmls(page)
-    if sh:
-        L.append(f"- 解説スライド: [docs/{sh[0].name}](./docs/{sh[0].name})" + (f"（原稿: [docs/{sm[0].name}](./docs/{sm[0].name})）" if sm else ""))
     L.append(f"- 確認していないこと（要約）: {summary}")
     L.append(f"- 詳細・経緯・検査の記録: [.work/{LOG_NAME}](./.work/{LOG_NAME})")
     L.append(STATUS_END)
     return "\n".join(L)
+
+
+def normalize_nav(page):
+    """解説メモ 5 本の冒頭リンクをそろえる（toTopPage＝../README.md、toREADME＝./README.md）。変えたファイル名を返す。"""
+    changed = []
+    for n in MEMO_FILES:
+        f = Path(page) / n
+        if not f.is_file():
+            continue
+        t = f.read_text(encoding="utf-8")
+        t2 = NAV_RE.sub(NAV_NEW, t, count=1)
+        if t2 != t:
+            f.write_text(t2, encoding="utf-8"); changed.append(n)
+    return changed
+
+
+def slides_block(page):
+    """「解説資料」の節（スライドの HTML と原稿 MD へのリンク）。スライドが無ければ None。"""
+    sh, sm = slide_htmls(page), slide_mds(page)
+    if not sh and not sm:
+        return None
+    L = [SLIDES_START, "## 解説資料"]
+    if sh:
+        L.append(f"- [解説スライド](./docs/{sh[0].name})")
+    if sm:
+        L.append(f"- [スライド原稿](./docs/{sm[0].name})")
+    L.append(SLIDES_END)
+    return "\n".join(L)
+
+
+def apply_slides_section(text, block):
+    """表紙に「解説資料」の節を、最初の区切りの直後（## セクション の前）に置く。何度でも同じ結果。block が None なら外す。"""
+    if SLIDES_START in text:
+        if block is None:
+            return SLIDES_BLOCK_RE.sub("", text, count=1)
+        new = _replace_between(text, SLIDES_START, SLIDES_END, block)
+        return new
+    if block is None:
+        return text
+    i = text.find(SEP_LINES)
+    if i < 0:
+        raise ValueError("表紙に最初の区切り（-----／[toTop](#totoppage)）が無い。解説メモの表紙ではない？")
+    j = i + len(SEP_LINES)
+    return text[:j] + block + "\n\n" + SEP_LINES + text[j:]
 
 
 def update_cover(r, page):
@@ -183,8 +227,9 @@ def update_cover(r, page):
     st = page_status(page)
     log_text = update_log(r, page, st)
     block = status_block(r, page, st, unverified_summary(log_text))
+    normalize_nav(page)                                # 5 本の冒頭リンク
     f = page / "README.md"
-    text = f.read_text(encoding="utf-8")
+    text = apply_slides_section(f.read_text(encoding="utf-8"), slides_block(page))   # 表紙の「解説資料」
     new = _replace_between(text, STATUS_START, STATUS_END, block)
     if new is None:
         body = text.rstrip("\n")

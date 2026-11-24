@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 解説メモ：一貫した品質のためにSkill（新しいタブで開きます）を作成する
 - `title`: 一貫した品質のためにSkill（新しいタブで開きます）を作成する

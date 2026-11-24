@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 資料：より良い結果を得る（Claude 101 レッスン 3）
 - `title`: より良い結果を得る（Claude 101 レッスン 3）
@@ -7,6 +7,14 @@
 - `retrieved_at`: 2026-11-15T17:45:06+09:00
 - `profile`: article
 - `content_type`: 学習・ビジネス
+
+-----
+[toTop](#totoppage)
+<!-- slides:start -->
+## 解説資料
+- [解説スライド](./docs/getting-better-results-explained-slides.html)
+- [スライド原稿](./docs/getting-better-results-explained-slides.md)
+<!-- slides:end -->
 
 -----
 [toTop](#totoppage)
@@ -53,9 +61,8 @@ Claudeの回答が期待と少し違うときの課題5種（一般的すぎる�
 [toTop](#totoppage)
 <!-- page-status:start -->
 ## 状態と関連資料
-- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 状態: 検査済み（2026-11-25 時点。解説メモ 11 PASS／1 FAIL／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
 - 原本: [00_originals/getting-better-results.md](./00_originals/getting-better-results.md)
-- 解説スライド: [docs/getting-better-results-explained-slides.html](./docs/getting-better-results-explained-slides.html)（原稿: [docs/getting-better-results-explained-slides.md](./docs/getting-better-results-explained-slides.md)）
 - 確認していないこと（要約）: 動画／【補足】【推測】の当否
 - 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
 <!-- page-status:end -->

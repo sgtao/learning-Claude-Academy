@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 解説メモ：法務：規制とコンプライアンス（★2）
 - `title`: 法務：規制とコンプライアンス（★2）

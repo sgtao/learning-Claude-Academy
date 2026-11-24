@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # LLM 用プロンプト：マーケティング：キャンペーンブリーフ（★1）
 - `title`: マーケティング：キャンペーンブリーフ（★1）

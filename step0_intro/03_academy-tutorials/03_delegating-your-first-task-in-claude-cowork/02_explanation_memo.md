@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 解説メモ：Claude Coworkで最初のタスクを委任する
 - `title`: Claude Coworkで最初のタスクを委任する

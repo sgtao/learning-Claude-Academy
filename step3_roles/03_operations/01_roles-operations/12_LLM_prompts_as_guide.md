@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # LLM 用プロンプト：オペレーションの役割ページ（Claude Academy）
 - `title`: オペレーションの役割ページ（Claude Academy）

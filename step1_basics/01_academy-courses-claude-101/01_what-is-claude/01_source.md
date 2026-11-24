@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 本文：Claudeとは何ですか？（Claude 101 レッスン 1）
 - `title`: Claudeとは何ですか？（Claude 101 レッスン 1）

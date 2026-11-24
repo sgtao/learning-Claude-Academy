@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 資料：Claudeを活用するその他の方法（Claude 101 レッスン 12）
 - `title`: Claudeを活用するその他の方法（Claude 101 レッスン 12）
@@ -7,6 +7,14 @@
 - `retrieved_at`: 2026-11-15T17:45:07+09:00
 - `profile`: article
 - `content_type`: 学習・ビジネス
+
+-----
+[toTop](#totoppage)
+<!-- slides:start -->
+## 解説資料
+- [解説スライド](./docs/other-ways-to-work-with-claude-explained-slides.html)
+- [スライド原稿](./docs/other-ways-to-work-with-claude-explained-slides.md)
+<!-- slides:end -->
 
 -----
 [toTop](#totoppage)
@@ -53,9 +61,8 @@ Claude Academy のコース「Claude 101」のレッスン 12 の本文です。
 [toTop](#totoppage)
 <!-- page-status:start -->
 ## 状態と関連資料
-- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 状態: 検査済み（2026-11-25 時点。解説メモ 11 PASS／1 FAIL／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
 - 原本: [00_originals/other-ways-to-work-with-claude.md](./00_originals/other-ways-to-work-with-claude.md)
-- 解説スライド: [docs/other-ways-to-work-with-claude-explained-slides.html](./docs/other-ways-to-work-with-claude-explained-slides.html)（原稿: [docs/other-ways-to-work-with-claude-explained-slides.md](./docs/other-ways-to-work-with-claude-explained-slides.md)）
 - 確認していないこと（要約）: 原本のリンク先の中身、画像・動画／【推測】の当否。読み合わせは作成者（AI）が行ったもの／このページの README は旧リポジトリに無く、2026-11-24 に補った
 - 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
 <!-- page-status:end -->

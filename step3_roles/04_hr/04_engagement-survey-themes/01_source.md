@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # 本文：人事：サーベイからアクションプラン（★3）
 - `title`: 人事：サーベイからアクションプラン（★3）

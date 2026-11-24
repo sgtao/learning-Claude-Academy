@@ -1,4 +1,4 @@
-###### [toTopPage](./README.md)
+###### [toTopPage](../README.md)
 ###### [toREADME](./README.md)
 # FAQ：データ：アドホックなデータ質問に答える（★1）
 - `title`: データ：アドホックなデータ質問に答える（★1）
