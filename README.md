@@ -55,12 +55,17 @@ step1_basics/                          ← ステップ
 この Markdown を、そのまま VitePress のサイトにして読める（Markdown は写さない。サイドバーは台帳 `ledger.csv` から作る）。
 
 ```bash
-npm ci                 # 初回だけ（Node.js 20 以上）
-npm run docs:dev       # 手元で開く（http://localhost:5173/）。保存すると自動で更新される
-npm run docs:build     # 公開用に作る（.vitepress/dist/）。リンク切れがあると失敗する
-python3 tools/test_site.py   # ビルドと中身の検査（一時フォルダに出す）
+# 初回だけ（Node.js 20 以上）
+npm ci
+# 手元で開く（http://localhost:5173/）。保存すると自動で更新される
+npm run docs:dev
+# 公開用に作る（.vitepress/dist/）。リンク切れがあると失敗する
+npm run docs:build
+# ビルドと中身の検査（一時フォルダに出す）
+python3 tools/test_site.py
 ```
 
+- コマンドは 1 行ずつ貼り付ける（行末の `# …` を付けて実行しない。zsh は `#` 以降を引数にして、`npm run docs:dev # …` だと表示されないことがある）。
 - 出るもの：ステップ・まとまり・ページの README と解説メモ・FAQ・LLM 用プロンプト・原本、スライド（HTML）、`tools/README.md`。出ないもの：`.work/` の中間ファイル、スライドの原稿 MD、`catalog/`。
 - 表紙の「詳細・経緯・検査の記録」（`.work/working-log.md`）のリンクは、GitHub 上のファイルを開く（`.work/` は VitePress のページにならないため）。
 - 表紙の「原稿」（`docs/*-slides.md`）のリンクは、スライド（HTML）を開く（同じ名前の HTML が出るため）。

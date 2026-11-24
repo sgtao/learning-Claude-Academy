@@ -21,6 +21,7 @@
 | `memo.py pages [STEP] GROUP` / `pages -a [STEP]` | まとまりの中のページ（解説メモ）の一覧。`-a` は全ページ（STEP を付けるとそのステップだけ） | 読むページを探すとき |
 | `memo.py info PAGE [--json]` | 表紙 `README.md` のフロントマター（題名・URL・取得日など。無いページは原本の frontmatter） | ページの素性を確かめるとき |
 | `memo.py show PAGE [--only ...]` | 表紙 `README.md`・`.work/intermediate/09_input-memo.md`・`12_LLM_prompts_as_guide.md` を表示（09 か 12 が無いページは README と `01_source`、解説メモが無いページはページの README と原本） | 解説メモを読む・LLM に渡すとき |
+| `test_docs.py` | README のコマンド例の検査（行末にコメントを付けない・行頭に空白を付けない・npm スクリプトはルート `.` を明示）。貼り付けて動くようにするため | README を直したとき |
 | `test_site.py` | VitePress のサイトの検査（ビルドできる・リンク切れ 0・台帳の全ページが出る・スライドがコピーされる・`.work/` が出ない・base が効く。Node と `npm ci` が要る） | サイトの設定を直したとき、公開の前 |
 | `test_memo.py` | `memo.py` の検査（見本の木と実物の木） | `memo.py` を直したとき |
 
@@ -37,8 +38,10 @@ python3 tools/ledger.py refresh && python3 tools/build_index.py && python3 tools
 
 ## 1 ページを作ったあとの流れ
 ```bash
-python3 tools/ledger.py refresh      # そのページの検査と状態を台帳に反映
-python3 tools/build_index.py         # 索引と README の表を作り直す
+# そのページの検査と状態を台帳に反映
+python3 tools/ledger.py refresh
+# 索引と README の表を作り直す
+python3 tools/build_index.py
 python3 tools/check_index.py && python3 tools/check_links.py
 ```
 
@@ -49,14 +52,22 @@ STEP は `1`・`step1_basics`・`basics`、GROUP は `01`・`01_academy-courses-
 PAGE は台帳の ID（`1-7`）・フォルダ名・slug・パス・名前の一部のどれでもよい（複数に当たると候補を出して止まる）。
 
 ```bash
-python3 tools/memo.py groups                 # 全ステップの「まとまり」（名前だけ）
-python3 tools/memo.py groups 3               # ステップ 3 だけ
-python3 tools/memo.py pages 1 01             # ステップ 1 のまとまり 01 のページ
-python3 tools/memo.py pages -a               # 全ページ（`pages -a 3` ならステップ 3 だけ）
-python3 tools/memo.py info 1-7               # フロントマター（--json で JSON）
-python3 tools/memo.py show 1-7               # README ＋ out/09_input-memo.md ＋ 12_LLM_prompts_as_guide.md
-python3 tools/memo.py show 1-7 --only prompt # 一部だけ（readme input prompt source）
-python3 tools/test_memo.py                   # 検査
+# 全ステップの「まとまり」（名前だけ）
+python3 tools/memo.py groups
+# ステップ 3 だけ
+python3 tools/memo.py groups 3
+# ステップ 1 のまとまり 01 のページ
+python3 tools/memo.py pages 1 01
+# 全ページ（`pages -a 3` ならステップ 3 だけ）
+python3 tools/memo.py pages -a
+# フロントマター（--json で JSON）
+python3 tools/memo.py info 1-7
+# README ＋ out/09_input-memo.md ＋ 12_LLM_prompts_as_guide.md
+python3 tools/memo.py show 1-7
+# 一部だけ（readme input prompt source）
+python3 tools/memo.py show 1-7 --only prompt
+# 検査
+python3 tools/test_memo.py
 ```
 
 ## ページのフォルダの形と、構造の移行
