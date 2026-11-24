@@ -9,26 +9,28 @@
 | `ledger.py learned <ID> [日付]` | 学習済みの日を入れる | 学んだとき |
 | `build_index.py` | 台帳から `00_index.md` と、各ステップ・まとまりの README の表を作る（`--check` で古さだけ確かめる） | 台帳を変えたあと |
 | `check_index.py` | 台帳と索引の検査（状態の値・完了の条件・台帳に無いページ・索引の古さ） | 毎回の最後 |
-| `check_numbers.py <ページ>` | スライドの数字が原本か解説メモにあるか | ページを作ったとき |
+| `check_numbers.py <ページ>` | スライド（`docs/`）の数字が原本か解説メモにあるか | ページを作ったとき |
 | `check_links.py [フォルダ]` | Markdown の相対リンク切れ | 毎回の最後 |
 | `page_status.py <ページ>` | 1 ページ分の検査結果（JSON） | 調べたいとき |
 | `add_page.py <URL>` | 日本語版の URL 1 つを、取得・薄い判定・台帳への追加まで行う（止まる条件は 4 通り） | 台帳に無い新しいページを足すとき |
-| `page_readme.py <ID> [--force]` | 検査の結果から、ページの README を作る（完了・薄い・取得済み・失敗・重複） | ページを作ったあと |
+| `page_readme.py <ID>` / `--all` | 解説メモがあるページ：表紙 `README.md` の末尾の「状態と関連資料」と、`.work/working-log.md` の「検査の結果」を更新（何度でも同じ結果）。解説メモが無いページ：README が無いときだけ作る（`--force` で作り直す） | ページを作ったあと |
 | `catalog.py [--due]` | 公開のサイトマップを取り、台帳の対象の消えた件数と、対象外の件数を報告（`catalog/` に記録）。`--due` は 30 日経過の判定 | 30 日ごと |
-| `upgrade_explained.py <解説メモのフォルダ>` | 旧版のスキルで作った解説メモの形を、今の版にそろえる（本文は変えない） | 旧版のページを直すとき |
+| `upgrade_explained.py <ページのフォルダ>` | 旧版のスキルで作った解説メモの形を、今の版にそろえる（本文は変えない） | 旧版のページを直すとき |
+| `test_structure.py` | 構造の移行スクリプトと、表紙・作業ログの更新の検査（見本の木と実物の木） | 移行スクリプトや `page_readme.py` を直したとき |
 | `memo.py groups [STEP]` | ステップごとの「まとまり」の名前だけの一覧 | 何があるか見たいとき |
 | `memo.py pages [STEP] GROUP` / `pages -a [STEP]` | まとまりの中のページ（解説メモ）の一覧。`-a` は全ページ（STEP を付けるとそのステップだけ） | 読むページを探すとき |
-| `memo.py info PAGE [--json]` | 解説メモの README のフロントマター（題名・URL・取得日など） | ページの素性を確かめるとき |
-| `memo.py show PAGE [--only ...]` | 解説メモの README・`out/09_input-memo.md`・`12_LLM_prompts_as_guide.md` を表示（`out` か 12 が無いページは README と `01_source`、解説メモが無いページはページの README と原本） | 解説メモを読む・LLM に渡すとき |
+| `memo.py info PAGE [--json]` | 表紙 `README.md` のフロントマター（題名・URL・取得日など。無いページは原本の frontmatter） | ページの素性を確かめるとき |
+| `memo.py show PAGE [--only ...]` | 表紙 `README.md`・`.work/intermediate/09_input-memo.md`・`12_LLM_prompts_as_guide.md` を表示（09 か 12 が無いページは README と `01_source`、解説メモが無いページはページの README と原本） | 解説メモを読む・LLM に渡すとき |
 | `test_memo.py` | `memo.py` の検査（見本の木と実物の木） | `memo.py` を直したとき |
 
-解説メモの検査（`check_docs.py`）は、ced-skills の `ced-craft-explanation-docs` のものを使う（`page_status.py` が最新の版を探す）。
+解説メモの検査（`check_docs.py`）は、ced-skills の `ced-craft-explanation-docs` のものを使う（`page_status.py` が最新の版を探し、ページのフォルダを `--out-dir <ページ>/.work/intermediate` つきで検査する）。
+表紙 `README.md` のリンクは、check_docs の C-5 により、ページのフォルダの外を指せない。
 
 ## URL を 1 つ追加する流れ
 ```bash
 python3 tools/add_page.py <URL> --step 9 --group 01_added --kind 技術・ハウツー
-# ここで解説メモとスライドを作る（learning-page スキル）
-python3 tools/page_readme.py <ID> --force
+# ここで解説メモとスライドを作る（learning-page スキル。解説メモは直下、スライドは docs/、中間ファイルは .work/intermediate/）
+python3 tools/page_readme.py <ID>
 python3 tools/ledger.py refresh && python3 tools/build_index.py && python3 tools/check_index.py && python3 tools/check_links.py
 ```
 
@@ -55,3 +57,12 @@ python3 tools/memo.py show 1-7               # README ＋ out/09_input-memo.md �
 python3 tools/memo.py show 1-7 --only prompt # 一部だけ（readme input prompt source）
 python3 tools/test_memo.py                   # 検査
 ```
+
+## ページのフォルダの形と、構造の移行
+```
+<ページ>/README.md（表紙）・00_originals/・01_source.md・02_explanation_memo.md・11_question_and_answer.md・12_LLM_prompts_as_guide.md
+        docs/（スライドの MD と HTML）・.work/working-log.md（追跡する）・.work/intermediate/（追跡しない）
+```
+旧構造（`<slug>_explained/` の中に解説メモと `out/`、スライドがページ直下、ページ README に状態）からは、
+`.work/migrate-page-structure.sh` で一度だけ移した（2026-11-25）。試しは `bash .work/migrate-page-structure.sh`、実行は `--apply`。
+旧ページ README は `.work/working-log.md` に、解説メモの README は表紙に、`out/` は `.work/intermediate/` に、スライドは `docs/` に移る（何も削除しない）。

@@ -3,7 +3,7 @@
 
 使い方:  python3 tools/check_links.py [<フォルダ。既定は 03_outputs 全体>]
 終了コード: 0＝切れ 0 件 / 1＝あり
-http・mailto・claude:// などのスキーム付きと、ページ内の # は対象外。.work/ と out/ の中は見ない。
+http・mailto・claude:// などのスキーム付きと、ページ内の # は対象外。.work/（中間ファイルと working-log.md）と out/ の中は見ない。
 """
 import re, sys
 from pathlib import Path

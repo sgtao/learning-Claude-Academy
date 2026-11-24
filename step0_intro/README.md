@@ -47,8 +47,8 @@
 
 | 確かめたいこと | 読むページ |
 |---|---|
-| 最初のプロンプトの書き方（完璧でなくてよい。通常の言葉で頼む。不明点は Claude に質問させる） | 0-3 の [解説メモ](./03_academy-tutorials/01_getting-started-with-claude/getting-started-with-claude_explained/02_explanation_memo.md)・[スライド](./03_academy-tutorials/01_getting-started-with-claude/getting-started-with-claude-explained-slides.html) |
-| 最初のタスクをまるごと任せる流れ | 0-5 の [解説メモ](./03_academy-tutorials/03_delegating-your-first-task-in-claude-cowork/delegating-your-first-task-in-claude-cowork_explained/02_explanation_memo.md) |
+| 最初のプロンプトの書き方（完璧でなくてよい。通常の言葉で頼む。不明点は Claude に質問させる） | 0-3 の [解説メモ](./03_academy-tutorials/01_getting-started-with-claude/02_explanation_memo.md)・[スライド](./03_academy-tutorials/01_getting-started-with-claude/docs/getting-started-with-claude-explained-slides.html) |
+| 最初のタスクをまるごと任せる流れ | 0-5 の [解説メモ](./03_academy-tutorials/03_delegating-your-first-task-in-claude-cowork/02_explanation_memo.md) |
 | 自分の設定（コネクタ・指示・Skill）を整える | 0-6（ステップ 2 でも使う） |
 | 全体の道筋（どこから学ぶか） | 0-1・0-2 |
 

@@ -1,27 +1,69 @@
-###### [toTopPage](../../../README.md)
-###### [toREADME](../README.md)
-# 0-2 Claude 101（コースのトップ）
-- 元ページ: https://academy.claude.com/ja/courses/claude-101（取得: 2026-11-15／取得手段: Academy 日本語版を url-to-md で変換、`direct`）
-- 所要（ページ表示）: 約 150 分（学習メモの値。**取得した本文には分数が無い**）　内容の種類: 学習・ビジネス　状態: 完了
+###### [toTopPage](./README.md)
+###### [toREADME](./README.md)
+# 資料：Claude 101（コースのトップ）
+- `title`: Claude 101（コースのトップ）
+- `url`: https://academy.claude.com/ja/courses/claude-101
+- `source_format`: html
+- `retrieved_at`: 2026-11-15T16:51:28+09:00
+- `profile`: article
+- `content_type`: 学習・ビジネス
 
-## 成果物
-| 種類 | ファイル |
-|---|---|
-| 原本 | [00_originals/claude-101.md](./00_originals/claude-101.md) |
-| 解説メモ（入口） | [claude-101_explained/README.md](./claude-101_explained/README.md) |
-| 解説スライド | [claude-101-explained-slides.html](./claude-101-explained-slides.html)（原稿: [.md](./claude-101-explained-slides.md)） |
+-----
+[toTop](#totoppage)
+## セクション
+分割なし
 
-## 検査（実際に出力した結果）
-- 解説メモ: `check_docs.py` 11 PASS / 0 FAIL（サブエージェントは 2 回目で合格と報告。1 回目は C-6 で README の概要が 431 字（上限 400 字）。メインが再実行して 11 PASS を確認）／読み合わせ: サブエージェントが、本文に無い「13 レッスン」「Claude Academy」の語を除いた。メインが数字・プラン条件を原本と照合して食い違い 0
-- スライド: 8 枚（本文が約 800 字のため 5〜8 枚の目安）／`mdss-convert --strict` の lint は warnings 0・lint 0（メインが再実行）／サブエージェントが撮影した 8 枚のうち 1 枚の折り返しを修正／出典の無い数字: 0
-- 印の件数: `【補足】` 26・`【推測】` 4・`（要確認:` 4（レッスンの一覧・所要時間・Chat/Cowork/Code の向き不向き・有料プランの注記の中身）
+-----
+[toTop](#totoppage)
+## 概要
+Claude 101 はコースのトップページの本文で、本文は短く、概要・前提・対象の文章だけです。概要では、最初の会話とプロンプト作成の基本から、プロジェクト、Artifacts、Skills、Connectors、Enterprise Search、リサーチ機能へ進み、Chat・Cowork・Code の使い分けを確認し、役割別のユースケースとツアーで終える流れが示されます。前提は任意のプランの Claude アカウントで、使用経験は不要です。Cowork と Research 機能（Pro、Max、Team、Enterprise）、Enterprise Search（Team、Enterprise）は有料プランが必要です。レッスンの一覧・各レッスンの内容・所要時間は本文に無く、図もありません。変換は direct のため、図・画像・リンク先の中身は反映されていません。
 
-## 確認していないこと
-- 13 レッスンの一覧と各レッスンの内容（本文に無い。ステップ 1 で扱う）
-- 【推測】の当否（例: Free プランでは Cowork・Research・Enterprise Search を試せないと読める）。各レッスンの注記で確かめる
+-----
+[toTop](#totoppage)
+## 生成AIの総括
+### 入口の案内状：まず自分の位置と条件を知る
+- 横断分析：
+  - 順序：本文は、基本（最初の会話・プロンプト）から応用（プロジェクト、Artifacts、Skills）、連携（Connectors、Enterprise Search、リサーチ機能）へ進む道筋を示している。
+  - 条件：前提は軽い（アカウントのみ・経験不要）が、機能ごとに必要なプランが違う。
+  - 対象：新規ユーザーにも既存ユーザーにも向く。
+  - 限界：レッスンの一覧・内容・所要時間は本文には書かれていない。【補足】したがって、この資料の価値は「何を、どんな条件で学ぶか」を知ることにあり、中身は次の資料で確かめる。
+- 一言まとめ：Claude 101 のトップは、自分のプランと目的を確かめて最初の会話から始めるための案内であり、レッスンの中身は本文には書かれていない。
 
-## 学習メモとの食い違い
-- 学習メモは「約 150 分・13 レッスン」。ページの本文にはどちらも書かれていない（本文を根拠にした解説・スライドには書いていない）
+-----
+[toTop](#totoppage)
+## 本文
+- [01_source.md](./01_source.md)：入力 Markdown の複製（本文は変更していません）
+
+-----
+[toTop](#totoppage)
+## 解説メモ
+- [02_explanation_memo.md](./02_explanation_memo.md)
+
+-----
+[toTop](#totoppage)
+## FAQ
+- [11_question_and_answer.md](./11_question_and_answer.md)
+
+-----
+[toTop](#totoppage)
+## Proposed Prompts
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+## LLM 用プロンプト
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+<!-- page-status:start -->
+## 状態と関連資料
+- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 8 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 原本: [00_originals/claude-101.md](./00_originals/claude-101.md)
+- 解説スライド: [docs/claude-101-explained-slides.html](./docs/claude-101-explained-slides.html)（原稿: [docs/claude-101-explained-slides.md](./docs/claude-101-explained-slides.md)）
+- 確認していないこと（要約）: 13 レッスンの一覧と各レッスンの内容（本文に無い。ステップ 1 で扱う）／【推測】の当否
+- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
+<!-- page-status:end -->
 
 -----
 [toTop](#totoppage)

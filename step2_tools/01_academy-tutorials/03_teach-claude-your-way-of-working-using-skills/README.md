@@ -1,30 +1,64 @@
-###### [toTopPage](../../../README.md)
-###### [toREADME](../README.md)
-# 2-3 Skillsを使ってClaudeにあなたの仕事の進め方を教える
+###### [toTopPage](./README.md)
+###### [toREADME](./README.md)
+# 資料：Skillsを使ってClaudeにあなたの仕事の進め方を教える
+- `title`: Skillsを使ってClaudeにあなたの仕事の進め方を教える
+- `url`: https://academy.claude.com/ja/tutorials/teach-claude-your-way-of-working-using-skills
+- `source_format`: html
+- `retrieved_at`: 2026-11-24T07:04:33+09:00
+- `profile`: article
+- `content_type`: 技術・ハウツー
 
-- 状態：完了（2026-11-24。M1 の実例）
-- 種類：技術・ハウツー（手を動かして再現するチュートリアル）
-- 所要：本文に書かれていない（学習メモの目安は 11 分。出典：01_sources/11_ref-effective-Claude-Learning/02_learning-memo.md）
-- 原本の URL：https://academy.claude.com/ja/tutorials/teach-claude-your-way-of-working-using-skills（日本語版。2026-11-24 取得）
+-----
+[toTop](#totoppage)
+## セクション
+分割なし
 
-## 入口
-| 見るもの | リンク |
-|---|---|
-| 解説メモ一式の入口 | [README](./teach-claude-your-way-of-working-using-skills_explained/README.md) |
-| 解説メモ | [02_explanation_memo.md](./teach-claude-your-way-of-working-using-skills_explained/02_explanation_memo.md) |
-| FAQ（8 件） | [11_question_and_answer.md](./teach-claude-your-way-of-working-using-skills_explained/11_question_and_answer.md) |
-| ガイド役のプロンプト | [12_LLM_prompts_as_guide.md](./teach-claude-your-way-of-working-using-skills_explained/12_LLM_prompts_as_guide.md) |
-| 解説スライド（9 枚） | [HTML](./teach-claude-your-way-of-working-using-skills-explained-slides.html)・[MD](./teach-claude-your-way-of-working-using-skills-explained-slides.md) |
-| 原本 | [00_originals](./00_originals/teach-claude-your-way-of-working-using-skills.md) |
+-----
+[toTop](#totoppage)
+## 概要
+Claude Academy のチュートリアル。何度も Claude に説明している仕事のやり方を Skill にまとめ、会話のたびに自動で使わせる方法を教える。Skill は Projects やカスタム指示と役割が違い、どの会話でも働く点が特徴だと説明する。作る場面の例（週次の更新、顧客の声の分析、ブランドの基準など）、利用できるプランと必要な設定、形式・トーン・良い例の 3 つを名指しして説明する手順、新しい会話での確かめ方を扱う。本文には見出しが無く、動画や画像の説明も無い。所要時間は本文に書かれていない。
 
-## 検査の結果（2026-11-24。実際に出力を確認したもの）
-- 解説メモ：check_docs C-1〜C-12 の 12 PASS
-- スライド：mdss-convert の lint は error 0・warn 0。撮影 9 枚を全部目視（はみ出し 0）
-- 数字の照合：スライドの数字 7 件がすべて原本か解説メモにある（出典の無い数字 0）
-- リンク：このページ以下の Markdown の相対リンク切れ 0
-- 印の件数：解説メモの【補足】6・【推測】1、スライドの（要確認: 0 件
+-----
+[toTop](#totoppage)
+## 生成AIの総括
+### 説明の手間を一度で済ませる、Skill の作り方と確かめ方
+- 横断分析：
+  - 役割：Skill は繰り返す手順を、どの会話でも関連するときだけ自動で使わせる。Projects は文脈の場、カスタム指示は全般の好みで、役割が分かれる
+  - 作り方：2 回以上説明した作業を選び、形式・トーン・良い例の 3 つを名指しして Claude に説明する。技術的な知識は要らない
+  - 確かめ方：新しい会話で頼み、Skill の読み込みを確認し、貼った例と構造・文体を並べて見る。違う所は Skill に書き足す
+  - 前提：Free・Pro・Max・Team・Enterprise で使え、コード実行とファイル作成を有効にする
+- 一言まとめ：同じ 3 つを 2 回名指ししたら、Skill にまとめる時である
 
-## 確認していないこと
-- 原本のリンク先（support.claude.com など）の中身。画像・動画（本文に無い）
-- 手順を実際に自分のアカウントで操作した結果（Skill を作って動かす）
-- 読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
+-----
+[toTop](#totoppage)
+## 本文
+- [01_source.md](./01_source.md)：入力 Markdown の複製（本文は変更していません）
+
+-----
+[toTop](#totoppage)
+## 解説メモ
+- [02_explanation_memo.md](./02_explanation_memo.md)
+
+-----
+[toTop](#totoppage)
+## FAQ
+- [11_question_and_answer.md](./11_question_and_answer.md)
+
+-----
+[toTop](#totoppage)
+## LLM 用プロンプト
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+<!-- page-status:start -->
+## 状態と関連資料
+- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 9 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 原本: [00_originals/teach-claude-your-way-of-working-using-skills.md](./00_originals/teach-claude-your-way-of-working-using-skills.md)
+- 解説スライド: [docs/teach-claude-your-way-of-working-using-skills-explained-slides.html](./docs/teach-claude-your-way-of-working-using-skills-explained-slides.html)（原稿: [docs/teach-claude-your-way-of-working-using-skills-explained-slides.md](./docs/teach-claude-your-way-of-working-using-skills-explained-slides.md)）
+- 確認していないこと（要約）: 原本のリンク先／手順を実際に自分のアカウントで操作した結果（Skill を作って動かす）／読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
+- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
+<!-- page-status:end -->
+
+-----
+[toTop](#totoppage)

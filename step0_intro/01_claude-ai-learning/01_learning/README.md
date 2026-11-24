@@ -1,28 +1,77 @@
-###### [toTopPage](../../../README.md)
-###### [toREADME](../README.md)
-# 0-1 学ぶ（`/learning` 入口）
-- 元ページ: https://claude.ai/learning（取得: 2026-11-15／取得手段: Claude in Chrome。本文を読んで起こした `model-read`）
-- 所要（ページ表示）: －（入口ページ。「はじめに」の 3 本が 4・4・7 分）　内容の種類: 学習・ビジネス　状態: 完了
+###### [toTopPage](./README.md)
+###### [toREADME](./README.md)
+# 資料：学ぶ（Claude Academy のコース、チュートリアル、活用事例）
+- `title`: 学ぶ（Claude Academy のコース、チュートリアル、活用事例）
+- `url`: https://claude.ai/learning
+- `source_format`: html
+- `retrieved_at`: 2026-11-15T16:51:13+09:00
+- `profile`: article
+- `content_type`: 学習・ビジネス
 
-## 成果物
-| 種類 | ファイル |
-|---|---|
-| 原本 | [00_originals/learning.md](./00_originals/learning.md)（取得したままの文字: [learning.raw.txt](./00_originals/learning.raw.txt)） |
-| 解説メモ（入口） | [learning_explained/README.md](./learning_explained/README.md) |
-| 解説スライド | [learning-explained-slides.html](./learning-explained-slides.html)（原稿: [.md](./learning-explained-slides.md)） |
+-----
+[toTop](#totoppage)
+## セクション
+入力の見出しによる区切りです。
 
-## 検査（実際に出力した結果）
-- 解説メモ: `check_docs.py` 11 PASS / 0 FAIL（サブエージェントは 2 回目で合格と報告。メインが再実行して 11 PASS を確認）／読み合わせ: R-1〜R-4 はサブエージェントが実施（英語題の訳に【補足】を足す修正 1 回）。G-3 としてメインが FAQ の数字・「本文には書かれていない」の扱いを原本と照合して食い違い 0
-- スライド: 8 枚（本文 753 字のため 5〜8 枚の目安）／`mdss-convert --strict` の lint は warnings 0・lint 0（メインが再実行）／撮影した 8 枚のうち 2 枚をメインが目視（表・棒グラフとも崩れなし。棒グラフの軸ラベルは小さい）／出典の無い数字: 0（`06` は note の「06 総括」の参照で数値ではない）
-- 印の件数: `【補足】` 39・`【推測】` 2・`（要確認:` 3（作成機能の有料プラン・権限の条件／チェックインの選べる頻度／リンク先の中身）
+- 1 : [注目のラーニング](./01_source.md#注目のラーニング)
+- 2 : [はじめに](./01_source.md#はじめに)
+- 3 : [デザイン、デッキ、ドキュメントを作成](./01_source.md#デザインデッキドキュメントを作成)
+- 4 : [役割別に探す](./01_source.md#役割別に探す)
+- 5 : [学習チェックインをスケジュールする](./01_source.md#学習チェックインをスケジュールする)
 
-## 確認していないこと
-- ページ内の「作成」3 つとチェックインの実際の動作（ボタンは押していない。説明文だけが根拠）
-- リンク先（Claude 101・各チュートリアル・役割別ページ）の中身。有料プラン・権限の条件（本文に無い）
-- ログイン状態による表示の違い（取得時の表示のみ）
+-----
+[toTop](#totoppage)
+## 概要
+Claude の学習ページ（claude.ai/learning）の入口を起こした資料。注目のコース Claude 101 とチュートリアル Intro to Claude、「はじめに」の短いチュートリアル 3 本（4 分・4 分・7 分）、会話で作成を頼める 3 つの例（スライド・文書・1 ページのビジュアル）、役割別に探す 11 項目、学習チェックインの予約を案内する。本文は案内文だけで、各リンク先の中身は書かれていない。
 
-## 学習メモとの食い違い
-- なし（学習メモ 0-1 の「分」は「－」。ページの「はじめに」は 4・4・7 分で、学習メモの 0-4・0-5・0-6 と一致）
+【補足】注意：この原本は Chrome で読んで起こしたもの（conversion: model-read）で、ログイン状態で表示が変わる部分がある。「作成」の 3 つとチェックインは実際にはボタンで、押すとアカウントに会話や定期タスクができるが、本文にあるのは説明文だけ。リンク先の中身は読んでいない。
+
+-----
+[toTop](#totoppage)
+## 生成AIの総括
+### 学ぶ・作る・続けるが一列に並んだ、Claude 活用の入口
+- 横断分析：
+  - 順序：基本を学ぶ（注目のラーニング・はじめに）、会話で作る、自分の役割に寄せる、練習を続ける、の順に並ぶ。
+  - 所要時間：「はじめに」だけが 4 分・4 分・7 分と明示されている。【補足】短く始められる作り、という筆者の読み取り。
+  - 成果物：作成の 3 つの例はすべて、材料（メモ・アイデア・説明）から形にする流れで、後から編集・調整できる。
+  - 空白：有料プランや権限の条件、リンク先の中身は本文に無く、画面で確かめる部分として残る。
+- 一言まとめ：まず短く学び、自分の仕事 1 件を会話で作ってみて、練習の予約で続ける。
+
+-----
+[toTop](#totoppage)
+## 本文
+- [01_source.md](./01_source.md)：入力 Markdown の複製（本文は変更していません）
+
+-----
+[toTop](#totoppage)
+## 解説メモ
+- [02_explanation_memo.md](./02_explanation_memo.md)
+
+-----
+[toTop](#totoppage)
+## FAQ
+- [11_question_and_answer.md](./11_question_and_answer.md)
+
+-----
+[toTop](#totoppage)
+## Proposed Prompts
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+## LLM 用プロンプト
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+<!-- page-status:start -->
+## 状態と関連資料
+- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 8 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 原本: [00_originals/learning.md](./00_originals/learning.md)
+- 解説スライド: [docs/learning-explained-slides.html](./docs/learning-explained-slides.html)（原稿: [docs/learning-explained-slides.md](./docs/learning-explained-slides.md)）
+- 確認していないこと（要約）: ページ内の「作成」3 つとチェックインの実際の動作／リンク先／ログイン状態による表示の違い（取得時の表示のみ）
+- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
+<!-- page-status:end -->
 
 -----
 [toTop](#totoppage)

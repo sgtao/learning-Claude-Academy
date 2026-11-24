@@ -1,27 +1,64 @@
-###### [toTopPage](../../../README.md)
-###### [toREADME](../README.md)
-# 4-3 Introduction to Claude Cowork
-- 元ページ: https://academy.claude.com/ja/courses/introduction-to-claude-cowork（取得: 2026-11-24）
-- 所要: 150 分（学習メモの値。本文に分数が無いことがある）　内容の種類: 学習・ビジネス　状態: 取得済（現在の状態は[台帳](../../../00_index.md)が正）
+###### [toTopPage](./README.md)
+###### [toREADME](./README.md)
+# 資料：(無題)
+- `title`: (無題)
+- `url`: https://academy.claude.com/ja/courses/introduction-to-claude-cowork
+- `source_format`: html
+- `retrieved_at`: 2026-11-24T08:42:49+09:00
+- `profile`: article
+- `content_type`: 技術・ハウツー
 
-## 成果物
-| 種類 | ファイル |
-|---|---|
-| 原本 | [00_originals/introduction-to-claude-cowork.md](./00_originals/introduction-to-claude-cowork.md) |
-| 解説メモ（入口） | [introduction-to-claude-cowork_explained/README.md](./introduction-to-claude-cowork_explained/README.md) |
-| 解説スライド | [introduction-to-claude-cowork-explained-slides.html](./introduction-to-claude-cowork-explained-slides.html)（原稿: [.md](./introduction-to-claude-cowork-explained-slides.md)） |
+-----
+[toTop](#totoppage)
+## セクション
+分割なし
 
-## 検査（2026-11-24 に実際に出力を確認）
-- 解説メモ: `check_docs.py` で 12 PASS
-- スライド: 6 枚／lint 0
-- 数字の照合: 出典の無い数字 0 件
-- リンク切れ: 0 件
-- 印の件数: 解説メモの【補足】3・【推測】1、スライドの（要確認: 0
+-----
+[toTop](#totoppage)
+## 概要
+Claude Cowork の使い方を、初回起動から日常の使いこなしまで学ぶコースのトップページ（2.5 時間・14 レッスン、学習メモの値）。本文は Cowork の定義（ファイル・フォルダ・アプリと直接連携し、会話を作業セッションに変える）と、コースの範囲だけで、レッスンの一覧と手順は本文に無い。有料機能を含む（学習メモによる）。本文が短いので、解説は本文の範囲で書いた。
 
-## 確認していないこと
-- 原本のリンク先の中身、画像・動画
-- 手順を実際に自分のアカウントで操作した結果
-- 読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
+-----
+[toTop](#totoppage)
+## 生成AIの総括
+### 計画を確かめて任せる、Cowork の使い方の全体
+- 横断分析：
+  - 定義：ファイル・フォルダ・アプリに直接つながり、実際の出力を作る
+  - 流れ：計画を立て、利用者が途中で直しながら実行する
+  - 範囲：初回起動から、常設のコンテキスト、アプリへの取り入れ、チームの共有まで
+  - 限界：レッスンと手順は本文に無いので、受講して確かめる
+- 一言まとめ：小さな作業で計画の確認を練習してから、広げていく
+
+-----
+[toTop](#totoppage)
+## 本文
+- [01_source.md](./01_source.md)：入力 Markdown の複製（本文は変更していません）
+
+-----
+[toTop](#totoppage)
+## 解説メモ
+- [02_explanation_memo.md](./02_explanation_memo.md)
+
+-----
+[toTop](#totoppage)
+## FAQ
+- [11_question_and_answer.md](./11_question_and_answer.md)
+
+-----
+[toTop](#totoppage)
+## LLM 用プロンプト
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+<!-- page-status:start -->
+## 状態と関連資料
+- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 6 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 原本: [00_originals/introduction-to-claude-cowork.md](./00_originals/introduction-to-claude-cowork.md)
+- 解説スライド: [docs/introduction-to-claude-cowork-explained-slides.html](./docs/introduction-to-claude-cowork-explained-slides.html)（原稿: [docs/introduction-to-claude-cowork-explained-slides.md](./docs/introduction-to-claude-cowork-explained-slides.md)）
+- 確認していないこと（要約）: 原本のリンク先の中身、画像・動画／手順を実際に自分のアカウントで操作した結果／読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
+- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
+<!-- page-status:end -->
 
 -----
 [toTop](#totoppage)

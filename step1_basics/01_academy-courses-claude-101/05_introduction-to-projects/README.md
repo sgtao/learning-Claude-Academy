@@ -1,28 +1,70 @@
-###### [toTopPage](../../../README.md)
-###### [toREADME](../README.md)
-# 1-5 プロジェクト入門（Claude 101 レッスン 5）
-- 元ページ: https://academy.claude.com/ja/courses/claude-101/introduction-to-projects（取得: 2026-11-15／取得手段: Academy 日本語版を url-to-md で変換、`direct`）
-- 所要（ページ表示）: 15 分（学習メモの値。本文の「数分」はプロジェクト作成の説明。**取得した本文にレッスンの分数は無い**）　内容の種類: 学習・ビジネス　状態: 完了
+###### [toTopPage](./README.md)
+###### [toREADME](./README.md)
+# 資料：プロジェクト入門（Claude 101 レッスン 5）
+- `title`: プロジェクト入門（Claude 101 レッスン 5）
+- `url`: https://academy.claude.com/ja/courses/claude-101/introduction-to-projects
+- `source_format`: html
+- `retrieved_at`: 2026-11-15T17:45:06+09:00
+- `profile`: article
+- `content_type`: 学習・ビジネス
 
-## 成果物
-| 種類 | ファイル |
-|---|---|
-| 原本 | [00_originals/introduction-to-projects.md](./00_originals/introduction-to-projects.md) |
-| 解説メモ（入口） | [introduction-to-projects_explained/README.md](./introduction-to-projects_explained/README.md) |
-| 解説スライド | [introduction-to-projects-explained-slides.html](./introduction-to-projects-explained-slides.html)（原稿: [.md](./introduction-to-projects-explained-slides.md)） |
+-----
+[toTop](#totoppage)
+## セクション
+分割なし
 
-## 検査（実際に出力した結果）
-- 解説メモ: `check_docs.py` 11 PASS / 0 FAIL（メインが再実行）／サブエージェントの修正: 1 回目から 11 PASS。読み合わせ R-2 で `out/07` の補足の印が足りない箇所を直して再転記／読み合わせ G-3（メイン）: 共有は Claude for Work（Team・Enterprise）向け、作成の手順の順序、「最大10倍」の扱い（基準が本文に無い→要確認）、原本内のゆれ（画面名・公開範囲の呼び名・容量・説明文の扱い）を原本と照合して食い違い 0／README の概要 326 字（上限 400）
-- スライド: 10 枚／`mdss-convert --strict` の lint は warnings 0・lint 0（メインが再実行）／サブエージェントが撮影した 10 枚のうち 1 枚（スライド 4 の見出し文言）を修正して再撮影／出典の無い数字: 0（`03`・`05` は note 内の解説メモの参照番号で数値ではない）
-- 印の件数: `【補足】` 11・`【推測】` 5・`（要確認:` 2（「最大10倍」の倍率の基準・Claude for Work 以外のプランでのプロジェクトの利用可否）
+-----
+[toTop](#totoppage)
+## 概要
+Claude のプロジェクトを紹介する入門ページ。プロジェクトは独自のチャット履歴・ナレッジ・指示を持つ自己完結型の環境で、アップロードした資料や指示がその中のすべてのチャットで使われる。ナレッジが多いときは検索拡張生成（RAG）で容量が自動的に拡張される。作成の手順、指示とナレッジの設定、Claude for Work（TeamおよびEnterprise）での共有と3つの権限レベル、用途の例、使いこなしのコツ、考えるための問いが続く。注意：本文に見出しは無く、分割なし。原本は Academy 日本語版を直接変換したもので、図は再現していない。ナビ・フッターなどのページ枠の文言は見当たらないが、リンクに「新しいタブで開きます」という表示文が残る。ページの動画の字幕は取っておらず、リンク先の中身も読んでいない。
 
-## 確認していないこと
-- 動画の字幕・画像・リンク先（プロジェクトのページ・ヘルプセンター）の中身
-- 【推測】の当否（画面名・公開範囲の呼び名の揺れ、「最大10倍」の意味）。実際の画面の表示
-- Claude for Work 以外のプランでのプロジェクトの利用可否（本文に無い。スライド 8 に要確認）
-- 本文は約 8,500 字で見出しが無く、解説メモは「分割なし・グループ 1 つ」。ステップ 2 の「Intro to Projects」（チュートリアル）とは別のページ
-## 学習メモとの食い違い
-- 学習メモは「15 分」。本文にレッスンの所要時間は無く、解説・スライドには分数を書いていない
+-----
+[toTop](#totoppage)
+## 生成AIの総括
+### プロジェクトは「伝え直さなくてよい」専用の作業場
+
+- 横断分析：
+  - 置き場所の視点：資料はナレッジに、決まりごとは指示に置くと、プロジェクト内のすべてのチャットで効く。会話中だけのアップロードは、その場かぎりの資料の置き場になる。
+  - 規模の視点：資料が増えても、上限に近づくと RAG に自動で切り替わり、利用者の操作は変わらないと本文は書く。
+  - 人の視点：共有は Claude for Work（TeamおよびEnterprise）の機能で、閲覧可能・編集可能・オーナーの 3 つの権限で関わり方を分ける。
+  - 始め方の視点：継続的な作業を 1 件選び、焦点を絞って始め、ナレッジを最新に保ち、指示を明確に書く。
+- 一言まとめ：プロジェクトは、繰り返す仕事の前提（資料と決まりごと）を Claude に持たせておく仕組みで、まず自分の仕事 1 件から試せる。
+
+-----
+[toTop](#totoppage)
+## 本文
+- [01_source.md](./01_source.md)：入力 Markdown の複製（本文は変更していません）
+
+-----
+[toTop](#totoppage)
+## 解説メモ
+- [02_explanation_memo.md](./02_explanation_memo.md)
+
+-----
+[toTop](#totoppage)
+## FAQ
+- [11_question_and_answer.md](./11_question_and_answer.md)
+
+-----
+[toTop](#totoppage)
+## Proposed Prompts
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+## LLM 用プロンプト
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+<!-- page-status:start -->
+## 状態と関連資料
+- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 原本: [00_originals/introduction-to-projects.md](./00_originals/introduction-to-projects.md)
+- 解説スライド: [docs/introduction-to-projects-explained-slides.html](./docs/introduction-to-projects-explained-slides.html)（原稿: [docs/introduction-to-projects-explained-slides.md](./docs/introduction-to-projects-explained-slides.md)）
+- 確認していないこと（要約）: 動画の字幕・画像・リンク先（プロジェクトのページ・ヘルプセンター）の中身／【推測】の当否／Claude for Work 以外のプランでのプロジェクトの利用可否ほか
+- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
+<!-- page-status:end -->
 
 -----
 [toTop](#totoppage)

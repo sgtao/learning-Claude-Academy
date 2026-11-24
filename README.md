@@ -16,8 +16,9 @@ Claude の公式学習ページ（claude.ai/learning、実体は Claude Academy�
 03_outputs/
 ├── README.md              この地図
 ├── 00_index.md            索引（ledger.csv から自動で作る。手で直さない）
-├── ledger.csv             台帳。全 71 ページの ID・場所・状態・検査結果・学習済みの日（正本）
-├── tools/                 台帳・索引・検査のスクリプト（tools/README.md）
+├── ledger.csv             台帳。全 73 ページの ID・場所・状態・検査結果・学習済みの日（正本）
+├── tools/                 台帳・索引・検査・参照のスクリプト（tools/README.md）
+├── .work/                 構造を移したときのスクリプト（migrate-page-structure.sh。一度きり）
 ├── step0_intro/           ステップ 0：入口
 ├── step1_basics/          ステップ 1：基礎（Claude 101 の 15 ページ）
 ├── step2_tools/           ステップ 2：道具を整える
@@ -31,12 +32,21 @@ Claude の公式学習ページ（claude.ai/learning、実体は Claude Academy�
 step1_basics/                          ← ステップ
 └── 01_academy-courses-claude-101/     ← まとまり（関連するページ。README に一覧）
     └── 07_working-with-skills/        ← ページ（1 ページ分）
-        ├── README.md                  入口。状態、検査の結果、確認していないこと
+        ├── README.md                  表紙（タイトル、概要、AI の総括、各資料へのリンク、状態 1 行、確認していないことの要約）
         ├── 00_originals/              原本（取得したままの本文。frontmatter 付き）
-        ├── working-with-skills_explained/   解説メモ一式（README・01_source・02_explanation_memo・11_question_and_answer・12_LLM_prompts_as_guide）
-        ├── working-with-skills-explained-slides.html   解説スライド
-        └── working-with-skills-explained-slides.md     スライドの原稿（これを直して HTML を作り直す）
+        ├── 01_source.md               解説メモ一式（本文の複製）
+        ├── 02_explanation_memo.md     解説メモ
+        ├── 11_question_and_answer.md  FAQ
+        ├── 12_LLM_prompts_as_guide.md LLM 用プロンプト
+        ├── docs/
+        │   ├── working-with-skills-explained-slides.html   解説スライド
+        │   └── working-with-skills-explained-slides.md     スライドの原稿（これを直して HTML を作り直す）
+        └── .work/                     作業用（読む人は開かなくてよい）
+            ├── working-log.md         状態、検査の結果、確認していないこと、作業の経緯（git で追跡する）
+            └── intermediate/          スキルで作成した中間ファイル（git では追跡しない）
 ```
+
+解説メモがないページ（薄いページ・取得失敗・重複）は、`README.md`（ページの説明）と `00_originals/` だけを置く。
 
 番号（`01_`、`02_`…）は並び順で、学ぶ順と台帳の順にそろえてある。ステップの番号とフォルダ名は台帳の `step` 列と同じ。
 
@@ -47,6 +57,7 @@ step1_basics/                          ← ステップ
 `未着手`／`取得済`／`作成中`／`完了`（解説メモ 12 PASS・スライド lint 0・数字とリンクの検査が通った）／`薄いページ`（本文が 300 字未満で作らない）／`重複`（同じページが別の場所にある）／`失敗`（取得できない）／`要確認`（検査が通らない）
 
 ## 読むときの注意
-- 各ページの README にある検査の記述は、作成当時の記録。**今の結果は台帳（`ledger.csv`・`00_index.md`）が正**。
+- 各ページの README（表紙）の末尾にある「状態」は 1 行の要約。検査の細かい結果・経緯・確認していないことの全文は `.work/working-log.md`。**今の結果は台帳（`ledger.csv`・`00_index.md`）が正**（作業ログの旧 README の記述は、移行前の記録）。
+- 表紙の状態の言葉は 作成中／検査済み／確定（検査済み＝台帳が「完了」、確定＝学習済みの日がある）。台帳の「状態の意味」とは別。
 - 内容は 2026-11-15〜11-24 に取得した時点のもの。所要時間・プラン条件は、使う前に公式ページで確かめる。
 - 旧リポジトリ（`01_sources/11_ref-effective-Claude-Learning/`）から写したページは、2026-11-24 に今の形（ced-skills 0.0.3）にそろえた。

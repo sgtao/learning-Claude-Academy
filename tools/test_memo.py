@@ -17,34 +17,35 @@ def w(path, text):
     path.write_text(text, encoding="utf-8")
 
 
+def memo_files(page, readme, tag="", intermediate=True):
+    """新構造の解説メモ 5 本（ページのフォルダの直下）と、中間ファイル（.work/intermediate/）。"""
+    w(page / "README.md", readme)
+    w(page / "01_source.md", f"SOURCE-{tag}")
+    w(page / "02_explanation_memo.md", "MEMO-02")
+    w(page / "11_question_and_answer.md", "FAQ-11")
+    w(page / "12_LLM_prompts_as_guide.md", f"PROMPT-{tag}")
+    if intermediate:
+        w(page / ".work/intermediate/09_input-memo.md", f"INPUTMEMO-{tag}")
+
+
 def make_tree(root):
-    """見本の木。alpha=完全／beta=out が無い／gamma=解説メモが無い／.work=無視される。"""
+    """見本の木（新構造）。alpha=完全／beta=09_input-memo が無い／gamma=解説メモが無い／.work=無視される。"""
     g = root / "step1_basics" / "01_grpA"
     # alpha: すべてそろっている
-    a = g / "07_alpha"
-    w(a / "README.md", "PAGE-README-ALPHA")
-    w(a / "alpha_explained/README.md",
-      "###### [toTopPage](./README.md)\n# 資料：アルファ題\n- `title`: アルファ題\n- `url`: https://example.com/alpha\n"
-      "- `retrieved_at`: 2026-11-15\n\n-----\n## 概要\nEXPLAINED-README-ALPHA\n")
-    w(a / "alpha_explained/01_source.md", "SOURCE-ALPHA")
-    w(a / "alpha_explained/12_LLM_prompts_as_guide.md", "PROMPT-ALPHA")
-    w(a / "alpha_explained/out/09_input-memo.md", "INPUTMEMO-ALPHA")
-    # beta: out/09 が無い（12 はある）
-    b = g / "08_beta"
-    w(b / "README.md", "PAGE-README-BETA")
-    w(b / "beta_explained/README.md", "# 資料：ベータ題\n- `title`: ベータ題\n- `url`: https://example.com/beta\n\n-----\nEXPLAINED-README-BETA\n")
-    w(b / "beta_explained/01_source.md", "SOURCE-BETA")
-    w(b / "beta_explained/12_LLM_prompts_as_guide.md", "PROMPT-BETA")
+    memo_files(g / "07_alpha",
+               "###### [toTopPage](./README.md)\n# 資料：アルファ題\n- `title`: アルファ題\n- `url`: https://example.com/alpha\n"
+               "- `retrieved_at`: 2026-11-15\n\n-----\n## 概要\nEXPLAINED-README-ALPHA\n", tag="ALPHA")
+    w(g / "07_alpha/.work/working-log.md", "# log")
+    # beta: 解説メモはあるが、中間ファイルの 09_input-memo が無い
+    memo_files(g / "08_beta", "# 資料：ベータ題\n- `title`: ベータ題\n- `url`: https://example.com/beta\n\n-----\nEXPLAINED-README-BETA\n",
+               tag="BETA", intermediate=False)
     # gamma: 解説メモなし（薄いページ）。原本だけ
     c = g / "09_gamma"
     w(c / "README.md", "# 1-9 ガンマ\nPAGE-README-GAMMA")
     w(c / "00_originals/gamma.md", "---\ntitle: ガンマ題\nsource_url: \"https://example.com/gamma\"\nretrieved_at: 2026-11-24\n---\nORIGINAL-GAMMA\n")
     w(c / "00_originals/gamma.raw.txt", "RAW-GAMMA")
     # 別ステップに同じ slug（曖昧さの検査用）
-    d = root / "step2_tools" / "01_grpB" / "01_alpha"
-    w(d / "README.md", "PAGE-README-ALPHA2")
-    w(d / "alpha_explained/README.md", "# 資料：別のアルファ\n- `title`: 別のアルファ\n\n-----\n")
-    w(d / "alpha_explained/01_source.md", "SOURCE-ALPHA2")
+    memo_files(root / "step2_tools" / "01_grpB" / "01_alpha", "# 資料：別のアルファ\n- `title`: 別のアルファ\n\n-----\n", tag="ALPHA2")
     # フロントマターが無いページ（重複ページなど）
     w(root / "step2_tools/01_grpB/02_nofm/README.md", "# 2-2 plain page\nPAGE-README-NOFM")
     # 無視される場所
@@ -200,7 +201,7 @@ class FixtureTests(unittest.TestCase):
         self.assertIn("EXPLAINED-README-BETA", out)
         self.assertIn("SOURCE-BETA", out)
         self.assertNotIn("PROMPT-BETA", out)               # 12 があっても、out が無ければ代替の形
-        self.assertIn("out/09_input-memo.md not created", out)   # 無いものを注記する
+        self.assertIn(".work/intermediate/09_input-memo.md not created", out)   # 無いものを注記する
 
     def test_show_page_without_explained_dir(self):
         code, out, _ = run(self.root, "show", "1-9")

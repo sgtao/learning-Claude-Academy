@@ -1,28 +1,69 @@
-###### [toTopPage](../../../README.md)
-###### [toREADME](../README.md)
-# 1-10 深掘り調査のためのリサーチ機能（Claude 101 レッスン 10）
-- 元ページ: https://academy.claude.com/ja/courses/claude-101/research-mode-for-deep-dives（取得: 2026-11-15／取得手段: Academy 日本語版を url-to-md で変換、`direct`）
-- 所要（ページ表示）: 10 分（学習メモの値。**取得した本文には分数が無い**。本文の「数分かそれ以上」は 1 回のリサーチにかかる時間で、レッスンの所要ではない）　内容の種類: 学習・ビジネス　状態: 完了
+###### [toTopPage](./README.md)
+###### [toREADME](./README.md)
+# 資料：深掘り調査のためのリサーチ機能（Claude 101 レッスン 10）
+- `title`: 深掘り調査のためのリサーチ機能（Claude 101 レッスン 10）
+- `url`: https://academy.claude.com/ja/courses/claude-101/research-mode-for-deep-dives
+- `source_format`: html
+- `retrieved_at`: 2026-11-15T17:45:06+09:00
+- `profile`: article
+- `content_type`: 学習・ビジネス
 
-## 成果物
-| 種類 | ファイル |
-|---|---|
-| 原本 | [00_originals/research-mode-for-deep-dives.md](./00_originals/research-mode-for-deep-dives.md) |
-| 解説メモ（入口） | [research-mode-for-deep-dives_explained/README.md](./research-mode-for-deep-dives_explained/README.md) |
-| 解説スライド | [research-mode-for-deep-dives-explained-slides.html](./research-mode-for-deep-dives-explained-slides.html)（原稿: [.md](./research-mode-for-deep-dives-explained-slides.md)） |
+-----
+[toTop](#totoppage)
+## セクション
+分割なし
 
-## 検査（実際に出力した結果）
-- 解説メモ: `check_docs.py` 11 PASS / 0 FAIL（メインが再実行）／サブエージェントの修正: 1 回目は 9 PASS / 2 FAIL（C-6 概要 403 字、C-8 本文に無い「」の引用 3 件）。概要を短くし `out/03` の「」を外して再転記。読み合わせで「だれが」の断定を【推測】付きに直して再転記し、2 回目で 11 PASS。利用上限で一度停止し、再開して完了／読み合わせ G-3（メイン）: 本文にプラン条件は無いことを原本と照合（本文の時間の記述は「数分かそれ以上」のみ）。依頼文にあった「（有料）」は本文に無いため事実として書かれていないことを確認／README の概要 364 字（上限 400）
-- スライド: 10 枚／`mdss-convert --strict` の lint は warnings 0・lint 0（メインが再実行）／サブエージェントが撮影した 10 枚で修正なし／出典の無い数字: 0（`03`・`05` は note 内の解説メモの参照番号で数値ではない）
-- 印の件数: `【補足】` 13・`【推測】` 1・`（要確認:` 1（利用できるプラン・権限の条件。原本には書かれていない）
+-----
+[toTop](#totoppage)
+## 概要
+Claudeのリサーチ機能の解説です。リサーチ機能は、Claudeが複数の検索を積み重ね、ウェブや接続済みの連携機能（Google Workspaceなど）から情報を集めて、引用付きの包括的なレポートにまとめる機能で、通常の検索より時間がかかります（質問によっては数分かそれ以上）。本文は、使いどころ、ウェブ検索・思考モード・Enterprise searchに切り替える場面、4つのステップ、有効化の手順、プロンプトのコツ、連携機能との併用、3つの問いを順に述べています。本文には見出しがなく、分割していません。注意：ナビ・フッターなどのページ枠の文言は本文に残っていません。本文には利用できるプランの条件や所要時間は書かれていません。動画チュートリアルへの言及はありますが字幕は取っておらず、末尾のヘルプセンターのリンク先の中身も読んでいません。図は無く、html を直接変換したものです。
 
-## 確認していないこと
-- 動画チュートリアルとヘルプセンターのリンク先の中身
-- 利用できるプラン・権限の条件（本文に無い。スライド 9 に要確認）
-- 【推測】の当否
+-----
+[toTop](#totoppage)
+## 生成AIの総括
+### 「調べ方を任せる」機能を、場面と依頼文で使いこなす
+- 横断分析：
+  - 役割の変化：Claudeは質問に答える相手から、計画・検索・統合・引用までを進める調査者になる。
+  - 時間の使い方：時間がかかる代わりに、自分は別の作業に専念できる。
+  - 使い分け：ソースの数・速さ・情報の場所（外か中か、推論か）で機能を選ぶ。
+  - 品質は依頼文で決まる：待ち時間が長いので、目標・構成・制約を具体的に書き、出典を自分でも確かめる。
+- 一言まとめ：リサーチ機能は「時間をかけてよい徹底調査」を任せる機能で、向く場面を見極め、具体的な依頼文で頼み、引用で確かめるのが使いこなしの基本です。
 
-## 学習メモとの食い違い
-- 学習メモは「有料・10 分」。このレッスンの本文には有料プランの記述も所要時間も無い。なお 0-2（Claude 101 のコースのトップ）の本文には「Cowork と Research 機能は有料プラン（Pro・Max・Team・Enterprise）が必要」とあり、そちらが学習メモの「有料」の根拠。解説・スライドには、このレッスンの本文に無い条件は書いていない
+-----
+[toTop](#totoppage)
+## 本文
+- [01_source.md](./01_source.md)：入力 Markdown の複製（本文は変更していません）
+
+-----
+[toTop](#totoppage)
+## 解説メモ
+- [02_explanation_memo.md](./02_explanation_memo.md)
+
+-----
+[toTop](#totoppage)
+## FAQ
+- [11_question_and_answer.md](./11_question_and_answer.md)
+
+-----
+[toTop](#totoppage)
+## Proposed Prompts
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+## LLM 用プロンプト
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+<!-- page-status:start -->
+## 状態と関連資料
+- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 原本: [00_originals/research-mode-for-deep-dives.md](./00_originals/research-mode-for-deep-dives.md)
+- 解説スライド: [docs/research-mode-for-deep-dives-explained-slides.html](./docs/research-mode-for-deep-dives-explained-slides.html)（原稿: [docs/research-mode-for-deep-dives-explained-slides.md](./docs/research-mode-for-deep-dives-explained-slides.md)）
+- 確認していないこと（要約）: 動画チュートリアルとヘルプセンターのリンク先の中身／利用できるプラン・権限の条件（本文に無い。スライド 9 に要確認）／【推測】の当否
+- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
+<!-- page-status:end -->
 
 -----
 [toTop](#totoppage)

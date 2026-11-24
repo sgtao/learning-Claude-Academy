@@ -1,27 +1,64 @@
-###### [toTopPage](../../../README.md)
-###### [toREADME](../README.md)
-# 3-05-03 プロダクト：フィードバック統合（★2）
-- 元ページ: https://academy.claude.com/ja/use-cases/feedback-synthesis（取得: 2026-11-24）
-- 所要: 10 分（学習メモの値。本文に分数が無いことがある）　内容の種類: 技術・ハウツー　状態: 完了（現在の状態は[台帳](../../../00_index.md)が正）
+###### [toTopPage](./README.md)
+###### [toREADME](./README.md)
+# 資料：プロダクト：フィードバック統合（★2）
+- `title`: プロダクト：フィードバック統合（★2）
+- `url`: https://academy.claude.com/ja/use-cases/feedback-synthesis
+- `source_format`: html
+- `retrieved_at`: 2026-11-24T09:49:47+09:00
+- `profile`: article
+- `content_type`: 技術・ハウツー
 
-## 成果物
-| 種類 | ファイル |
-|---|---|
-| 原本 | [00_originals/feedback-synthesis.md](./00_originals/feedback-synthesis.md) |
-| 解説メモ（入口） | [feedback-synthesis_explained/README.md](./feedback-synthesis_explained/README.md) |
-| 解説スライド | [feedback-synthesis-explained-slides.html](./feedback-synthesis-explained-slides.html)（原稿: [.md](./feedback-synthesis-explained-slides.md)） |
+-----
+[toTop](#totoppage)
+## セクション
+分割なし
 
-## 検査（2026-11-24 に実際に出力を確認）
-- 解説メモ: `check_docs.py` で 12 PASS
-- スライド: 10 枚／lint 0
-- 数字の照合: 出典の無い数字 0 件
-- リンク切れ: 0 件
-- 印の件数: 解説メモの【補足】15・【推測】4、スライドの（要確認: 0
+-----
+[toTop](#totoppage)
+## 概要
+顧客フィードバックを、Claude Cowork で 1 ページの Voice of Customer（VoC）ブリーフにまとめる手順の記事です。Slack・Linear・Google Drive をつなぎ、NPS・サポートチケット・セールスコール・インタビュー記録を 1 つのフォルダに集めて、5〜7 のテーマに整理させます。頻度・深刻度・最良の引用・Linear のロードマップとの対応を求める 6 つのコツを挙げ、やり取りをスキルにして /schedule で毎週金曜に自動実行し、チームで共有する流れも述べます。入力は図を再現していない直接変換で、「接続」のボタンはリンクだけが残っています。
 
-## 確認していないこと
-- 原本のリンク先の中身、画像・動画
-- 手順を実際に自分のアカウントで操作した結果
-- 読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
+-----
+[toTop](#totoppage)
+## 生成AIの総括
+### 散らばった声を、毎週同じ基準の 1 ページにする
+- 横断分析：
+  - 入力の整え方：材料は 1 つのフォルダと Slack などのコネクタに集め、読む場所と書く場所をそろえる。
+  - 依頼の設計：数の範囲、頻度と深刻度、最良の引用、既存計画との比較を指定して、判断に使える形で返してもらう。
+  - 仕組みへの育て方：一度の成功を、スキル化、/schedule、共有で、毎週・チーム全員の習慣にする。
+  - 確認の置き方：不確実な点をフラグさせ、人が最初に見る場所を決めておく。
+- 一言まとめ：フィードバック整理は、一度きりの依頼で終わらせず、自分の基準を入れたスキルにして回す。
+
+-----
+[toTop](#totoppage)
+## 本文
+- [01_source.md](./01_source.md)：入力 Markdown の複製（本文は変更していません）
+
+-----
+[toTop](#totoppage)
+## 解説メモ
+- [02_explanation_memo.md](./02_explanation_memo.md)
+
+-----
+[toTop](#totoppage)
+## FAQ
+- [11_question_and_answer.md](./11_question_and_answer.md)
+
+-----
+[toTop](#totoppage)
+## LLM 用プロンプト
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+<!-- page-status:start -->
+## 状態と関連資料
+- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 原本: [00_originals/feedback-synthesis.md](./00_originals/feedback-synthesis.md)
+- 解説スライド: [docs/feedback-synthesis-explained-slides.html](./docs/feedback-synthesis-explained-slides.html)（原稿: [docs/feedback-synthesis-explained-slides.md](./docs/feedback-synthesis-explained-slides.md)）
+- 確認していないこと（要約）: 原本のリンク先の中身、画像・動画／手順を実際に自分のアカウントで操作した結果／読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
+- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
+<!-- page-status:end -->
 
 -----
 [toTop](#totoppage)

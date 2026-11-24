@@ -1,27 +1,64 @@
-###### [toTopPage](../../../README.md)
-###### [toREADME](../README.md)
-# 3-07-01 財務の役割ページ
-- 元ページ: https://claude.ai/learning/roles/finance（取得: 2026-11-24）
-- 所要: 本文に書かれていない　内容の種類: 学習・ビジネス　状態: 完了（現在の状態は[台帳](../../../00_index.md)が正）
+###### [toTopPage](./README.md)
+###### [toREADME](./README.md)
+# 資料：財務の役割ページ（Claude Academy）
+- `title`: 財務の役割ページ（Claude Academy）
+- `url`: https://claude.ai/learning/roles/finance
+- `source_format`: html
+- `retrieved_at`: 2026-11-24
+- `profile`: article
+- `content_type`: 学習・ビジネス
 
-## 成果物
-| 種類 | ファイル |
-|---|---|
-| 原本 | [00_originals/roles-finance.md](./00_originals/roles-finance.md) |
-| 解説メモ（入口） | [roles-finance_explained/README.md](./roles-finance_explained/README.md) |
-| 解説スライド | [roles-finance-explained-slides.html](./roles-finance-explained-slides.html)（原稿: [.md](./roles-finance-explained-slides.md)） |
+-----
+[toTop](#totoppage)
+## セクション
+分割なし
 
-## 検査（2026-11-24 に実際に出力を確認）
-- 解説メモ: `check_docs.py` で 12 PASS
-- スライド: 10 枚／lint 0
-- 数字の照合: 出典の無い数字 0 件
-- リンク切れ: 0 件
-- 印の件数: 解説メモの【補足】18・【推測】7、スライドの（要確認: 0
+-----
+[toTop](#totoppage)
+## 概要
+Claude Academy の財務の役割ページを、Chrome で読んでテキストだけにしたものです。前半は「プロンプトを試す」で、予測の草案、予算実績比較、投資メモ、2 つのファイルの照合、決算説明会の要約、月次レポートの 6 件が並びます。後半は「使用事例」で、ユースケース 18 件とチュートリアル 6 件が所要分数つきで並びます。見出しは無く、各項目の題と短い説明、分数があるだけです。ユースケースとチュートリアルの題は英語のままで、各項目の中身は本文に含まれません。冒頭にナビゲーションの語（概要・学ぶ・財務の役職）が残っています。
 
-## 確認していないこと
-- 原本のリンク先の中身、画像・動画
-- 手順を実際に自分のアカウントで操作した結果
-- 読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
+-----
+[toTop](#totoppage)
+## 生成AIの総括
+### 財務の仕事の「始め方」を並べた入り口ページ
+- 横断分析：
+  - 構造：ページは「すぐ試す 6 件のプロンプト」と「流れを学ぶ 24 件の事例」の 2 段になっている。
+  - 業務の幅：題には予測、予算実績比較、投資メモ、照合、決算説明会の要約、月次レポートが並び、財務の日常から分析までが 1 画面に並ぶ。
+  - 時間の目安：本文の分数を足すと、ユースケース 240 分、チュートリアル 45 分で、全部では 285 分。短いものは 2 分、長いものは 18 分。
+  - 空白：各項目の中身は本文にない。【補足】読み手は、開いて確かめる必要がある。
+- 一言まとめ：まず 1 件のプロンプトを自分のデータで編集して試し、近いユースケースで流れを学ぶ入り口である。
+
+-----
+[toTop](#totoppage)
+## 本文
+- [01_source.md](./01_source.md)：入力 Markdown の複製（本文は変更していません）
+
+-----
+[toTop](#totoppage)
+## 解説メモ
+- [02_explanation_memo.md](./02_explanation_memo.md)
+
+-----
+[toTop](#totoppage)
+## FAQ
+- [11_question_and_answer.md](./11_question_and_answer.md)
+
+-----
+[toTop](#totoppage)
+## LLM 用プロンプト
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+<!-- page-status:start -->
+## 状態と関連資料
+- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 原本: [00_originals/roles-finance.md](./00_originals/roles-finance.md)
+- 解説スライド: [docs/roles-finance-explained-slides.html](./docs/roles-finance-explained-slides.html)（原稿: [docs/roles-finance-explained-slides.md](./docs/roles-finance-explained-slides.md)）
+- 確認していないこと（要約）: 原本のリンク先の中身、画像・動画／手順を実際に自分のアカウントで操作した結果／読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
+- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
+<!-- page-status:end -->
 
 -----
 [toTop](#totoppage)

@@ -1,27 +1,64 @@
-###### [toTopPage](../../../README.md)
-###### [toREADME](../README.md)
-# 3-04-02 人事：オンボーディングガイド（★1）
-- 元ページ: https://academy.claude.com/ja/use-cases/create-new-hire-onboarding-guides（取得: 2026-11-24）
-- 所要: 15 分（学習メモの値。本文に分数が無いことがある）　内容の種類: 技術・ハウツー　状態: 完了（現在の状態は[台帳](../../../00_index.md)が正）
+###### [toTopPage](./README.md)
+###### [toREADME](./README.md)
+# 資料：人事：オンボーディングガイド（★1）
+- `title`: 人事：オンボーディングガイド（★1）
+- `url`: https://academy.claude.com/ja/use-cases/create-new-hire-onboarding-guides
+- `source_format`: html
+- `retrieved_at`: 2026-11-24T09:49:44+09:00
+- `profile`: article
+- `content_type`: 技術・ハウツー
 
-## 成果物
-| 種類 | ファイル |
-|---|---|
-| 原本 | [00_originals/create-new-hire-onboarding-guides.md](./00_originals/create-new-hire-onboarding-guides.md) |
-| 解説メモ（入口） | [create-new-hire-onboarding-guides_explained/README.md](./create-new-hire-onboarding-guides_explained/README.md) |
-| 解説スライド | [create-new-hire-onboarding-guides-explained-slides.html](./create-new-hire-onboarding-guides-explained-slides.html)（原稿: [.md](./create-new-hire-onboarding-guides-explained-slides.md)） |
+-----
+[toTop](#totoppage)
+## セクション
+分割なし
 
-## 検査（2026-11-24 に実際に出力を確認）
-- 解説メモ: `check_docs.py` で 12 PASS
-- スライド: 10 枚／lint 0
-- 数字の照合: 出典の無い数字 0 件
-- リンク切れ: 0 件
-- 印の件数: 解説メモの【補足】7・【推測】5、スライドの（要確認: 0
+-----
+[toTop](#totoppage)
+## 概要
+新入社員向けの初週ガイドをClaudeで作る方法を紹介する使用例のページ。新入社員の名前・役職・入社日・チーム・マネージャーと標準的な会社情報を渡し、Googleカレンダー、Slackチャンネル、アップロードした文書を検索させて、ウェルカムメッセージ、スケジュール、オフィスの情報、チーム紹介、ツールとアクセス権、よくある質問を1か所にまとめる。結果の例（Sarah Chenのガイド）に加え、複数人分の一括作成、画像やハイパーリンクの埋め込み、用途別の変換、デザインの調整、テンプレート保存まで扱う。注意：本文には画像が1枚あるが、画像の中身は読めていない。
 
-## 確認していないこと
-- 原本のリンク先の中身、画像・動画
-- 手順を実際に自分のアカウントで操作した結果
-- 読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
+-----
+[toTop](#totoppage)
+## 生成AIの総括
+### 共通の型に個人の情報を差し込む、初週ガイドづくり
+- 横断分析：
+  - 組み合わせ：標準的な会社情報（共通）と新入社員の詳細情報（個別）を掛け合わせることで、手作業の組み立てを減らす。
+  - 情報収集の任せ方：カレンダー、Slackチャンネル、アップロード文書を検索先に指定し、散らばった情報を1か所に集める。
+  - 見た目と中身の両方に指示を出す：含める項目だけでなく、情報密度やセンスといったデザインの方針も言葉で伝える。
+  - 広げて再利用する：1人分を、複数人・別形式・テンプレートへと展開し、次の入社に備える。
+- 一言まとめ：1通の良い初週ガイドを土台に、共通部分は使い回し、個別部分だけを差し替えて、新入社員が自信を持って出社できる状態をつくる。
+
+-----
+[toTop](#totoppage)
+## 本文
+- [01_source.md](./01_source.md)：入力 Markdown の複製（本文は変更していません）
+
+-----
+[toTop](#totoppage)
+## 解説メモ
+- [02_explanation_memo.md](./02_explanation_memo.md)
+
+-----
+[toTop](#totoppage)
+## FAQ
+- [11_question_and_answer.md](./11_question_and_answer.md)
+
+-----
+[toTop](#totoppage)
+## LLM 用プロンプト
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+<!-- page-status:start -->
+## 状態と関連資料
+- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 原本: [00_originals/create-new-hire-onboarding-guides.md](./00_originals/create-new-hire-onboarding-guides.md)
+- 解説スライド: [docs/create-new-hire-onboarding-guides-explained-slides.html](./docs/create-new-hire-onboarding-guides-explained-slides.html)（原稿: [docs/create-new-hire-onboarding-guides-explained-slides.md](./docs/create-new-hire-onboarding-guides-explained-slides.md)）
+- 確認していないこと（要約）: 原本のリンク先の中身、画像・動画／手順を実際に自分のアカウントで操作した結果／読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
+- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
+<!-- page-status:end -->
 
 -----
 [toTop](#totoppage)

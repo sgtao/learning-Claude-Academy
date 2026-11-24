@@ -1,27 +1,64 @@
-###### [toTopPage](../../../README.md)
-###### [toREADME](../README.md)
-# 3-01-03 マーケティング：ブランドに沿ったコンテンツ（★2）
-- 元ページ: https://academy.claude.com/ja/use-cases/on-brand-content（取得: 2026-11-24）
-- 所要: 10 分（学習メモの値。本文に分数が無いことがある）　内容の種類: 技術・ハウツー　状態: 完了（現在の状態は[台帳](../../../00_index.md)が正）
+###### [toTopPage](./README.md)
+###### [toREADME](./README.md)
+# 資料：マーケティング：ブランドに沿ったコンテンツ（★2）
+- `title`: マーケティング：ブランドに沿ったコンテンツ（★2）
+- `url`: https://academy.claude.com/ja/use-cases/on-brand-content
+- `source_format`: html
+- `retrieved_at`: 2026-11-24T09:49:37+09:00
+- `profile`: article
+- `content_type`: 技術・ハウツー
 
-## 成果物
-| 種類 | ファイル |
-|---|---|
-| 原本 | [00_originals/on-brand-content.md](./00_originals/on-brand-content.md) |
-| 解説メモ（入口） | [on-brand-content_explained/README.md](./on-brand-content_explained/README.md) |
-| 解説スライド | [on-brand-content-explained-slides.html](./on-brand-content-explained-slides.html)（原稿: [.md](./on-brand-content-explained-slides.md)） |
+-----
+[toTop](#totoppage)
+## セクション
+分割なし
 
-## 検査（2026-11-24 に実際に出力を確認）
-- 解説メモ: `check_docs.py` で 12 PASS
-- スライド: 9 枚／lint 0
-- 数字の照合: 出典の無い数字 0 件
-- リンク切れ: 0 件
-- 印の件数: 解説メモの【補足】16・【推測】4、スライドの（要確認: 0
+-----
+[toTop](#totoppage)
+## 概要
+Claude Cowork を使い、ブランドの声に沿ったコンテンツ一式（ブログ記事・ランディングページのコピー・3 通のメールシーケンス・3 つの長さの広告コピー）を 1 回の依頼で作る手順を説明した記事です。Marketing プラグインの /draft-content を出発点に、Connectors の設定、ブリーフ・ブランドガイドライン・好例を 1 つのフォルダへ置く準備、依頼文の書き方、スキルへの育て方、/schedule による平日午前 9 時の定期実行、チームでの共有を順に述べます。本文に見出しは無く、分割なしで扱います。ナビや広告の残りはありません。
 
-## 確認していないこと
-- 原本のリンク先の中身、画像・動画
-- 手順を実際に自分のアカウントで操作した結果
-- 読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
+-----
+[toTop](#totoppage)
+## 生成AIの総括
+### 資料を渡し、指示で縛り、作業を仕組みにする
+
+- 横断分析：
+  - 材料：ブリーフ、ガイドライン、好例を 1 つのフォルダに置くことで、AI の出力が想像ではなく実際の参照資料に基づく。
+  - 指示：1 つのプロンプトで全部を頼み、ガイドを制約として伝え、不足を指摘させることで、一貫性と確認のしやすさを得る。
+  - 仕組み：うまくいった作業をスキルにして /schedule で定期実行し、チームで共有することで、毎回の依頼が不要になる。
+- 一言まとめ：材料を整え、指示で枠を決め、成功した型をスキルにして共有すれば、ブランドに沿った下書きを毎回同じ基準で得られる。
+
+-----
+[toTop](#totoppage)
+## 本文
+- [01_source.md](./01_source.md)：入力 Markdown の複製（本文は変更していません）
+
+-----
+[toTop](#totoppage)
+## 解説メモ
+- [02_explanation_memo.md](./02_explanation_memo.md)
+
+-----
+[toTop](#totoppage)
+## FAQ
+- [11_question_and_answer.md](./11_question_and_answer.md)
+
+-----
+[toTop](#totoppage)
+## LLM 用プロンプト
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+<!-- page-status:start -->
+## 状態と関連資料
+- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 9 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 原本: [00_originals/on-brand-content.md](./00_originals/on-brand-content.md)
+- 解説スライド: [docs/on-brand-content-explained-slides.html](./docs/on-brand-content-explained-slides.html)（原稿: [docs/on-brand-content-explained-slides.md](./docs/on-brand-content-explained-slides.md)）
+- 確認していないこと（要約）: 原本のリンク先の中身、画像・動画／手順を実際に自分のアカウントで操作した結果／読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
+- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
+<!-- page-status:end -->
 
 -----
 [toTop](#totoppage)

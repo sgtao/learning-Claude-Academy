@@ -1,27 +1,64 @@
-###### [toTopPage](../../../README.md)
-###### [toREADME](../README.md)
-# 3-08-02 法務：法律リサーチ（★1）
-- 元ページ: https://academy.claude.com/ja/use-cases/legal-research-memo（取得: 2026-11-24）
-- 所要: 10 分（学習メモの値。本文に分数が無いことがある）　内容の種類: 技術・ハウツー　状態: 完了（現在の状態は[台帳](../../../00_index.md)が正）
+###### [toTopPage](./README.md)
+###### [toREADME](./README.md)
+# 資料：法務：法律リサーチ（★1）
+- `title`: 法務：法律リサーチ（★1）
+- `url`: https://academy.claude.com/ja/use-cases/legal-research-memo
+- `source_format`: html
+- `retrieved_at`: 2026-11-24T09:49:54+09:00
+- `profile`: article
+- `content_type`: 技術・ハウツー
 
-## 成果物
-| 種類 | ファイル |
-|---|---|
-| 原本 | [00_originals/legal-research-memo.md](./00_originals/legal-research-memo.md) |
-| 解説メモ（入口） | [legal-research-memo_explained/README.md](./legal-research-memo_explained/README.md) |
-| 解説スライド | [legal-research-memo-explained-slides.html](./legal-research-memo-explained-slides.html)（原稿: [.md](./legal-research-memo-explained-slides.md)） |
+-----
+[toTop](#totoppage)
+## セクション
+分割なし
 
-## 検査（2026-11-24 に実際に出力を確認）
-- 解説メモ: `check_docs.py` で 12 PASS
-- スライド: 9 枚／lint 0
-- 数字の照合: 出典の無い数字 0 件
-- リンク切れ: 0 件
-- 印の件数: 解説メモの【補足】18・【推測】3、スライドの（要確認: 0
+-----
+[toTop](#totoppage)
+## 概要
+Claude Cowork で法律リサーチメモを作る手順を紹介するページです。Litigation Legal プラグインを出発点に、リサーチ依頼・関連する事実・過去のメモを 1 つのフォルダにまとめて Cowork に渡し、提示された質問・簡潔な回答・議論・未解決の論点という構成で、すべての命題に出典を付けたメモを作らせます。うまくいくプロンプトの工夫を 6 つ挙げ、最後に同じやり方を /research-memo スキルとして保存し、/schedule で平日午前 9 時に新しい依頼へ自動実行させる方法まで説明します。本文は HTML から直接変換されたもので、見出しが無く、ボタンのリンク文字が前後の文脈なしに残っています。図は含まれません。
 
-## 確認していないこと
-- 原本のリンク先の中身、画像・動画
-- 手順を実際に自分のアカウントで操作した結果
-- 読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
+-----
+[toTop](#totoppage)
+## 生成AIの総括
+### 出典と確認箇所をはっきりさせて、手順ごと仕組みにする
+- 横断分析：
+  - 確認できる形にする：出典の指定・すべての命題への引用・不確実な点のフラグは、どれも「あとで人が何を確かめればよいか」を見えるようにするための工夫である。
+  - 材料を先に渡す：依頼・事実・過去のメモを 1 つのフォルダに入れることで、メモは一般論ではなく自分の状況に当てはまる形になる。
+  - 一度うまくいった手順を残す：同じやり方を /research-memo スキルとして保存し、/schedule で予約すると、毎回の頼み方に頼らず同じ品質の初稿が出る。
+  - 使う前に自分の条件を確かめる：ローカルかクラウドか、Team・Enterprise か Pro・Max かで、ファイルの扱いが変わる。
+- 一言まとめ：材料を渡し、出典と不確実さを見える形にして頼み、うまくいった型をスキルと予約で回す。
+
+-----
+[toTop](#totoppage)
+## 本文
+- [01_source.md](./01_source.md)：入力 Markdown の複製（本文は変更していません）
+
+-----
+[toTop](#totoppage)
+## 解説メモ
+- [02_explanation_memo.md](./02_explanation_memo.md)
+
+-----
+[toTop](#totoppage)
+## FAQ
+- [11_question_and_answer.md](./11_question_and_answer.md)
+
+-----
+[toTop](#totoppage)
+## LLM 用プロンプト
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+<!-- page-status:start -->
+## 状態と関連資料
+- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 9 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 原本: [00_originals/legal-research-memo.md](./00_originals/legal-research-memo.md)
+- 解説スライド: [docs/legal-research-memo-explained-slides.html](./docs/legal-research-memo-explained-slides.html)（原稿: [docs/legal-research-memo-explained-slides.md](./docs/legal-research-memo-explained-slides.md)）
+- 確認していないこと（要約）: 原本のリンク先の中身、画像・動画／手順を実際に自分のアカウントで操作した結果／読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
+- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
+<!-- page-status:end -->
 
 -----
 [toTop](#totoppage)

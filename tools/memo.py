@@ -9,8 +9,8 @@
   python3 tools/memo.py pages [STEP] GROUP       まとまりの中のページ（解説メモ）の一覧
   python3 tools/memo.py pages -a [STEP]          全ページの一覧（STEP を付けるとそのステップだけ）
   python3 tools/memo.py info PAGE [--json]       解説メモの README のフロントマター（題名・URL・取得日など）
-  python3 tools/memo.py show PAGE [--only ...]   README・out/09_input-memo.md・12_LLM_prompts_as_guide.md を表示
-                                                 （out か 12 が無いページは README と 01_source を表示）
+  python3 tools/memo.py show PAGE [--only ...]   README・.work/intermediate/09_input-memo.md・12_LLM_prompts_as_guide.md を表示
+                                                 （09 か 12 が無いページは README と 01_source を表示）
 
 指定のしかた:
   STEP   1 / step1 / step1_basics / basics
@@ -27,11 +27,12 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import common
+from common import has_memo, MEMO_FILES
 
 ROOT = common.ROOT
 STEP_RE = re.compile(r"^step\d+_")
 SKIP = {"tools", "catalog", "__pycache__"}
-MEMO_REL = "out/09_input-memo.md"
+MEMO_REL = ".work/intermediate/09_input-memo.md"
 PROMPT_NAME = "12_LLM_prompts_as_guide.md"
 SECTION_KEYS = ("readme", "input", "prompt", "source")
 
@@ -65,10 +66,9 @@ def scan(root=ROOT):
         for gd in _dirs(sd):
             for pd in _dirs(gd):
                 rel = f"{sd.name}/{gd.name}/{pd.name}"
-                ex = next((d for d in _dirs(pd) if d.name.endswith("_explained")), None)
                 row = ledger.get(rel, {})
                 pages.append({"step": sd.name, "group": gd.name, "name": pd.name, "rel": rel, "path": pd,
-                              "explained": ex, "id": row.get("id", ""), "status": row.get("status", ""),
+                              "memo": has_memo(pd), "id": row.get("id", ""), "status": row.get("status", ""),
                               "ledger_title": row.get("title", "")})
     return pages
 
@@ -118,9 +118,7 @@ def originals_md(page):
 def frontmatter_of(page):
     """(辞書, 読んだファイルの相対パス)。解説メモの README を先に、無ければ原本の frontmatter を読む。"""
     root_of = page["path"].parent.parent.parent
-    cands = []
-    if page["explained"] is not None:
-        cands.append(page["explained"] / "README.md")
+    cands = [page["path"] / "README.md"]          # 解説メモの表紙（解説メモが無いページでは、形式が違うので空になり、原本へ進む）
     o = originals_md(page)
     if o is not None:
         cands.append(o)
@@ -216,23 +214,22 @@ def resolve_page(pages, q):
 # ---------------------------------------------------------------- 表示する中身
 
 def show_plan(page):
-    """(注記, [(キー, 表示名, ファイル)])。out/09 と 12 の両方があれば通常の 3 つ、無ければ README と 01_source。"""
-    root_of = page["path"].parent.parent.parent
-    ex = page["explained"]
-    memo = ex / MEMO_REL if ex else None
-    prompt = ex / PROMPT_NAME if ex else None
-    if ex and memo.is_file() and prompt.is_file():
-        return None, [("readme", "README.md", ex / "README.md"),
+    """(注記, [(キー, 表示名, ファイル)])。09_input-memo と 12 の両方があれば通常の 3 つ、無ければ README と 01_source。"""
+    pp = page["path"]
+    memo = pp / MEMO_REL
+    prompt = pp / PROMPT_NAME
+    if page["memo"] and memo.is_file() and prompt.is_file():
+        return None, [("readme", "README.md", pp / "README.md"),
                       ("input", MEMO_REL, memo),
                       ("prompt", PROMPT_NAME, prompt)]
-    if ex is None:
+    if not page["memo"]:
         note = "no explanation memo (thin / failed / duplicate page); showing the page README and the original"
-        readme, source = page["path"] / "README.md", originals_md(page)
+        readme, source = pp / "README.md", originals_md(page)
         source_label = "00_originals (original)"
     else:
         missing = [n for n, f in ((MEMO_REL, memo), (PROMPT_NAME, prompt)) if not f.is_file()]
         note = f"{' and '.join(missing)} not created; showing README and 01_source"
-        readme, source = ex / "README.md", ex / "01_source.md"
+        readme, source = pp / "README.md", pp / "01_source.md"
         source_label = "01_source.md"
     plan = []
     if readme.is_file():
@@ -257,7 +254,7 @@ def _write_group_pages(gp, s, g, out):
     out.write(f"# {s} / {g} ({len(gp)} pages)\n\n")
     out.write("id\tpage\tmemo\tstatus\ttitle\n")
     for p in gp:
-        has = "yes" if show_plan(p)[0] is None else ("partial" if p["explained"] else "no")
+        has = "yes" if show_plan(p)[0] is None else ("partial" if p["memo"] else "no")
         out.write(f"{p['id'] or '-'}\t{p['name']}\t{has}\t{p['status'] or '-'}\t{memo_title(p)}\n")
 
 

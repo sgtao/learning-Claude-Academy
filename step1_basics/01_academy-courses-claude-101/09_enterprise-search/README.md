@@ -1,28 +1,69 @@
-###### [toTopPage](../../../README.md)
-###### [toREADME](../README.md)
-# 1-9 Enterprise Search（Claude 101 レッスン 9）
-- 元ページ: https://academy.claude.com/ja/courses/claude-101/enterprise-search（取得: 2026-11-15／取得手段: Academy 日本語版を url-to-md で変換、`direct`）
-- 所要（ページ表示）: 15 分（学習メモの値。**取得した本文には分数が無い**）　内容の種類: 学習・ビジネス　状態: 完了
+###### [toTopPage](./README.md)
+###### [toREADME](./README.md)
+# 資料：Enterprise Search（Claude 101 レッスン 9）
+- `title`: Enterprise Search（Claude 101 レッスン 9）
+- `url`: https://academy.claude.com/ja/courses/claude-101/enterprise-search
+- `source_format`: html
+- `retrieved_at`: 2026-11-15T17:45:06+09:00
+- `profile`: article
+- `content_type`: 学習・ビジネス
 
-## 成果物
-| 種類 | ファイル |
-|---|---|
-| 原本 | [00_originals/enterprise-search.md](./00_originals/enterprise-search.md) |
-| 解説メモ（入口） | [enterprise-search_explained/README.md](./enterprise-search_explained/README.md) |
-| 解説スライド | [enterprise-search-explained-slides.html](./enterprise-search-explained-slides.html)（原稿: [.md](./enterprise-search-explained-slides.md)） |
+-----
+[toTop](#totoppage)
+## セクション
+分割なし
 
-## 検査（実際に出力した結果）
-- 解説メモ: `check_docs.py` 11 PASS / 0 FAIL（メインが再実行）／サブエージェントの修正: 1 回目から 11 PASS。読み合わせで総括の「使いながら足していく設計」という本文に無い言い切りを「あとからいつでも追加できる」に直して再転記。利用上限で一度停止し、再開して完了／読み合わせ G-3（メイン）: プラン条件（Team・Enterprise 向け。すべての Team・Enterprise 組織で既定有効だが、チームメンバーが使う前にオーナーが初期セットアップを完了する必要がある。2 段階のセットアップ）と管理者 6 手順・利用者 4 手順の順序を原本と照合して食い違い 0／README の概要 332 字（上限 400）
-- スライド: 10 枚／`mdss-convert --strict` の lint は warnings 0・lint 0（メインが再実行）／サブエージェントが撮影した 10 枚のうち 3 枚を修正（図解のラベル重なり、point の帯とカードの重なり、steps の番号の二重表示）／出典の無い数字: 0（なし は note 内の解説メモの参照番号で数値ではない）
-- 印の件数: `【補足】` 14・`【推測】` 3・`（要確認:` 0
+-----
+[toTop](#totoppage)
+## 概要
+Claude 101 のレッスン 9。Enterprise Search は、サイドバーに「{組織名}に質問」を加え、SharePoint・Slack・Gmail・Google Drive など接続済みのツールを横断して検索し、出典を引用しつつ一つの回答にまとめる機能です。TeamおよびEnterpriseの組織でデフォルトで有効ですが、使う前にオーナーが初期セットアップ（6 つの手順）を行い、そのあと各ユーザーが各サービスで認証します。本文には活用例、接続元で権限のある情報だけを表示するという安全性の説明、振り返りの 3 つの問いがあります。注意：本文に見出しは無く、分割なしで扱います。末尾のリンクに「新しいタブで開きます」というページ枠の文言が残っています。図は無く、動画の字幕は取っておらず、リンク先の中身は読んでいません。
 
-## 確認していないこと
-- ページの動画・画像・リンク先（ヘルプセンター）の中身
-- 本文の「管理者」と「オーナー」が同じ人かどうか（【推測】のまま）
-- 解説メモ一式へのスライドの出典リンクは URL ではなくユーザー提供の記載
+-----
+[toTop](#totoppage)
+## 生成AIの総括
+### 散らばった社内の知識を、権限の範囲で一つの答えにまとめる入口
+- 横断分析：
+  - 役割：通常のチャットと違い、探して統合することに特化した専用の入口である。
+  - 前提：Team・Enterprise で既定で有効だが、管理者のセットアップと各ユーザーの認証という 2 段階を経て初めて使える。
+  - 信頼：常にソースを引用し、接続元の権限のある情報だけを表示するため、確認しながら使える。
+  - 広がり：コネクタが多いほど結果が包括的になり、あとからいつでも追加できる。
+- 一言まとめ：Enterprise Search は、接続した社内ツールを横断して探し、出典つきで答える専用の入口であり、使い始めには管理者の設定と自分の認証が要る。
 
-## 学習メモとの食い違い
-- 学習メモは「Team・Enterprise 向け・15 分」。Team・Enterprise 向けは本文と一致。本文には所要時間が無く、解説・スライドには分数を書いていない
+-----
+[toTop](#totoppage)
+## 本文
+- [01_source.md](./01_source.md)：入力 Markdown の複製（本文は変更していません）
+
+-----
+[toTop](#totoppage)
+## 解説メモ
+- [02_explanation_memo.md](./02_explanation_memo.md)
+
+-----
+[toTop](#totoppage)
+## FAQ
+- [11_question_and_answer.md](./11_question_and_answer.md)
+
+-----
+[toTop](#totoppage)
+## Proposed Prompts
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+## LLM 用プロンプト
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+<!-- page-status:start -->
+## 状態と関連資料
+- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 原本: [00_originals/enterprise-search.md](./00_originals/enterprise-search.md)
+- 解説スライド: [docs/enterprise-search-explained-slides.html](./docs/enterprise-search-explained-slides.html)（原稿: [docs/enterprise-search-explained-slides.md](./docs/enterprise-search-explained-slides.md)）
+- 確認していないこと（要約）: ページの動画・画像・リンク先（ヘルプセンター）の中身／本文の「管理者」と「オーナー」が同じ人かどうか（【推測】のまま）／解説メモ一式へのスライドの出典リンクは URL ではなくユーザー提供の記載
+- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
+<!-- page-status:end -->
 
 -----
 [toTop](#totoppage)

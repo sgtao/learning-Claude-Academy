@@ -18,6 +18,36 @@ STEPS = {
 }
 
 
+# ---- ページのフォルダの形（新構造）----
+#   <ページ>/README.md（表紙）・00_originals/・解説メモ 5 本（直下）・docs/（スライド）・.work/（working-log.md と intermediate/）
+MEMO_FILES = ["README.md", "01_source.md", "02_explanation_memo.md", "11_question_and_answer.md", "12_LLM_prompts_as_guide.md"]
+WORK = ".work"
+LOG_NAME = "working-log.md"
+INTERMEDIATE = ".work/intermediate"
+DOCS = "docs"
+
+
+def has_memo(page):
+    """解説メモ 5 本が、ページのフォルダの直下にそろっているか。"""
+    return all((Path(page) / n).is_file() for n in MEMO_FILES)
+
+
+def intermediate_dir(page):
+    return Path(page) / INTERMEDIATE
+
+
+def working_log(page):
+    return Path(page) / WORK / LOG_NAME
+
+
+def slide_mds(page):
+    return sorted((Path(page) / DOCS).glob("*-explained-slides.md"))
+
+
+def slide_htmls(page):
+    return sorted((Path(page) / DOCS).glob("*-explained-slides.html"))
+
+
 def read_ledger():
     with open(LEDGER, encoding="utf-8", newline="") as f:
         rd = csv.DictReader(f)

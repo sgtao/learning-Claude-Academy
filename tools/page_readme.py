@@ -1,15 +1,32 @@
 #!/usr/bin/env python3
-"""ページの README.md を作る（完了・薄いページ・失敗・重複で中身を変える）。
+"""ページの README.md と、作業ログ（.work/working-log.md）を作る・更新する。
 
-使い方:  python3 tools/page_readme.py <ID> [--force]     完了に向かうページの README を、検査の結果から作る
-README が既にあるときは、--force が無ければ何もしない。fetch_page.py は、薄いページ・失敗・重複のときにここの render を使う。
+ページのフォルダの形（解説メモがあるページ）:
+  README.md        表紙（解説メモの入口。ced-craft-explanation-docs が作る）。末尾に「状態と関連資料」を足す（このスクリプト）
+  .work/working-log.md   状態・検査の結果・確認していないこと・作業の経緯（検査の結果の節は、このスクリプトが更新する）
+解説メモが無いページ（薄いページ・失敗・重複・取得済み）は、README.md をこのスクリプトの render が作る（ページ README）。
+
+使い方:
+  python3 tools/page_readme.py <ID>            解説メモがあるページ：作業ログの検査の結果と、表紙末尾の状態を更新する
+                                               解説メモが無いページ：README が無いときだけ作る（作り直すなら --force）
+  python3 tools/page_readme.py --all           台帳の、解説メモがあるページすべて
+何度実行しても同じ結果になる（印のコメントの間だけを書き換える。手で書いた部分は触らない）。
+状態の言葉は 作成中／検査済み／確定。検査済み＝台帳が「完了」（機械検査がすべて通った）、確定＝さらに学習済みの日がある。
 """
 import os, re, sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import ROOT, read_ledger, body_of, today
+from common import (ROOT, read_ledger, today, has_memo, working_log, slide_mds, slide_htmls, MEMO_FILES, LOG_NAME)
 from page_status import page_status
 
+STATUS_START, STATUS_END = "<!-- page-status:start -->", "<!-- page-status:end -->"
+CHECKS_START, CHECKS_END = "<!-- checks:start -->", "<!-- checks:end -->"
+SEP = "-----\n[toTop](#totoppage)"
+DEFAULT_UNVERIFIED = ["原本のリンク先の中身、画像・動画", "手順を実際に自分のアカウントで操作した結果",
+                      "読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）"]
+
+
+# ------------------------------------------------------------ 解説メモが無いページの README（従来どおり）
 
 def nav(page):
     top = os.path.relpath(ROOT / "README.md", page)
@@ -28,45 +45,147 @@ def head(r, page):
             f"- 所要: {mins}　内容の種類: {r['kind']}　状態: {r['status']}（現在の状態は[台帳](../../../00_index.md)が正）\n")
 
 
-def render(r, page, state="complete", reason=""):
+def render(r, page, state="pending", reason=""):
+    """解説メモが無いページ（thin / pending / failed / duplicate）の README。"""
     page = Path(page)
     t = nav(page) + head(r, page) + "\n"
     if state == "thin":
         t += f"## 薄いページ\n本文が 300 字未満のため、解説メモとスライドは作っていない（本文に無いことを書くことになるため）。\n- 理由: {reason}\n- 原本: [00_originals](./00_originals/)\n- 文字起こしなど本文を足せたら、`python3 tools/fetch_page.py {r['id']} --redo` で作り直せる\n"
     elif state == "pending":
-        o = sorted((page / "00_originals").glob("*.md"))
         t += (f"## 取得済み（解説は未作成）\n- 原本: [00_originals](./00_originals/)\n"
-              f"- {reason}\n- 次: 解説メモ（ced-craft-explanation-docs）とスライド（ced-websearch-slide-ja）を作り、`python3 tools/ledger.py refresh`\n")
+              f"- {reason}\n- 次: 解説メモ（ced-craft-explanation-docs。作ると、この README が解説メモの表紙に置き換わる）とスライド（ced-websearch-slide-ja。docs/ に置く）を作り、`python3 tools/ledger.py refresh`\n")
     elif state == "failed":
         t += f"## 取得できなかった\n- 理由: {reason}\n- 対処: 強制的な取得（--force）は使わない。ブラウザで本文が読めるなら、Claude in Chrome で読む（ボタンは押さない）\n"
     elif state == "duplicate":
         t += f"## 重複\n同じページが別の場所にある。実体: {reason}\n- 解説メモ・スライドは実体のページを見る。ここでは作らない\n"
     else:
-        sl = sorted(page.glob("*-explained-slides.md")); ex = sorted(page.glob("*_explained"))
-        stt = page_status(page)
-        cnt = {"補足": 0, "推測": 0}
-        for e in ex:
-            for f in e.glob("0*.md"):
-                x = f.read_text(encoding="utf-8"); cnt["補足"] += x.count("【補足】"); cnt["推測"] += x.count("【推測】")
-            f = e / "11_question_and_answer.md"
-            if f.exists():
-                x = f.read_text(encoding="utf-8"); cnt["補足"] += x.count("【補足】"); cnt["推測"] += x.count("【推測】")
-        conf = sum(x.read_text(encoding="utf-8").count("（要確認:") for x in sl)
-        o = sorted((page / "00_originals").glob("*.md"))
-        slug = r["slug"]
-        t += "## 成果物\n| 種類 | ファイル |\n|---|---|\n"
-        if o:
-            t += f"| 原本 | [00_originals/{o[0].name}](./00_originals/{o[0].name}) |\n"
-        if ex:
-            t += f"| 解説メモ（入口） | [{ex[0].name}/README.md](./{ex[0].name}/README.md) |\n"
-        if sl:
-            h = sl[0].with_suffix(".html")
-            t += f"| 解説スライド | [{h.name}](./{h.name})（原稿: [.md](./{sl[0].name})） |\n"
-        t += (f"\n## 検査（{today()} に実際に出力を確認）\n- 解説メモ: `check_docs.py` で {stt.get('memo') or '未実施'}\n"
-              f"- スライド: {stt.get('slides') or '未実施'}\n- 数字の照合: 出典の無い数字 {len(stt.get('numbers_missing') or [])} 件\n"
-              f"- リンク切れ: {stt.get('links_broken')} 件\n- 印の件数: 解説メモの【補足】{cnt['補足']}・【推測】{cnt['推測']}、スライドの（要確認: {conf}\n"
-              "\n## 確認していないこと\n- 原本のリンク先の中身、画像・動画\n- 手順を実際に自分のアカウントで操作した結果\n- 読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）\n")
+        raise ValueError(f"state が不明: {state}")
     return t + "\n-----\n[toTop](#totoppage)\n"
+
+
+# ------------------------------------------------------------ 作業ログ
+
+def _replace_between(text, start, end, block):
+    """start〜end の印の間（印を含む）を block に置き換える。印が無ければ None。"""
+    i, j = text.find(start), text.find(end)
+    if i < 0 or j < i:
+        return None
+    return text[:i] + block + text[j + len(end):]
+
+
+def marks_count(page):
+    cnt = {"補足": 0, "推測": 0}
+    for n in MEMO_FILES:
+        f = page / n
+        if f.is_file() and n != "01_source.md":
+            x = f.read_text(encoding="utf-8")
+            cnt["補足"] += x.count("【補足】"); cnt["推測"] += x.count("【推測】")
+    conf = sum(x.read_text(encoding="utf-8").count("（要確認:") for x in slide_mds(page))
+    return cnt, conf
+
+
+def checks_block(st, cnt, conf):
+    return (f"{CHECKS_START}\n## 検査の結果（`tools/page_readme.py` が更新する。最新）\n"
+            f"- 確認日: {today()}\n"
+            f"- 解説メモ: `check_docs.py`（`--out-dir .work/intermediate`）で {st.get('memo') or '未実施'}\n"
+            f"- スライド: {st.get('slides') or '未実施'}\n"
+            f"- 数字の照合: 出典の無い数字 {len(st.get('numbers_missing') or [])} 件\n"
+            f"- リンク切れ: {st.get('links_broken')} 件\n"
+            f"- 印の件数: 解説メモの【補足】{cnt['補足']}・【推測】{cnt['推測']}、スライドの（要確認: {conf}\n"
+            f"{CHECKS_END}")
+
+
+def update_log(r, page, st):
+    """作業ログの「検査の結果」を更新する。ログが無ければ作る。手で書いた部分は触らない。"""
+    log = working_log(page)
+    cnt, conf = marks_count(page)
+    block = checks_block(st, cnt, conf)
+    if not log.exists():
+        log.parent.mkdir(parents=True, exist_ok=True)
+        text = (f"# 作業ログ：{r['id']} {r['title']}\n\n"
+                f"状態・検査の結果・確認していないこと・作業の経緯を書く。表紙（[../README.md](../README.md)）には要約だけを置く。\n\n"
+                f"{block}\n\n## 確認していないこと\n" + "".join(f"- {x}\n" for x in DEFAULT_UNVERIFIED) +
+                f"\n## 作業の経緯\n- {today()} 作成（`tools/page_readme.py`）\n")
+    else:
+        text = log.read_text(encoding="utf-8")
+        new = _replace_between(text, CHECKS_START, CHECKS_END, block)
+        if new is None:                               # 印が無いログ（移行したもの）：最初の「## 」の前に入れる
+            m = re.search(r"^## ", text, re.M)
+            at = m.start() if m else len(text)
+            new = text[:at] + block + "\n\n" + text[at:]
+        text = new
+    log.write_text(text, encoding="utf-8")
+    return text
+
+
+def unverified_summary(log_text, limit=3, width=40):
+    """作業ログの「確認していないこと」の箇条書きを、1 行に要約する。
+    各項目は、width 字以内ならそのまま。長いときだけ、最初の「（」「。」で切り、それでも長ければ「…」で切る。"""
+    items, on = [], False
+    for ln in log_text.split("\n"):
+        if re.match(r"^#{2,6}\s*確認していないこと", ln):
+            on = True; continue
+        if on and re.match(r"^#{1,6}\s", ln):
+            break
+        if on and ln.startswith("- "):
+            items.append(ln[2:].strip())
+    if not items:
+        items = DEFAULT_UNVERIFIED
+    short = []
+    for x in items[:limit]:
+        if len(x) > width:
+            x = re.split(r"[（(。]", x)[0].strip()
+            if len(x) > width:
+                x = x[:width] + "…"
+        short.append(x)
+    return "／".join(short) + ("ほか" if len(items) > limit else "")
+
+
+# ------------------------------------------------------------ 表紙の末尾
+
+def state_word(r, st):
+    ok = r["status"] == "完了"
+    if ok and (r.get("learned_on") or "").strip():
+        return "確定"
+    return "検査済み" if ok else "作成中"
+
+
+def status_block(r, page, st, summary):
+    # 表紙のリンクは、ページのフォルダの中だけにする（check_docs の C-5 が、外を指すリンクを不合格にする）
+    page = Path(page)
+    w = state_word(r, st)
+    nums = len(st.get("numbers_missing") or [])
+    line = (f"- 状態: {w}（{today()} 時点。解説メモ {st.get('memo') or '未実施'}／スライド {st.get('slides') or '未実施'}"
+            f"／出典の無い数字 {nums} 件／リンク切れ {st.get('links_broken')} 件。今の状態は台帳 00_index.md が正）")
+    o = sorted((page / "00_originals").glob("*.md"))
+    L = [STATUS_START, "## 状態と関連資料", line]
+    if o:
+        L.append(f"- 原本: [00_originals/{o[0].name}](./00_originals/{o[0].name})")
+    sm, sh = slide_mds(page), slide_htmls(page)
+    if sh:
+        L.append(f"- 解説スライド: [docs/{sh[0].name}](./docs/{sh[0].name})" + (f"（原稿: [docs/{sm[0].name}](./docs/{sm[0].name})）" if sm else ""))
+    L.append(f"- 確認していないこと（要約）: {summary}")
+    L.append(f"- 詳細・経緯・検査の記録: [.work/{LOG_NAME}](./.work/{LOG_NAME})")
+    L.append(STATUS_END)
+    return "\n".join(L)
+
+
+def update_cover(r, page):
+    """解説メモがあるページ：作業ログと、表紙（README.md）末尾の「状態と関連資料」を更新する。"""
+    page = Path(page)
+    st = page_status(page)
+    log_text = update_log(r, page, st)
+    block = status_block(r, page, st, unverified_summary(log_text))
+    f = page / "README.md"
+    text = f.read_text(encoding="utf-8")
+    new = _replace_between(text, STATUS_START, STATUS_END, block)
+    if new is None:
+        body = text.rstrip("\n")
+        if not body.endswith(SEP):
+            raise ValueError(f"{f}: 末尾が区切り（{SEP!r}）で終わっていない。解説メモの表紙ではない？")
+        new = body + "\n" + block + "\n\n" + SEP + "\n"
+    f.write_text(new, encoding="utf-8")
+    return st
 
 
 def main():
@@ -74,14 +193,27 @@ def main():
     if not a:
         print(__doc__); sys.exit(2)
     _, rows = read_ledger()
+    if a[0] == "--all":
+        n = 0
+        for r in rows:
+            page = ROOT / r["page_dir"]
+            if page.is_dir() and has_memo(page):
+                update_cover(r, page); n += 1
+        print(f"{n} ページの作業ログと表紙の状態を更新しました")
+        return
     hit = [x for x in rows if x["id"] == a[0]]
     if not hit:
         print("その ID は台帳にありません"); sys.exit(2)
     r = hit[0]; page = ROOT / r["page_dir"]
+    if has_memo(page):
+        update_cover(r, page)
+        print(f"{page / 'README.md'} の状態と {working_log(page)} を更新しました")
+        return
     if (page / "README.md").exists() and "--force" not in a:
-        print("README.md が既にあります（作り直すなら --force）"); sys.exit(0)
-    (page / "README.md").write_text(render(r, page), encoding="utf-8")
-    print(f"{page / 'README.md'} を作りました")
+        print("解説メモが無いページ。README.md が既にあります（作り直すなら --force）"); sys.exit(0)
+    state = {"薄いページ": "thin", "失敗": "failed", "重複": "duplicate"}.get(r["status"], "pending")
+    (page / "README.md").write_text(render(r, page, state, "（理由は台帳の備考を参照）" if state != "pending" else ""), encoding="utf-8")
+    print(f"{page / 'README.md'} を作りました（{state}）")
 
 
 if __name__ == "__main__":

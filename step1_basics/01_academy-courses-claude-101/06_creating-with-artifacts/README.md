@@ -1,28 +1,69 @@
-###### [toTopPage](../../../README.md)
-###### [toREADME](../README.md)
-# 1-6 アーティファクトで作成する（Claude 101 レッスン 6）
-- 元ページ: https://academy.claude.com/ja/courses/claude-101/creating-with-artifacts（取得: 2026-11-15／取得手段: Academy 日本語版を url-to-md で変換、`direct`）
-- 所要（ページ表示）: 10 分（学習メモの値。**取得した本文には分数が無い**）　内容の種類: 学習・ビジネス　状態: 完了
+###### [toTopPage](./README.md)
+###### [toREADME](./README.md)
+# 資料：アーティファクトで作成する（Claude 101 レッスン 6）
+- `title`: アーティファクトで作成する（Claude 101 レッスン 6）
+- `url`: https://academy.claude.com/ja/courses/claude-101/creating-with-artifacts
+- `source_format`: html
+- `retrieved_at`: 2026-11-15T17:45:06+09:00
+- `profile`: article
+- `content_type`: 学習・ビジネス
 
-## 成果物
-| 種類 | ファイル |
-|---|---|
-| 原本 | [00_originals/creating-with-artifacts.md](./00_originals/creating-with-artifacts.md) |
-| 解説メモ（入口） | [creating-with-artifacts_explained/README.md](./creating-with-artifacts_explained/README.md) |
-| 解説スライド | [creating-with-artifacts-explained-slides.html](./creating-with-artifacts-explained-slides.html)（原稿: [.md](./creating-with-artifacts-explained-slides.md)） |
+-----
+[toTop](#totoppage)
+## セクション
+分割なし
 
-## 検査（実際に出力した結果）
-- 解説メモ: `check_docs.py` 11 PASS / 0 FAIL（メインが再実行）／サブエージェントの修正: 1 回目から 11 PASS。読み合わせ R-1 で総括の「そのまま品質の差になる」が本文より強いと直して再転記／読み合わせ G-3（メイン）: 共有（Pro・Max は自分だけ／リンクを持つ誰とでも、Team・Enterprise はリンクが既定で組織内・外部共有は Owner または Primary Owner が有効化後）と、最初の 3 つの例は Team・Enterprise で管理者の有効化が前提、を原本と照合して食い違い 0／README の概要 351 字（上限 400）
-- スライド: 10 枚／`mdss-convert --strict` の lint は warnings 0・lint 0（メインが再実行）／サブエージェントが初版の撮影後に 3 枚を修正（図解のノード名の折り返し、変更方法 3 つの形、「次に試す 1 つ」の強調）、6 枚目の折り返しも 1 語短縮して再撮影で確認／出典の無い数字: 0（`03`・`05` は note 内の解説メモの参照番号で数値ではない）
-- 印の件数: `【補足】` 9・`【推測】` 1・`（要確認:` 0
+-----
+[toTop](#totoppage)
+## 概要
+Claude と一緒に作る成果物「アーティファクト」の解説（Claude 101 のレッスン 6）。会話と並ぶ専用ウィンドウで成果物が形になり、Artifacts タブに保存されて編集・再利用・共有できる。ビジュアルの Claude Design、プレゼンの Claude Slides、共同編集の Claude Docs という専用の作成方法があり、チャートやクイズなどは Free を含む全プランで会話内に作れる。変更は直接編集・コメント・会話で頼む、の 3 通り。共有は Pro・Max と Team・Enterprise で扱いが異なり、エクスポートもできる。末尾に依頼のコツと考える質問が付く。注意：本文の先頭に「Artifacts（新しいタブで開きます）」というリンクの注記が残っている。ナビ・フッターなどの枠の文言は無く、動画・画像も無い。リンク先は読んでいない。所要時間は本文に書かれていない。
 
-## 確認していないこと
-- リンク先（アーティファクトの紹介ページなど）の中身
-- Pro・Max での Design・Slides・Docs の利用可否（本文に無い）
-- 【推測】（画面名称・機能が変わる可能性）と【補足】（例え話・ユースケース整理・2 層という呼び方）の当否
+-----
+[toTop](#totoppage)
+## 生成AIの総括
+### 会話の外に残る「成果物」を、Claude と一緒に育てる
+- 横断分析：
+  - 場所の視点：会話は作る場所、Artifacts タブは成果物の置き場所、という役割分担が全体を貫く。だから後から戻って編集・共有できる。
+  - 道具の視点：Design・Slides・Docs の専用の方法と、会話内で作る軽い成果物の 2 層がある。【補足】2 層という呼び方は筆者（AI）の整理。
+  - 人との関わりの視点：直接編集・コメント・会話で頼む、の 3 通りで、自分でも Claude でも直せる。共有は非公開から始まり、プランで扱いが変わる。
+  - 依頼の視点：成果物を頼む、具体的に、使う人を伝える、土台を使う、の依頼のコツが、本文では「より良い結果」につながる工夫として並ぶ。
+- 一言まとめ：チャットで答えをもらうのではなく、成果物として頼み、Artifacts タブで育てて共有する。
 
-## 学習メモとの食い違い
-- 学習メモは「10 分」。本文には所要時間が無く、解説・スライドには分数を書いていない
+-----
+[toTop](#totoppage)
+## 本文
+- [01_source.md](./01_source.md)：入力 Markdown の複製（本文は変更していません）
+
+-----
+[toTop](#totoppage)
+## 解説メモ
+- [02_explanation_memo.md](./02_explanation_memo.md)
+
+-----
+[toTop](#totoppage)
+## FAQ
+- [11_question_and_answer.md](./11_question_and_answer.md)
+
+-----
+[toTop](#totoppage)
+## Proposed Prompts
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+## LLM 用プロンプト
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+<!-- page-status:start -->
+## 状態と関連資料
+- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 原本: [00_originals/creating-with-artifacts.md](./00_originals/creating-with-artifacts.md)
+- 解説スライド: [docs/creating-with-artifacts-explained-slides.html](./docs/creating-with-artifacts-explained-slides.html)（原稿: [docs/creating-with-artifacts-explained-slides.md](./docs/creating-with-artifacts-explained-slides.md)）
+- 確認していないこと（要約）: リンク先（アーティファクトの紹介ページなど）の中身／Pro・Max での Design・Slides・Docs の利用可否／【推測】
+- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
+<!-- page-status:end -->
 
 -----
 [toTop](#totoppage)

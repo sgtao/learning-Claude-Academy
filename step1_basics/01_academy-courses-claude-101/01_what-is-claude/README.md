@@ -1,28 +1,69 @@
-###### [toTopPage](../../../README.md)
-###### [toREADME](../README.md)
-# 1-1 Claudeとは何ですか？（Claude 101 レッスン 1）
-- 元ページ: https://academy.claude.com/ja/courses/claude-101/what-is-claude（取得: 2026-11-15／取得手段: Academy 日本語版を url-to-md で変換、`direct`）
-- 所要（ページ表示）: 約 5 分（学習メモの値。**取得した本文には分数が無い**）　内容の種類: 学習・ビジネス　状態: 完了
+###### [toTopPage](./README.md)
+###### [toREADME](./README.md)
+# 資料：Claudeとは何ですか？（Claude 101 レッスン 1）
+- `title`: Claudeとは何ですか？（Claude 101 レッスン 1）
+- `url`: https://academy.claude.com/ja/courses/claude-101/what-is-claude
+- `source_format`: html
+- `retrieved_at`: 2026-11-15T17:45:06+09:00
+- `profile`: article
+- `content_type`: 学習・ビジネス
 
-## 成果物
-| 種類 | ファイル |
-|---|---|
-| 原本 | [00_originals/what-is-claude.md](./00_originals/what-is-claude.md) |
-| 解説メモ（入口） | [what-is-claude_explained/README.md](./what-is-claude_explained/README.md) |
-| 解説スライド | [what-is-claude-explained-slides.html](./what-is-claude-explained-slides.html)（原稿: [.md](./what-is-claude-explained-slides.md)） |
+-----
+[toTop](#totoppage)
+## セクション
+分割なし
 
-## 検査（実際に出力した結果）
-- 解説メモ: `check_docs.py` 11 PASS / 0 FAIL（メインが再実行）／サブエージェントの修正: 1 回目から 11 PASS。読み合わせで「だれが」を【補足】にし、解釈に【推測】を付けて再転記／読み合わせ G-3（メイン）: プラン条件（Free・Pro・Max・Team・Enterprise の全プランで利用可、100 万トークンは対応モデルと Pro・Max・Team・Enterprise）と数字（20 万トークン・約 500 ページ）を原本と照合して食い違い 0／README の概要 352 字（上限 400）
-- スライド: 9 枚／`mdss-convert --strict` の lint は warnings 0・lint 0（メインが再実行）／サブエージェントが撮影した 9 枚を確認して修正なし／出典の無い数字: 0（`03`・`05` は note 内の解説メモの参照番号で数値ではない）
-- 印の件数: `【補足】` 31・`【推測】` 3・`（要確認:` 1（このレッスンの所要時間（分）
+-----
+[toTop](#totoppage)
+## 概要
+Claude 101 のレッスン 1 の本文。Claude は単なるチャットボットではなく、思考パートナーとして設計された AI アシスタントで、Constitutional AI と呼ばれる原則に導かれていると説明する。得意分野として文章作成、リサーチと分析、コーディング支援、問題解決と推論、新しいことを学ぶことを挙げ、Claude.ai・Claude Code・Claude Tag・Claude Design・Claude for Microsoft 365 の 5 つの使い方（インターフェース）を紹介する。最後に、自分の仕事で Claude を活用できるタスクを考える問いがある。注意：図は無く（conversion: direct）、各リンク先の中身は読んでいない。ページ枠のナビ・フッターの残りは無いが、リンク文言に「（新しいタブで開きます）」が付いている。所要時間（分）は本文には書かれていない。
 
-## 確認していないこと
-- 動画・画像・各リンク先の中身
-- 【推測】の当否（偏りチェックなど）
-- このレッスンの所要時間（本文に無い。スライド 6 に要確認）
+-----
+[toTop](#totoppage)
+## 生成AIの総括
+### Claudeは「答える道具」ではなく「一緒に考える相手」
+- 横断分析：
+  - 構造：位置づけ（思考パートナー）、特徴、得意分野（5 つ）、使える場所（5 つのインターフェース）、自分の仕事への問い、の順に、広い説明から自分ごとへ絞り込む構造になっている。
+  - 2 軸：得意分野とインターフェースは、どちらも「何を頼むか」と「どこで頼むか」の 2 軸として読める【補足】。
+  - 操作しやすさ：性格・トーン・振る舞いを指示できるという特徴と、文章作成の協働は、同じ「操作しやすさ」を別の面から述べたものとして読める【推測】。
+  - 限界：本文は能力の説明が中心で、限界や条件の詳細（利用条件など）は多くが本文には書かれていない。
+- 一言まとめ：Claude は思考パートナーとして使うもので、最初の一歩は、自分の仕事で任せたいタスクを 1 件決めることである。
 
-## 学習メモとの食い違い
-- 学習メモは「約 5 分」。本文には所要時間が無く、解説・スライドには分数を書いていない
+-----
+[toTop](#totoppage)
+## 本文
+- [01_source.md](./01_source.md)：入力 Markdown の複製（本文は変更していません）
+
+-----
+[toTop](#totoppage)
+## 解説メモ
+- [02_explanation_memo.md](./02_explanation_memo.md)
+
+-----
+[toTop](#totoppage)
+## FAQ
+- [11_question_and_answer.md](./11_question_and_answer.md)
+
+-----
+[toTop](#totoppage)
+## Proposed Prompts
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+## LLM 用プロンプト
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+<!-- page-status:start -->
+## 状態と関連資料
+- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 9 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 原本: [00_originals/what-is-claude.md](./00_originals/what-is-claude.md)
+- 解説スライド: [docs/what-is-claude-explained-slides.html](./docs/what-is-claude-explained-slides.html)（原稿: [docs/what-is-claude-explained-slides.md](./docs/what-is-claude-explained-slides.md)）
+- 確認していないこと（要約）: 動画・画像・各リンク先の中身／【推測】の当否（偏りチェックなど）／このレッスンの所要時間（本文に無い。スライド 6 に要確認）
+- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
+<!-- page-status:end -->
 
 -----
 [toTop](#totoppage)

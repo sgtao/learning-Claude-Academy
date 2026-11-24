@@ -1,30 +1,71 @@
-###### [toTopPage](../../../README.md)
-###### [toREADME](../README.md)
-# 0-6 Claudeをカスタマイズする（Customize Claude）
-- 元ページ: https://academy.claude.com/ja/tutorials/customize-claude-cowork（取得: 2026-11-15／取得手段: Academy 日本語版を url-to-md で変換、`direct`）
-- 所要（ページ表示）: 7 分（`/learning` の表示＝0-1 と学習メモ。**取得した本文には分数が無い**）　内容の種類: 技術・ハウツー　状態: 完了
-- **ステップ 2 の 2-1 と同一ページ**。実体はここ（ステップ 2 には参照用の README だけ置く）
+###### [toTopPage](./README.md)
+###### [toREADME](./README.md)
+# 資料：Claudeをカスタマイズする
+- `title`: Claudeをカスタマイズする
+- `url`: https://academy.claude.com/ja/tutorials/customize-claude-cowork
+- `source_format`: html
+- `retrieved_at`: 2026-11-15T16:51:28+09:00
+- `profile`: article
+- `content_type`: 技術・ハウツー
 
-## 成果物
-| 種類 | ファイル |
-|---|---|
-| 原本 | [00_originals/customize-claude-cowork.md](./00_originals/customize-claude-cowork.md) |
-| 解説メモ（入口） | [customize-claude-cowork_explained/README.md](./customize-claude-cowork_explained/README.md) |
-| 解説スライド | [customize-claude-cowork-explained-slides.html](./customize-claude-cowork-explained-slides.html)（原稿: [.md](./customize-claude-cowork-explained-slides.md)） |
+-----
+[toTop](#totoppage)
+## セクション
+入力の見出しによる区切りです。
 
-## 検査（実際に出力した結果）
-- 解説メモ: `check_docs.py` 11 PASS / 0 FAIL（サブエージェントは 1 回目から 11 PASS、読み合わせで 3 点を直して再転記と報告。メインが再実行して 11 PASS を確認）／読み合わせ: メインが G-3 として、所要・有料プラン・手順の順序（コネクタ → 指示 → Skill → プラグイン → 追加機能）を原本と照合して食い違い 0。「依頼元の情報」という曖昧な出典の書き方は残っていない
-- スライド: 10 枚（本文が約 4,400 字のため 8〜10 枚の目安）／`mdss-convert --strict` の lint は warnings 0・lint 0（メインが再実行）／サブエージェントが撮影した 10 枚のうち 2 枚を修正（リード文の折り返し、steps の番号の二重表示）／出典の無い数字: 0
-- 印の件数: `【補足】` 17・`【推測】` 8・`（要確認:` 5（所要時間・必要な有料プラン・管理者以外がコネクタ／プラグインを使えるか・グローバル指示とプロジェクト指示が食い違うときの優先順位・Skill を作るときの依頼文）
+- 1 : [プラグインの例](./01_source.md#プラグインの例)
 
-## 確認していないこと
-- リンク先・動画・画像の中身
-- 【推測】の当否。本文は「次の 2 つのレベル」と書いたあとに 3 項目を並べており（理由は本文から分からない）、「こう頼みます：」の直後に頼む文面が無い
-- 有料プラン・権限の条件（本文には「エンタープライズでは管理者が組織の設定を行う」という言及だけ）
+-----
+[toTop](#totoppage)
+## 概要
+Claude をカスタマイズし、自分のシステムとチームのやり方を組み込んで、以降のタスクをその状態から始める方法の説明。扱うのは、コネクタ（Slack や Jira などへの接続）、指示（グローバル・プロジェクト・組織）、Skill（繰り返す作業の手順）、プラグイン（コネクタと Skill のまとめ）、追加機能（スケジュールされたタスク・Artifacts）。本文には所要時間（分）も有料プランの条件も書かれていない。注意：リンクの文字にページの表示「（新しいタブで開きます）」が残っている。「Claudeにこう頼みます：」の直後に、頼む文面が本文に無い。ナビ・フッターなどのページ枠の文言は見当たらない。画像・動画・リンク先の中身は読んでいない。
 
-## 学習メモとの食い違い
-- なし（所要 7 分は本文には無いが、`/learning` の表示と学習メモが一致）
-- 作成時の気づき（スキル側）: 見出しが 1 つだけの記事（本文の後半にある「プラグインの例」）が「セクション 1 つ」になり、解説メモは同じ節の中を前半・後半に分けて扱った。分割なし扱いの方が自然な場合がある
+-----
+[toTop](#totoppage)
+## 生成AIの総括
+### 道具を整えて、仕事の出発点を上げる
+- 横断分析：【補足】以下は筆者（AI）の整理。
+  - 範囲の広さ：コネクタ（つなぐ）→ 指示（常に守るルール）→ Skill（特定タスクの手順）→ プラグイン（まとめて配る）の順で、個人からチームへと対象が広がる。
+  - 使い分けの軸：全タスクに効くものは指示、特定の繰り返しは Skill。
+  - 進め方：本文は、まずコネクタと指示、次に何度か実行してから Skill、聞かれたら共有、という順序を目安に挙げる。
+  - 自動化の先：スケジュールされたタスクと Artifacts は、整えた道具を毎週・継続の使い方へ延ばす。
+- 一言まとめ：一度整えれば以降のタスクは接続済み・ルール込みで始まるので、まずコネクタと指示を整え、繰り返す仕事は Skill にする。
+
+-----
+[toTop](#totoppage)
+## 本文
+- [01_source.md](./01_source.md)：入力 Markdown の複製（本文は変更していません）
+
+-----
+[toTop](#totoppage)
+## 解説メモ
+- [02_explanation_memo.md](./02_explanation_memo.md)
+
+-----
+[toTop](#totoppage)
+## FAQ
+- [11_question_and_answer.md](./11_question_and_answer.md)
+
+-----
+[toTop](#totoppage)
+## Proposed Prompts
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+## LLM 用プロンプト
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+<!-- page-status:start -->
+## 状態と関連資料
+- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 原本: [00_originals/customize-claude-cowork.md](./00_originals/customize-claude-cowork.md)
+- 解説スライド: [docs/customize-claude-cowork-explained-slides.html](./docs/customize-claude-cowork-explained-slides.html)（原稿: [docs/customize-claude-cowork-explained-slides.md](./docs/customize-claude-cowork-explained-slides.md)）
+- 確認していないこと（要約）: リンク先・動画・画像の中身／【推測】の当否／有料プラン・権限の条件
+- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
+<!-- page-status:end -->
 
 -----
 [toTop](#totoppage)

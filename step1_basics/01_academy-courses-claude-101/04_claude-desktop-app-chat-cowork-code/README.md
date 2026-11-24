@@ -1,30 +1,69 @@
-###### [toTopPage](../../../README.md)
-###### [toREADME](../README.md)
-# 1-4 デスクトップでClaudeとどのように仕事をするか（Claude 101 レッスン 4）
-- 元ページ: https://academy.claude.com/ja/courses/claude-101/claude-desktop-app-chat-cowork-code（取得: 2026-11-15／取得手段: Academy 日本語版を url-to-md で変換、`direct`）
-- 所要（ページ表示）: 10 分（学習メモの値。**取得した本文には分数が無い**）　内容の種類: 学習・ビジネス　状態: 完了
+###### [toTopPage](./README.md)
+###### [toREADME](./README.md)
+# 資料：デスクトップでClaudeとどのように仕事をするか（Claude 101 レッスン 4）
+- `title`: デスクトップでClaudeとどのように仕事をするか（Claude 101 レッスン 4）
+- `url`: https://academy.claude.com/ja/courses/claude-101/claude-desktop-app-chat-cowork-code
+- `source_format`: html
+- `retrieved_at`: 2026-11-15T17:45:06+09:00
+- `profile`: article
+- `content_type`: 学習・ビジネス
 
-## 成果物
-| 種類 | ファイル |
-|---|---|
-| 原本 | [00_originals/claude-desktop-app-chat-cowork-code.md](./00_originals/claude-desktop-app-chat-cowork-code.md) |
-| 解説メモ（入口） | [claude-desktop-app-chat-cowork-code_explained/README.md](./claude-desktop-app-chat-cowork-code_explained/README.md) |
-| 解説スライド | [claude-desktop-app-chat-cowork-code-explained-slides.html](./claude-desktop-app-chat-cowork-code-explained-slides.html)（原稿: [.md](./claude-desktop-app-chat-cowork-code-explained-slides.md)） |
+-----
+[toTop](#totoppage)
+## セクション
+分割なし
 
-## 検査（実際に出力した結果）
-- 解説メモ: `check_docs.py` 11 PASS / 0 FAIL（メインが再実行）／サブエージェントの修正: 1 回目から 11 PASS。読み合わせで一部の【補足】の位置を直して再転記／読み合わせ G-3（メイン）: プラン条件（Cowork は Pro・Max・Team・Enterprise、コンピュータ使用は Pro・Max でリサーチプレビュー、クラウド版 Cowork は Pro・Max で利用可・Team と管理者が有効にした Enterprise はベータ版）と、(Mac) の注記が付く 3 機能を原本と照合して食い違い 0／README の概要 260 字（上限 400）
-- スライド: 10 枚／`mdss-convert --strict` の lint は warnings 0・lint 0（メインが再実行）／サブエージェントが撮影した 10 枚のうち、スライド 3 の表を 2 周修正。表の「Codeタブ」が 2 行に折り返す点は未解消（はみ出し・切れは無い軽微な見た目）／出典の無い数字: 0（`07` は note 内の解説メモの参照番号で数値ではない）
-- 印の件数: `【補足】` 13・`【推測】` 2・`（要確認:` 1（Windowsなど、Mac以外での対応可否。本文に記載なし）
+-----
+[toTop](#totoppage)
+## 概要
+Claudeデスクトップアプリでの仕事を、ターンごとのやり取り（Chat）、作業を任せる（Cowork）、ソフトウェアの構築（Codeタブ）の3つの形に分けて説明するレッスンです。それぞれをどんなときに使うか、現在アプリのどこにあるか、利用できるプランや対応OSの条件、最後に3つを比べる表が書かれています。このページは直接変換（conversion: direct）で、図は含まれません。ナビ・フッターなどのページ枠の文言は残っておらず、リンクの文言に「（新しいタブで開きます）」が残るのみです。ページに動画があっても字幕は取っておらず、リンク先ページの中身も読んでいません。
 
-## 確認していないこと
-- リンク先（Claude Code in Action・Cowork in the cloud）の中身、動画の字幕
-- Mac 以外の OS での対応可否（本文に記載なし。スライド 8 に要確認）
-- 製品の最新の画面・プラン条件（本文の記述のみ。原本も新しい機能が定期的に追加されると述べている）
-- 本文冒頭の「6 つの情報源」の内訳（本文に無い）
-- 【推測】の当否（Code の「知っておく価値」の解釈の 1 か所）
-- 題名・本文の「Cowork」の呼び方は原本のまま（旧名称かどうかの手がかりは、修了バッジのページ（1-15）の告知バナー）
-## 学習メモとの食い違い
-- 学習メモは「10 分」。本文には所要時間が無く、解説・スライドには分数を書いていない
+-----
+[toTop](#totoppage)
+## 生成AIの総括
+### 「今の作業はどの形か」に気づくことが、Claudeを使いこなす入口
+- 横断分析：【補足】以下は筆者の整理です。
+  - 視点1：軸は「自分と Claude のどちらが各ステップをつなぐか」である。Chatでは自分がターンごとに判断し、Coworkでは成果を説明して計画と出力のレビューに回る。
+  - 視点2：選ぶのはタブではなく作業の種類で、タブはそれに従う。
+  - 視点3：任せても手は引かず、範囲の確認・計画の提示・重要アクションの承認が自分の関与の場所になる。
+  - 視点4：条件（プラン・Macの注記・リサーチプレビュー）は形ごとに違うので、使う前に自分の環境と照らす必要がある。
+- 一言まとめ：丸ごと任せられる仕事を一問一答で続けていないか、逆に考えながら進めたい仕事を任せていないかを見直すのが、このレッスンの使いどころである。
+
+-----
+[toTop](#totoppage)
+## 本文
+- [01_source.md](./01_source.md)：入力 Markdown の複製（本文は変更していません）
+
+-----
+[toTop](#totoppage)
+## 解説メモ
+- [02_explanation_memo.md](./02_explanation_memo.md)
+
+-----
+[toTop](#totoppage)
+## FAQ
+- [11_question_and_answer.md](./11_question_and_answer.md)
+
+-----
+[toTop](#totoppage)
+## Proposed Prompts
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+## LLM 用プロンプト
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+<!-- page-status:start -->
+## 状態と関連資料
+- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 原本: [00_originals/claude-desktop-app-chat-cowork-code.md](./00_originals/claude-desktop-app-chat-cowork-code.md)
+- 解説スライド: [docs/claude-desktop-app-chat-cowork-code-explained-slides.html](./docs/claude-desktop-app-chat-cowork-code-explained-slides.html)（原稿: [docs/claude-desktop-app-chat-cowork-code-explained-slides.md](./docs/claude-desktop-app-chat-cowork-code-explained-slides.md)）
+- 確認していないこと（要約）: リンク先／Mac 以外の OS での対応可否（本文に記載なし。スライド 8 に要確認）／製品の最新の画面・プラン条件ほか
+- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
+<!-- page-status:end -->
 
 -----
 [toTop](#totoppage)

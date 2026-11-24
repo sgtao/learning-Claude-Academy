@@ -6,7 +6,7 @@
 
 | ID | ページ | 分 | 状態 | ページ README | 解説スライド |
 |---|---|---|---|---|---|
-| 0-1 | 学ぶ（`/learning` 入口） | － | 完了 | [01_learning/](./01_learning/README.md) | [8 枚](./01_learning/learning-explained-slides.html) |
+| 0-1 | 学ぶ（`/learning` 入口） | － | 完了 | [01_learning/](./01_learning/README.md) | [8 枚](./01_learning/docs/learning-explained-slides.html) |
 
 - 読む順: 0-1 → 次は [02_academy-courses-claude-101/](../02_academy-courses-claude-101/README.md)
 - 用語の揺れ: 単独のページなので該当なし（ステップ全体の揺れは [../README.md](../README.md)）

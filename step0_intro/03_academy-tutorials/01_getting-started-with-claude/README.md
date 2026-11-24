@@ -1,28 +1,69 @@
-###### [toTopPage](../../../README.md)
-###### [toREADME](../README.md)
-# 0-3 Claudeを使い始める（Intro to Claude）
-- 元ページ: https://academy.claude.com/ja/tutorials/getting-started-with-claude（取得: 2026-11-15／取得手段: Academy 日本語版を url-to-md で変換、`direct`）
-- 所要（ページ表示）: 約 5 分（学習メモの値。**取得した本文には分数が無い**）　内容の種類: 技術・ハウツー　状態: 完了
+###### [toTopPage](./README.md)
+###### [toREADME](./README.md)
+# 資料：Claudeを使い始める（Intro to Claude）
+- `title`: Claudeを使い始める（Intro to Claude）
+- `url`: https://academy.claude.com/ja/tutorials/getting-started-with-claude
+- `source_format`: html
+- `retrieved_at`: 2026-11-15T16:51:28+09:00
+- `profile`: article
+- `content_type`: 技術・ハウツー
 
-## 成果物
-| 種類 | ファイル |
-|---|---|
-| 原本 | [00_originals/getting-started-with-claude.md](./00_originals/getting-started-with-claude.md) |
-| 解説メモ（入口） | [getting-started-with-claude_explained/README.md](./getting-started-with-claude_explained/README.md) |
-| 解説スライド | [getting-started-with-claude-explained-slides.html](./getting-started-with-claude-explained-slides.html)（原稿: [.md](./getting-started-with-claude-explained-slides.md)） |
+-----
+[toTop](#totoppage)
+## セクション
+分割なし
 
-## 検査（実際に出力した結果）
-- 解説メモ: `check_docs.py` 11 PASS / 0 FAIL（サブエージェントは 2 回目で合格と報告。メインが再実行して 11 PASS を確認）／読み合わせ: サブエージェントが本文に無い断定の削除と【補足】の付与を 2 件。メインが G-3 として**プラン条件**（Dashboards＝有料プランでベータ、Motion＝Team・Enterprise でベータ、ウェブ検索＝Free・Pro・Max は既定オン）を原本とスライドで照合して食い違い 0
-- スライド: 10 枚（本文が 800 字を超えるため 8〜10 枚の目安）／`mdss-convert --strict` の lint は warnings 0・lint 0（メインが再実行）／サブエージェントが撮影した 10 枚のうち 1 枚を修正／出典の無い数字: 0
-- 印の件数: `【補足】` 18・`【推測】` 3・`（要確認:` 1（Dashboards の「有料プラン」がどのプランか）
+-----
+[toTop](#totoppage)
+## 概要
+Claudeを使い始める最初の日に知っておくことを紹介するチュートリアル。普通の言葉で書きかければよく、最初のプロンプトは完璧でなくてよいという基本から始まる。回答の形式として、チャット内の回答、図やチャート、Claude Design・Slides・Docs・Dashboards・Motion、インタラクティブなアーティファクト、ファイルの作成を挙げる。続いて＋メニュー（コネクタ・ウェブ検索・リサーチ・スキル・フォルダ追加）、情報を引き継ぐ機能（プロジェクト・Claudeへの指示・メモリ）、使える場所、困ったときの頼み方を述べる。注意：本文に見出しは無く、図・動画・リンク先の中身は含まない。各リンクの「（新しいタブで開きます）」はページ枠の残り。所要時間は本文に書かれていない。
 
-## 確認していないこと
-- 動画・画像・リンク先（support.claude.com など）の中身。本文が予告する「ウォークスルー」の中身
-- 「有料プラン」の範囲（本文に書かれていない）
-- 原本の各リンクに残る「（新しいタブで開きます）」はページ枠の残り（解説メモの概要に注意として記載）
+-----
+[toTop](#totoppage)
+## 生成AIの総括
+### 完璧を求めず、頼んで直しながら広げる入口
+- 横断分析：
+  - 頼み方：普通の言葉で始め、合わなければ伝えて調整する、という対話が全体の土台。
+  - 形式の広がり：チャット内の回答から、図、成果物、ファイルまで、必要なものを依頼して得る。
+  - 手間の削減：＋メニューやプロジェクト・メモリなどで、毎回の説明や作業を減らす。
+  - 条件の確認：ウェブ検索や一部の成果物にはプランごとの条件があり、自分の環境で確かめる必要がある。
+- 一言まとめ：まず仕事1件を普通の言葉で頼み、答えを見ながら形式や機能を足していけばよい。
 
-## 学習メモとの食い違い
-- 学習メモは所要「約 5 分」。ページの本文には所要時間が無い（リサーチの「数分かかる」が唯一の時間の記述）。解説・スライドには分数を書いていない
+-----
+[toTop](#totoppage)
+## 本文
+- [01_source.md](./01_source.md)：入力 Markdown の複製（本文は変更していません）
+
+-----
+[toTop](#totoppage)
+## 解説メモ
+- [02_explanation_memo.md](./02_explanation_memo.md)
+
+-----
+[toTop](#totoppage)
+## FAQ
+- [11_question_and_answer.md](./11_question_and_answer.md)
+
+-----
+[toTop](#totoppage)
+## Proposed Prompts
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+## LLM 用プロンプト
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+<!-- page-status:start -->
+## 状態と関連資料
+- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 原本: [00_originals/getting-started-with-claude.md](./00_originals/getting-started-with-claude.md)
+- 解説スライド: [docs/getting-started-with-claude-explained-slides.html](./docs/getting-started-with-claude-explained-slides.html)（原稿: [docs/getting-started-with-claude-explained-slides.md](./docs/getting-started-with-claude-explained-slides.md)）
+- 確認していないこと（要約）: 動画・画像・リンク先／「有料プラン」の範囲（本文に書かれていない）／原本の各リンクに残る「
+- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
+<!-- page-status:end -->
 
 -----
 [toTop](#totoppage)

@@ -1,28 +1,69 @@
-###### [toTopPage](../../../README.md)
-###### [toREADME](../README.md)
-# 1-8 ツールを接続する（Claude 101 レッスン 8）
-- 元ページ: https://academy.claude.com/ja/courses/claude-101/connecting-your-tools（取得: 2026-11-15／取得手段: Academy 日本語版を url-to-md で変換、`direct`）
-- 所要（ページ表示）: 15 分（学習メモの値。**取得した本文には分数が無い**）　内容の種類: 学習・ビジネス　状態: 完了
+###### [toTopPage](./README.md)
+###### [toREADME](./README.md)
+# 資料：ツールを接続する（Claude 101 レッスン 8）
+- `title`: ツールを接続する（Claude 101 レッスン 8）
+- `url`: https://academy.claude.com/ja/courses/claude-101/connecting-your-tools
+- `source_format`: html
+- `retrieved_at`: 2026-11-15T17:45:06+09:00
+- `profile`: article
+- `content_type`: 学習・ビジネス
 
-## 成果物
-| 種類 | ファイル |
-|---|---|
-| 原本 | [00_originals/connecting-your-tools.md](./00_originals/connecting-your-tools.md) |
-| 解説メモ（入口） | [connecting-your-tools_explained/README.md](./connecting-your-tools_explained/README.md) |
-| 解説スライド | [connecting-your-tools-explained-slides.html](./connecting-your-tools-explained-slides.html)（原稿: [.md](./connecting-your-tools-explained-slides.md)） |
+-----
+[toTop](#totoppage)
+## セクション
+分割なし
 
-## 検査（実際に出力した結果）
-- 解説メモ: `check_docs.py` 11 PASS / 0 FAIL（メインが再実行）／サブエージェントの修正: 1 回目は 11 PASS。読み合わせで 3 点（デスクトップ拡張機能の手順に当てはまらない書き方、活用案冒頭の補足の印、本文に無い見出し名のような呼び方）を直して再転記。利用上限で一度停止し、再開して完了／読み合わせ G-3（メイン）: 接続手順の順序と、Team・Enterprise では組織のオーナーが先にコネクタを組織向けに追加する条件を原本と照合して食い違い 0。Team・Enterprise 以外のプランの可否は本文に無く、スライド 8 に「書かれていない」と明記／README の概要 302 字（上限 400）
-- スライド: 10 枚／`mdss-convert --strict` の lint は warnings 0・lint 0（メインが再実行）／サブエージェントが撮影した 10 枚で修正なし／出典の無い数字: 0（なし は note 内の解説メモの参照番号で数値ではない）
-- 印の件数: `【補足】` 13・`【推測】` 5・`（要確認:` 0
+-----
+[toTop](#totoppage)
+## 概要
+Claude 101 のレッスン 8 の記事です。仕事の情報は会話の外のツールにあるため、コネクタで Claude をそれらに接続し、検索・読み取り・許可された操作を会話の中で行えるようにする方法を説明します。コネクタは Model Context Protocol（MCP）で動き、クラウドサービス向けのウェブコネクタと Claude Desktop アプリ向けのデスクトップ拡張機能の 2 種類があります。接続の手順、依頼の例、スコープされたアクセスなどの考慮事項を載せています。注意：本文に見出しは無く、変換は direct で図はありません。リンク名に「（新しいタブで開きます）」というページ枠の文言が残っています。リンク先の中身と動画は読んでおらず、字幕も取っていません。
 
-## 確認していないこと
-- リンク先（コネクタのディレクトリ・ダウンロード・ヘルプセンター）の中身、画像
-- Team・Enterprise 以外（無料プランなど）でコネクタが使えるか、許可されるアクションの範囲（本文に無い）
-- 【推測】の当否
+-----
+[toTop](#totoppage)
+## 生成AIの総括
+### 情報の置き場所へ Claude をつなぐ「通行許可」
+- 横断分析：
+  - 目的の視点：会話にコピーを貼る作業をなくし、実際の情報を直接扱わせる。
+  - 仕組みの視点：MCP という共通の窓口があり、クラウド向けのウェブコネクタとローカル向けのデスクトップ拡張機能に分かれる。
+  - 手順の視点：ウェブコネクタは「見つける→連携する→認証→権限→テスト」、デスクトップ拡張機能は「アプリを入れる→設定 > 拡張機能→インストール→追加設定」と、どちらも順序が決まっており、Team・Enterprise では先に組織のオーナーの対応が要る。
+  - 安全の視点：権限は絞られ、自分が見られる範囲までで、いつでも取り消せる。【補足】この 4 つは、便利さと管理のバランスを取る設計として読める（筆者の整理）。
+- 一言まとめ：コネクタは、自分が見られる範囲で、必要な権限だけを渡して、Claude を仕事の情報の置き場所へつなぐ仕組みである。
 
-## 学習メモとの食い違い
-- 学習メモは「15 分」。本文には所要時間が無く、解説・スライドには分数を書いていない
+-----
+[toTop](#totoppage)
+## 本文
+- [01_source.md](./01_source.md)：入力 Markdown の複製（本文は変更していません）
+
+-----
+[toTop](#totoppage)
+## 解説メモ
+- [02_explanation_memo.md](./02_explanation_memo.md)
+
+-----
+[toTop](#totoppage)
+## FAQ
+- [11_question_and_answer.md](./11_question_and_answer.md)
+
+-----
+[toTop](#totoppage)
+## Proposed Prompts
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+## LLM 用プロンプト
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+<!-- page-status:start -->
+## 状態と関連資料
+- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 原本: [00_originals/connecting-your-tools.md](./00_originals/connecting-your-tools.md)
+- 解説スライド: [docs/connecting-your-tools-explained-slides.html](./docs/connecting-your-tools-explained-slides.html)（原稿: [docs/connecting-your-tools-explained-slides.md](./docs/connecting-your-tools-explained-slides.md)）
+- 確認していないこと（要約）: リンク先（コネクタのディレクトリ・ダウンロード・ヘルプセンター）の中身、画像／Team・Enterprise 以外／【推測】の当否
+- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
+<!-- page-status:end -->
 
 -----
 [toTop](#totoppage)

@@ -1,27 +1,64 @@
-###### [toTopPage](../../../README.md)
-###### [toREADME](../README.md)
-# 3-07-03 財務：ビジネスの財務を整理（★2）
-- 元ページ: https://academy.claude.com/ja/use-cases/organize-your-business-finances（取得: 2026-11-24）
-- 所要: 13 分（学習メモの値。本文に分数が無いことがある）　内容の種類: 技術・ハウツー　状態: 完了（現在の状態は[台帳](../../../00_index.md)が正）
+###### [toTopPage](./README.md)
+###### [toREADME](./README.md)
+# 資料：財務：ビジネスの財務を整理（★2）
+- `title`: 財務：ビジネスの財務を整理（★2）
+- `url`: https://academy.claude.com/ja/use-cases/organize-your-business-finances
+- `source_format`: html
+- `retrieved_at`: 2026-11-24T09:49:52+09:00
+- `profile`: article
+- `content_type`: 技術・ハウツー
 
-## 成果物
-| 種類 | ファイル |
-|---|---|
-| 原本 | [00_originals/organize-your-business-finances.md](./00_originals/organize-your-business-finances.md) |
-| 解説メモ（入口） | [organize-your-business-finances_explained/README.md](./organize-your-business-finances_explained/README.md) |
-| 解説スライド | [organize-your-business-finances-explained-slides.html](./organize-your-business-finances-explained-slides.html)（原稿: [.md](./organize-your-business-finances-explained-slides.md)） |
+-----
+[toTop](#totoppage)
+## セクション
+分割なし
 
-## 検査（2026-11-24 に実際に出力を確認）
-- 解説メモ: `check_docs.py` で 12 PASS
-- スライド: 10 枚／lint 0
-- 数字の照合: 出典の無い数字 0 件
-- リンク切れ: 0 件
-- 印の件数: 解説メモの【補足】15・【推測】4、スライドの（要確認: 0
+-----
+[toTop](#totoppage)
+## 概要
+フリーランスの請求書データ（日付・クライアント名・プロジェクト内容・請求金額）をClaudeに渡し、ダッシュボード付きのスプレッドシートを作ってもらう使い方を紹介する記事です。書式がばらばらで雑然としたデータでもそのままアップロードでき、Claudeが整理したうえで、フィルター、固定ヘッダー、トレンドチャートなどを加えます。依頼文の例、完成時の返答の例（収入や配分の数字）、追加の依頼やデータ更新のしかた、プロンプトに「xlsxwriter」と書くとスパークラインなどが使えることも説明されています。なお、記事の冒頭にある画像の中身は読めていません。
 
-## 確認していないこと
-- 原本のリンク先の中身、画像・動画
-- 手順を実際に自分のアカウントで操作した結果
-- 読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
+-----
+[toTop](#totoppage)
+## 生成AIの総括
+### 雑然とした記録を、見やすい仕組みに変えて育てていく
+- 横断分析：
+  - 入力の考え方：事前の整形より、記録がすべて揃っていることを優先する。きれいにする作業はClaudeに任せる。
+  - 依頼の組み立て：指標（何を見たいか）、機能（どう探したいか）、見た目（どう見せたいか）を分けて書くと、ダッシュボードの形が決まる。
+  - 結果の確かめ方：チャットのプレビューは概要で、機能はファイルを開いて確かめる。出力の数字は自分でも読み解く（例：手取り収入の差）。
+  - 続けて使う流れ：一度作って終わりにせず、列の追加や月次の更新を会話で重ねる。
+- 一言まとめ：書式が不揃いな請求書でもそのまま渡して、依頼で形を決め、会話で毎月更新していく。
+
+-----
+[toTop](#totoppage)
+## 本文
+- [01_source.md](./01_source.md)：入力 Markdown の複製（本文は変更していません）
+
+-----
+[toTop](#totoppage)
+## 解説メモ
+- [02_explanation_memo.md](./02_explanation_memo.md)
+
+-----
+[toTop](#totoppage)
+## FAQ
+- [11_question_and_answer.md](./11_question_and_answer.md)
+
+-----
+[toTop](#totoppage)
+## LLM 用プロンプト
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+<!-- page-status:start -->
+## 状態と関連資料
+- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 原本: [00_originals/organize-your-business-finances.md](./00_originals/organize-your-business-finances.md)
+- 解説スライド: [docs/organize-your-business-finances-explained-slides.html](./docs/organize-your-business-finances-explained-slides.html)（原稿: [docs/organize-your-business-finances-explained-slides.md](./docs/organize-your-business-finances-explained-slides.md)）
+- 確認していないこと（要約）: 原本のリンク先の中身、画像・動画／手順を実際に自分のアカウントで操作した結果／読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
+- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
+<!-- page-status:end -->
 
 -----
 [toTop](#totoppage)

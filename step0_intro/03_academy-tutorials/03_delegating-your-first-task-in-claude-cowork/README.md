@@ -1,28 +1,69 @@
-###### [toTopPage](../../../README.md)
-###### [toREADME](../README.md)
-# 0-5 Claude Coworkで最初のタスクを委任する（Delegating your first task to Claude）
-- 元ページ: https://academy.claude.com/ja/tutorials/delegating-your-first-task-in-claude-cowork（取得: 2026-11-15／取得手段: Academy 日本語版を url-to-md で変換、`direct`）
-- 所要（ページ表示）: 4 分（本文の先頭に「· 4 min」の表示あり。`/learning` の表示も 4 分）　内容の種類: 技術・ハウツー　状態: 完了
-- 題名に旧名称「Cowork」が残っている（学習メモの付録 D）。**旧名称かどうかは原本では確認できない**ので、解説・スライドでは【補足】として学習メモの付録 D に基づくと明記した
+###### [toTopPage](./README.md)
+###### [toREADME](./README.md)
+# 資料：Claude Coworkで最初のタスクを委任する
+- `title`: Claude Coworkで最初のタスクを委任する
+- `url`: https://academy.claude.com/ja/tutorials/delegating-your-first-task-in-claude-cowork
+- `source_format`: html
+- `retrieved_at`: 2026-11-15T16:51:28+09:00
+- `profile`: article
+- `content_type`: 技術・ハウツー
 
-## 成果物
-| 種類 | ファイル |
-|---|---|
-| 原本 | [00_originals/delegating-your-first-task-in-claude-cowork.md](./00_originals/delegating-your-first-task-in-claude-cowork.md) |
-| 解説メモ（入口） | [delegating-your-first-task-in-claude-cowork_explained/README.md](./delegating-your-first-task-in-claude-cowork_explained/README.md) |
-| 解説スライド | [delegating-your-first-task-in-claude-cowork-explained-slides.html](./delegating-your-first-task-in-claude-cowork-explained-slides.html)（原稿: [.md](./delegating-your-first-task-in-claude-cowork-explained-slides.md)） |
+-----
+[toTop](#totoppage)
+## セクション
+分割なし
 
-## 検査（実際に出力した結果）
-- 解説メモ: `check_docs.py` 11 PASS / 0 FAIL（サブエージェントは 2 回目で合格と報告。1 回目は C-8 で、本文に無い引用「どこまで Claude が動くか」。メインが再実行して 11 PASS を確認）／読み合わせ: メインが G-3 として、プラン条件（Pro・Max・Team・Enterprise 向け、macOS・Windows の Claude Desktop で一般提供）・所要（4 min）を原本と照合して食い違い 0。出典の書き方「依頼元の情報」を実際の出典（学習メモの付録 D）に直し、`out/` を直して `assemble.py` をやり直し、11 PASS を再確認
-- スライド: 10 枚（本文が約 800 字を超えるため 8〜10 枚の目安）／`mdss-convert --strict` の lint は warnings 0・lint 0（メインが再実行。出典の直しのあとの HTML 再生成でも 10 枚）／サブエージェントが撮影した 10 枚を目視し、1 枚（基本ループの図と帯の重なり）を修正／出典の無い数字: 0（`03` は note 内の解説メモの参照）
-- 印の件数: `【補足】` 8・`【推測】` 1・`（要確認:` 0
+-----
+[toTop](#totoppage)
+## 概要
+Claude Cowork（Claude Desktop アプリの Cowork タブ）に、完全なタスクを委任する流れを説明する記事です。作業がコンピュータ上・クラウド上・ブラウザ上のどこにあっても任せられること、Pro・Max・Team・Enterprise 向けに macOS と Windows で一般提供されていること、フォルダ・コネクタ・Claude in Chrome・グローバルな指示の準備、Downloads フォルダの整理を例にした「計画の提案、承認、実行」という基本ループを扱います。注意：先頭に「· 4 min」の表示が残っています。原本は直接変換で、画像・動画・リンク先の中身は含まれず、本文だけを根拠にしています。
 
-## 確認していないこと
-- リンク先・動画・画像の中身
-- スライド 7 の基本ループ（提案 → 調整 → 承認 → 実行）の「実行のあとに提案へ戻るか」は原本に無い（note に記載）
+-----
+[toTop](#totoppage)
+## 生成AIの総括
+### 任せるのは作業、決めるのは自分
+- 横断分析：
+  - 場所：作業のある場所（コンピュータ・クラウド・ブラウザ）に Claude が出向く構造で、準備はその場所への接続（フォルダ・コネクタ・Claude in Chrome）である。
+  - 手順：計画の提案、承認、実行の順で進み、承認が入るため、人の判断が実行の前に差し込まれる。
+  - チャットとの差：チャットは説明まで、Cowork は実行まで。
+  - 条件：プラン・OS・アプリの前提と、ローカル保存・アプリを開いたままにする点を最初に知っておく。
+- 一言まとめ：Cowork では、境界が明確な作業を、計画を見て承認したうえで任せ、できあがりを自分で確かめる。
 
-## 学習メモとの食い違い
-- なし（所要 4 分は本文の「· 4 min」・`/learning` の表示・学習メモが一致）
+-----
+[toTop](#totoppage)
+## 本文
+- [01_source.md](./01_source.md)：入力 Markdown の複製（本文は変更していません）
+
+-----
+[toTop](#totoppage)
+## 解説メモ
+- [02_explanation_memo.md](./02_explanation_memo.md)
+
+-----
+[toTop](#totoppage)
+## FAQ
+- [11_question_and_answer.md](./11_question_and_answer.md)
+
+-----
+[toTop](#totoppage)
+## Proposed Prompts
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+## LLM 用プロンプト
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+<!-- page-status:start -->
+## 状態と関連資料
+- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 原本: [00_originals/delegating-your-first-task-in-claude-cowork.md](./00_originals/delegating-your-first-task-in-claude-cowork.md)
+- 解説スライド: [docs/delegating-your-first-task-in-claude-cowork-explained-slides.html](./docs/delegating-your-first-task-in-claude-cowork-explained-slides.html)（原稿: [docs/delegating-your-first-task-in-claude-cowork-explained-slides.md](./docs/delegating-your-first-task-in-claude-cowork-explained-slides.md)）
+- 確認していないこと（要約）: リンク先・動画・画像の中身／スライド 7 の基本ループ
+- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
+<!-- page-status:end -->
 
 -----
 [toTop](#totoppage)

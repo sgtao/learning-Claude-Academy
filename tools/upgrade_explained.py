@@ -2,11 +2,12 @@
 """旧版スキル（v0.0.6）で作った解説メモの作業フォルダを、今の形（ced-skills 0.0.3）にそろえる。
 
 やること（本文には触れない。形だけ）:
-  1. out/06_summary.md の「横断分析」を、視点ごとの子箇条書きにする（（1）（2）… で分けられるときだけ）
+  1. intermediate/06_summary.md（旧構造は out/） の「横断分析」を、視点ごとの子箇条書きにする（（1）（2）… で分けられるときだけ）
   2. README.md・01_source.md の先頭のナビを ./README.md にし、README に「## LLM 用プロンプト」の節を足す
   3. assemble.py で 02・11・12 と README の総括を作り直す（呼ぶのは人。この script は 1・2 だけ）
 
 使い方:  python3 tools/upgrade_explained.py <作業フォルダ> [--dry-run]
+作業フォルダ＝解説メモ 5 本があるフォルダ（新構造ではページのフォルダ）。中間ファイルは .work/intermediate/（旧構造は out/）から探す。
 分けられないとき（視点が 3 個未満）は、何も書かずに「手で直す」と表示して終わる。
 """
 import re, sys
@@ -74,7 +75,10 @@ def main():
     if len(sys.argv) < 2:
         print(__doc__); sys.exit(2)
     d = Path(sys.argv[1]); dry = "--dry-run" in sys.argv
-    res = fix_summary(d / "out" / "06_summary.md", dry)
+    mid = d / ".work" / "intermediate"
+    if not mid.is_dir():
+        mid = d / "out"                # 旧構造
+    res = fix_summary(mid / "06_summary.md", dry)
     print(f"{d.name}: 06_summary {res}")
     if res.startswith("手で直す"):
         sys.exit(1)

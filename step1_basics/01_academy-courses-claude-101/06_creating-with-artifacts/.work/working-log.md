@@ -1,0 +1,41 @@
+###### [toTopPage](../../../../README.md)
+###### [toREADME](../../README.md)
+# 1-6 アーティファクトで作成する（Claude 101 レッスン 6）
+- 元ページ: https://academy.claude.com/ja/courses/claude-101/creating-with-artifacts（取得: 2026-11-15／取得手段: Academy 日本語版を url-to-md で変換、`direct`）
+- 所要（ページ表示）: 10 分（学習メモの値。**取得した本文には分数が無い**）　内容の種類: 学習・ビジネス　状態: 完了
+
+<!-- checks:start -->
+## 検査の結果（`tools/page_readme.py` が更新する。最新）
+- 確認日: 2026-11-25
+- 解説メモ: `check_docs.py`（`--out-dir .work/intermediate`）で 12 PASS
+- スライド: 10 枚／lint 0
+- 数字の照合: 出典の無い数字 0 件
+- リンク切れ: 0 件
+- 印の件数: 解説メモの【補足】9・【推測】2、スライドの（要確認: 0
+<!-- checks:end -->
+
+## 成果物
+| 種類 | ファイル |
+|---|---|
+| 原本 | [00_originals/creating-with-artifacts.md](../00_originals/creating-with-artifacts.md) |
+| 解説メモ（入口） | [creating-with-artifacts_explained/README.md](../README.md) |
+| 解説スライド | [creating-with-artifacts-explained-slides.html](../docs/creating-with-artifacts-explained-slides.html)（原稿: [.md](../docs/creating-with-artifacts-explained-slides.md)） |
+
+## 検査（実際に出力した結果）
+- 解説メモ: `check_docs.py` 11 PASS / 0 FAIL（メインが再実行）／サブエージェントの修正: 1 回目から 11 PASS。読み合わせ R-1 で総括の「そのまま品質の差になる」が本文より強いと直して再転記／読み合わせ G-3（メイン）: 共有（Pro・Max は自分だけ／リンクを持つ誰とでも、Team・Enterprise はリンクが既定で組織内・外部共有は Owner または Primary Owner が有効化後）と、最初の 3 つの例は Team・Enterprise で管理者の有効化が前提、を原本と照合して食い違い 0／README の概要 351 字（上限 400）
+- スライド: 10 枚／`mdss-convert --strict` の lint は warnings 0・lint 0（メインが再実行）／サブエージェントが初版の撮影後に 3 枚を修正（図解のノード名の折り返し、変更方法 3 つの形、「次に試す 1 つ」の強調）、6 枚目の折り返しも 1 語短縮して再撮影で確認／出典の無い数字: 0（`03`・`05` は note 内の解説メモの参照番号で数値ではない）
+- 印の件数: `【補足】` 9・`【推測】` 1・`（要確認:` 0
+
+## 確認していないこと
+- リンク先（アーティファクトの紹介ページなど）の中身
+- Pro・Max での Design・Slides・Docs の利用可否（本文に無い）
+- 【推測】（画面名称・機能が変わる可能性）と【補足】（例え話・ユースケース整理・2 層という呼び方）の当否
+
+## 学習メモとの食い違い
+- 学習メモは「10 分」。本文には所要時間が無く、解説・スライドには分数を書いていない
+
+-----
+[toTop](#totoppage)
+
+## 作業の経緯（移行）
+- 2026-11-25: 構造を移した（`.work/migrate-page-structure.sh`）。この README は旧構造のページ README の内容。リンクは .work/ から辿れる形に直した。検査の記述は移行前のもの（最新は「検査の結果」）

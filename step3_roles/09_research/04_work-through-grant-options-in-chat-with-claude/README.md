@@ -1,27 +1,64 @@
-###### [toTopPage](../../../README.md)
-###### [toREADME](../README.md)
-# 3-09-04 研究：助成金の選択肢（★3）
-- 元ページ: https://academy.claude.com/ja/use-cases/work-through-grant-options-in-chat-with-claude（取得: 2026-11-24）
-- 所要: 14 分（学習メモの値。本文に分数が無いことがある）　内容の種類: 技術・ハウツー　状態: 完了（現在の状態は[台帳](../../../00_index.md)が正）
+###### [toTopPage](./README.md)
+###### [toREADME](./README.md)
+# 資料：研究：助成金の選択肢（★3）
+- `title`: 研究：助成金の選択肢（★3）
+- `url`: https://academy.claude.com/ja/use-cases/work-through-grant-options-in-chat-with-claude
+- `source_format`: html
+- `retrieved_at`: 2026-11-24T09:49:58+09:00
+- `profile`: article
+- `content_type`: 技術・ハウツー
 
-## 成果物
-| 種類 | ファイル |
-|---|---|
-| 原本 | [00_originals/work-through-grant-options-in-chat-with-claude.md](./00_originals/work-through-grant-options-in-chat-with-claude.md) |
-| 解説メモ（入口） | [work-through-grant-options-in-chat-with-claude_explained/README.md](./work-through-grant-options-in-chat-with-claude_explained/README.md) |
-| 解説スライド | [work-through-grant-options-in-chat-with-claude-explained-slides.html](./work-through-grant-options-in-chat-with-claude-explained-slides.html)（原稿: [.md](./work-through-grant-options-in-chat-with-claude-explained-slides.md)） |
+-----
+[toTop](#totoppage)
+## セクション
+分割なし
 
-## 検査（2026-11-24 に実際に出力を確認）
-- 解説メモ: `check_docs.py` で 12 PASS
-- スライド: 9 枚／lint 0
-- 数字の照合: 出典の無い数字 0 件
-- リンク切れ: 0 件
-- 印の件数: 解説メモの【補足】13・【推測】4、スライドの（要確認: 0
+-----
+[toTop](#totoppage)
+## 概要
+ある研究者が、助成金の候補が多数ある中で、どの少数に絞って申請書を書くかを決める場面を扱う記事です。Claude に頼むと、金額・成功率・期限などを一つの散布図に折り込み、位置・サイズ・色でトレードオフを一度に見せてくれます。チャートとテーブルを一緒に絞り込むフィルターや、上位候補の優先順位付け・申請スケジュール草案のボタンも付きます。点のクリックでの詳細表示、提出済みの更新による再描画もできます。シートなしで Claude が数値を補完した場合は、個々の点をプログラムのページで確認する必要があります。記事に見出しは無く、分割なしで扱います。図は画像のため中身を読めておらず、画像の代替テキストの記述に基づきます。
 
-## 確認していないこと
-- 原本のリンク先の中身、画像・動画
-- 手順を実際に自分のアカウントで操作した結果
-- 読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
+-----
+[toTop](#totoppage)
+## 生成AIの総括
+### 並べ替えを、一枚の形に置き換える
+- 横断分析：
+  - 見せ方：位置・色・サイズに次元を割り当て、一つの順序では隠れていたトレードオフを一度に見せる。
+  - 進め方：最初のチャートは入口で、点の詳細・スケジュール化・提出済みの反映と、対話で育てていく。
+  - 信頼のしかた：チャートは意思決定の形を示すもので、数値はシートで裏付けるか、点ごとにプログラムのページで確認する。
+  - 広げ方：助成金だけでなく、人員配置やロードマップの優先順位など、複数の変数を同時に抱える意思決定に使える。
+- 一言まとめ：一つの列で決められない選択を、チャットで一枚のチャートにして対話で育て、決める前に点ごとに確かめる。
+
+-----
+[toTop](#totoppage)
+## 本文
+- [01_source.md](./01_source.md)：入力 Markdown の複製（本文は変更していません）
+
+-----
+[toTop](#totoppage)
+## 解説メモ
+- [02_explanation_memo.md](./02_explanation_memo.md)
+
+-----
+[toTop](#totoppage)
+## FAQ
+- [11_question_and_answer.md](./11_question_and_answer.md)
+
+-----
+[toTop](#totoppage)
+## LLM 用プロンプト
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+<!-- page-status:start -->
+## 状態と関連資料
+- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 9 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 原本: [00_originals/work-through-grant-options-in-chat-with-claude.md](./00_originals/work-through-grant-options-in-chat-with-claude.md)
+- 解説スライド: [docs/work-through-grant-options-in-chat-with-claude-explained-slides.html](./docs/work-through-grant-options-in-chat-with-claude-explained-slides.html)（原稿: [docs/work-through-grant-options-in-chat-with-claude-explained-slides.md](./docs/work-through-grant-options-in-chat-with-claude-explained-slides.md)）
+- 確認していないこと（要約）: 原本のリンク先の中身、画像・動画／手順を実際に自分のアカウントで操作した結果／読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
+- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
+<!-- page-status:end -->
 
 -----
 [toTop](#totoppage)

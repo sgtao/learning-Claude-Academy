@@ -1,27 +1,64 @@
-###### [toTopPage](../../../README.md)
-###### [toREADME](../README.md)
-# 3-07-04 財務：差異から経営層向けスライド（★3）
-- 元ページ: https://academy.claude.com/ja/use-cases/variance-exec-slides（取得: 2026-11-24）
-- 所要: 10 分（学習メモの値。本文に分数が無いことがある）　内容の種類: 技術・ハウツー　状態: 完了（現在の状態は[台帳](../../../00_index.md)が正）
+###### [toTopPage](./README.md)
+###### [toREADME](./README.md)
+# 資料：財務：差異から経営層向けスライド（★3）
+- `title`: 財務：差異から経営層向けスライド（★3）
+- `url`: https://academy.claude.com/ja/use-cases/variance-exec-slides
+- `source_format`: html
+- `retrieved_at`: 2026-11-24T09:49:53+09:00
+- `profile`: article
+- `content_type`: 技術・ハウツー
 
-## 成果物
-| 種類 | ファイル |
-|---|---|
-| 原本 | [00_originals/variance-exec-slides.md](./00_originals/variance-exec-slides.md) |
-| 解説メモ（入口） | [variance-exec-slides_explained/README.md](./variance-exec-slides_explained/README.md) |
-| 解説スライド | [variance-exec-slides-explained-slides.html](./variance-exec-slides-explained-slides.html)（原稿: [.md](./variance-exec-slides-explained-slides.md)） |
+-----
+[toTop](#totoppage)
+## セクション
+分割なし
 
-## 検査（2026-11-24 に実際に出力を確認）
-- 解説メモ: `check_docs.py` で 12 PASS
-- スライド: 10 枚／lint 0
-- 数字の照合: 出典の無い数字 0 件
-- リンク切れ: 0 件
-- 印の件数: 解説メモの【補足】14・【推測】6、スライドの（要確認: 0
+-----
+[toTop](#totoppage)
+## 概要
+Cowork を使い、月次の差異分析ワークブックから経営層向けの 3 枚のスライド（実績対計画のヘッドライン、主要な変動要因と一時的要因を示すドライバー、Q2 への持ち越しを示す見通し）を .pptx として作る手順の記事。コネクタの設定、フォルダとプロジェクトの用意、依頼文、6 つのコツ、スキル化、/schedule による毎週月曜の定期実行までを順に説明する。Finance プラグインが使えない場合の注意も冒頭にある。見出しが無いため分割なしで、図も無い。
 
-## 確認していないこと
-- 原本のリンク先の中身、画像・動画
-- 手順を実際に自分のアカウントで操作した結果
-- 読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
+-----
+[toTop](#totoppage)
+## 生成AIの総括
+### 一度の依頼を、毎回使える仕組みに育てる記事
+- 横断分析：
+  - 先に決めておく：3 枚の構成、重要性の基準、前四半期のデッキ、チャートの種類を、依頼文やプロジェクトの指示で明示すると、出力が安定する。
+  - 実例で伝える：説明よりも前四半期のデッキそのものを渡すほうが、レイアウトも表現も合わせやすい（本文はテンプレートとは実例そのものとする）。
+  - 一度で終わらせない：1 回の対話の成果をスキルにし、/schedule で毎週実行し、共有して全体をそろえるという段階がある。
+  - 人の役割が残る：プラグインのスキルは出発点で、自分のやり方でのカスタマイズが前提。聴衆の疑問の予測と、基準の設定は人が決める。
+- 一言まとめ：3 枚を名指しで頼み、実例と基準を渡し、スキルにして /schedule で回すと、毎四半期の取締役会準備が同じ形で再現できる。
+
+-----
+[toTop](#totoppage)
+## 本文
+- [01_source.md](./01_source.md)：入力 Markdown の複製（本文は変更していません）
+
+-----
+[toTop](#totoppage)
+## 解説メモ
+- [02_explanation_memo.md](./02_explanation_memo.md)
+
+-----
+[toTop](#totoppage)
+## FAQ
+- [11_question_and_answer.md](./11_question_and_answer.md)
+
+-----
+[toTop](#totoppage)
+## LLM 用プロンプト
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+<!-- page-status:start -->
+## 状態と関連資料
+- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 原本: [00_originals/variance-exec-slides.md](./00_originals/variance-exec-slides.md)
+- 解説スライド: [docs/variance-exec-slides-explained-slides.html](./docs/variance-exec-slides-explained-slides.html)（原稿: [docs/variance-exec-slides-explained-slides.md](./docs/variance-exec-slides-explained-slides.md)）
+- 確認していないこと（要約）: 原本のリンク先の中身、画像・動画／手順を実際に自分のアカウントで操作した結果／読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
+- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
+<!-- page-status:end -->
 
 -----
 [toTop](#totoppage)

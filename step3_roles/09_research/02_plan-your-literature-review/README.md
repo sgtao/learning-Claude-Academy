@@ -1,27 +1,64 @@
-###### [toTopPage](../../../README.md)
-###### [toREADME](../README.md)
-# 3-09-02 研究：文献レビュー計画（★1）
-- 元ページ: https://academy.claude.com/ja/use-cases/plan-your-literature-review（取得: 2026-11-24）
-- 所要: 15 分（学習メモの値。本文に分数が無いことがある）　内容の種類: 技術・ハウツー　状態: 完了（現在の状態は[台帳](../../../00_index.md)が正）
+###### [toTopPage](./README.md)
+###### [toREADME](./README.md)
+# 資料：研究：文献レビュー計画（★1）
+- `title`: 研究：文献レビュー計画（★1）
+- `url`: https://academy.claude.com/ja/use-cases/plan-your-literature-review
+- `source_format`: html
+- `retrieved_at`: 2026-11-24T09:49:56+09:00
+- `profile`: article
+- `content_type`: 技術・ハウツー
 
-## 成果物
-| 種類 | ファイル |
-|---|---|
-| 原本 | [00_originals/plan-your-literature-review.md](./00_originals/plan-your-literature-review.md) |
-| 解説メモ（入口） | [plan-your-literature-review_explained/README.md](./plan-your-literature-review_explained/README.md) |
-| 解説スライド | [plan-your-literature-review-explained-slides.html](./plan-your-literature-review-explained-slides.html)（原稿: [.md](./plan-your-literature-review-explained-slides.md)） |
+-----
+[toTop](#totoppage)
+## セクション
+分割なし
 
-## 検査（2026-11-24 に実際に出力を確認）
-- 解説メモ: `check_docs.py` で 12 PASS
-- スライド: 10 枚／lint 0
-- 数字の照合: 出典の無い数字 0 件
-- リンク切れ: 0 件
-- 印の件数: 解説メモの【補足】12・【推測】1、スライドの（要確認: 0
+-----
+[toTop](#totoppage)
+## 概要
+文献レビューの計画づくりを Claude に手伝ってもらう方法を紹介する記事です。リサーチクエスチョンを伝えると、PubMed を検索して優先順位をつけたリーディングガイドを作り、研究タイプ別に色分けした Word 文書のリサーチロードマップにまとめます。例では腸脳相関と気分障害を題材に、42本の論文を3段階の読書計画に整理しています。後半では、パターンの検証・矛盾する論文の分析・知識のギャップの補充という3つの追加の質問と、引用の再確認などの注意点も示されます。本文に見出しは無く、分割しません。冒頭の画像は内容を読めておらず、根拠にしていません。
 
-## 確認していないこと
-- 原本のリンク先の中身、画像・動画
-- 手順を実際に自分のアカウントで操作した結果
-- 読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
+-----
+[toTop](#totoppage)
+## 生成AIの総括
+### 検索と仕分けは Claude に任せ、判断と確認は自分で持つ
+- 横断分析：
+  - 分担の視点：Claude は検索・関連性の評価・整理を受け持ち、人は統合と独自の分析、そして引用の最終確認を受け持つ。全体が、この分担で貫かれている。
+  - 順序の視点：結果の例は、基礎論文から、メカニズムと臨床試験、ギャップ分析へと進む。追加の質問も、気づき（傾向・矛盾・穴）が出た順に使う。「全体から細部へ、最後に疑う」という流れである。
+  - 指示の具体性の視点：観点・期間・データベース・成果物・見た目を最初に伝えるほど、出来上がりが希望に近づく。デザインの指定が無いと標準的な書式になる。
+  - 検証の視点：プレビューは基本的な構造だけで、実際の Word 文書を開いて確かめる。中心になる引用も元の論文で確かめる。出力は「下書き」として扱う。
+- 一言まとめ：問いと条件を具体的に伝えて読書計画を作らせ、読みながら追加で確かめ、最後の引用は自分の目で確認する。
+
+-----
+[toTop](#totoppage)
+## 本文
+- [01_source.md](./01_source.md)：入力 Markdown の複製（本文は変更していません）
+
+-----
+[toTop](#totoppage)
+## 解説メモ
+- [02_explanation_memo.md](./02_explanation_memo.md)
+
+-----
+[toTop](#totoppage)
+## FAQ
+- [11_question_and_answer.md](./11_question_and_answer.md)
+
+-----
+[toTop](#totoppage)
+## LLM 用プロンプト
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+<!-- page-status:start -->
+## 状態と関連資料
+- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 原本: [00_originals/plan-your-literature-review.md](./00_originals/plan-your-literature-review.md)
+- 解説スライド: [docs/plan-your-literature-review-explained-slides.html](./docs/plan-your-literature-review-explained-slides.html)（原稿: [docs/plan-your-literature-review-explained-slides.md](./docs/plan-your-literature-review-explained-slides.md)）
+- 確認していないこと（要約）: 原本のリンク先の中身、画像・動画／手順を実際に自分のアカウントで操作した結果／読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
+- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
+<!-- page-status:end -->
 
 -----
 [toTop](#totoppage)

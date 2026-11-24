@@ -47,5 +47,9 @@ node_modules/
 dist/
 build/
 *.log
-.work
-out
+# ---- このリポジトリ：ページの作業用フォルダ ----
+# .work/ の中は、working-log.md（状態・検査の結果・経緯）だけを追跡する。intermediate/（スキルの中間ファイル）などは追跡しない
+**/.work/*
+!**/.work/working-log.md
+# 構造の移行スクリプト（一度きり。記録として追跡する）
+!/.work/migrate-page-structure.sh

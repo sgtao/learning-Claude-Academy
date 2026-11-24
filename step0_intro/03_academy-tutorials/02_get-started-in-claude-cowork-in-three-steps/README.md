@@ -1,29 +1,71 @@
-###### [toTopPage](../../../README.md)
-###### [toREADME](../README.md)
-# 0-4 Claude Coworkを3つのステップで始める（Get started with Claude in three steps）
-- 元ページ: https://academy.claude.com/ja/tutorials/get-started-in-claude-cowork-in-three-steps（取得: 2026-11-15／取得手段: Academy 日本語版を url-to-md で変換、`direct`）
-- 所要（ページ表示）: 4 分（`/learning` の一覧の表示＝0-1。**取得した本文には分数が無い**）　内容の種類: 技術・ハウツー　状態: 完了
-- 題名に旧名称「Cowork」が残っている（学習メモの付録 D）
+###### [toTopPage](./README.md)
+###### [toREADME](./README.md)
+# 資料：Claude Coworkを3つのステップで始める
+- `title`: Claude Coworkを3つのステップで始める
+- `url`: https://academy.claude.com/ja/tutorials/get-started-in-claude-cowork-in-three-steps
+- `source_format`: html
+- `retrieved_at`: 2026-11-15T16:51:28+09:00
+- `profile`: article
+- `content_type`: 技術・ハウツー
 
-## 成果物
-| 種類 | ファイル |
-|---|---|
-| 原本 | [00_originals/get-started-in-claude-cowork-in-three-steps.md](./00_originals/get-started-in-claude-cowork-in-three-steps.md) |
-| 解説メモ（入口） | [get-started-in-claude-cowork-in-three-steps_explained/README.md](./get-started-in-claude-cowork-in-three-steps_explained/README.md) |
-| 解説スライド | [get-started-in-claude-cowork-in-three-steps-explained-slides.html](./get-started-in-claude-cowork-in-three-steps-explained-slides.html)（原稿: [.md](./get-started-in-claude-cowork-in-three-steps-explained-slides.md)） |
+-----
+[toTop](#totoppage)
+## セクション
+分割なし
 
-## 検査（実際に出力した結果）
-- 解説メモ: `check_docs.py` 11 PASS / 0 FAIL（サブエージェントは 2 回目で合格と報告。1 回目は C-6 で概要が 410 字（上限 400 字）。メインが再実行して 11 PASS を確認）／読み合わせ: サブエージェントが本文に無い「入力欄」の語を直し、FAQ 9 の引用を差し替え。メインが G-3 として、プラン条件（本文に無い）・手順の順序（アプリを開いてサインイン → `/setup-claude` → Work in a folder → 最初のタスク）を原本と照合して食い違い 0
-- スライド: 10 枚（本文が約 2,450 字のため 8〜10 枚の目安）／`mdss-convert --strict` の lint は warnings 0・lint 0（メインが再実行）／サブエージェントが撮影した 10 枚を目視して修正なし／出典の無い数字: 0（`03`・`06` は note 内の解説メモの参照で数値ではない）
-- 印の件数: `【補足】` 14・`【推測】` 5・`（要確認:` 1（所要時間）
+-----
+[toTop](#totoppage)
+## 概要
+Claude Academy の日本語チュートリアル「Claude Coworkを3つのステップで始める」の本文。Cowork を開いてサインインし、新しい会話で /setup-claude を入力して役割・プラグイン・ツール接続をガイド付きで設定し、チャットバーの Work in a folder で作業場所（フォルダまたはプロジェクト）を指定して、最初のタスクを始めるまでを順に説明する。例文 3 つと関連ページの案内も付く。
 
-## 確認していないこと
-- リンク先（support.claude.com など）・動画・画像の中身
-- 【推測】の当否。原本に見出し・番号が無く、「3 つのステップ」の内訳（`/setup-claude`・作業場所の指定・最初のタスク）は推測。フォルダとプロジェクトの使い分けも推測
-- 有料プラン・権限の条件（本文に書かれていない）
+注意：本文に見出しや番号つきのステップ表記は無く、所要時間（分）も有料プラン・権限の条件も書かれていない。ナビ・フッターなどのページ枠の文言は残っていない（リンクの注記「（新しいタブで開きます）」は残っている）。ページに動画があっても字幕は取っておらず、図は再現されていない（conversion: direct）。リンク先（support.claude.com など）の中身は読んでいない。
 
-## 学習メモとの食い違い
-- なし（学習メモの「4 分」はページの本文には無いが、0-1 の `/learning` の表示と一致）
+-----
+[toTop](#totoppage)
+## 生成AIの総括
+### 先に場所と道具を決めてから、最初の仕事を頼む
+- 横断分析：
+  - 順序の視点：本文は、アプリを開く、/setup-claude で設定する、作業場所を指定する、タスクを頼む、の順に並べ、頼む前の準備を先に済ませる構造になっている。
+  - 道具の視点：プラグインは、スキル・コネクタ・サンプルプロンプトのひとまとめで、「空のセッション」ではなく出発点を作る。
+  - 場所の視点：フォルダ（コンピューター上）とプロジェクト（セッションをまたいで保持）という 2 つの作業場所が、読み書きの範囲を決める。
+  - 空白の視点：所要時間・有料プランや権限の条件・アクセス範囲は本文に無く、続けて読むページ（特に安全の案内）に委ねられている。
+- 一言まとめ：Cowork は、役割の設定と作業場所の指定を済ませてから、完成した成果物を頼む使い方を案内している。
+
+-----
+[toTop](#totoppage)
+## 本文
+- [01_source.md](./01_source.md)：入力 Markdown の複製（本文は変更していません）
+
+-----
+[toTop](#totoppage)
+## 解説メモ
+- [02_explanation_memo.md](./02_explanation_memo.md)
+
+-----
+[toTop](#totoppage)
+## FAQ
+- [11_question_and_answer.md](./11_question_and_answer.md)
+
+-----
+[toTop](#totoppage)
+## Proposed Prompts
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+## LLM 用プロンプト
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+<!-- page-status:start -->
+## 状態と関連資料
+- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 原本: [00_originals/get-started-in-claude-cowork-in-three-steps.md](./00_originals/get-started-in-claude-cowork-in-three-steps.md)
+- 解説スライド: [docs/get-started-in-claude-cowork-in-three-steps-explained-slides.html](./docs/get-started-in-claude-cowork-in-three-steps-explained-slides.html)（原稿: [docs/get-started-in-claude-cowork-in-three-steps-explained-slides.md](./docs/get-started-in-claude-cowork-in-three-steps-explained-slides.md)）
+- 確認していないこと（要約）: リンク先（support.claude.com など）・動画・画像の中身／【推測】の当否／有料プラン・権限の条件（本文に書かれていない）
+- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
+<!-- page-status:end -->
 
 -----
 [toTop](#totoppage)

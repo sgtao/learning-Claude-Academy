@@ -43,7 +43,7 @@ def index_text(rows):
           "├── tools/               検査と台帳のスクリプト（tools/README.md）",
           "└── step<N>_<名前>/       ステップごと（0 入口 ／ 1 基礎 ／ 2 道具 ／ 3 職種 ／ 4 発展）",
           "    └── <NN>_<まとまり>/  関連するページのまとまり",
-          "        └── <NN>_<ページ>/ 1 ページ分（README、00_originals、*_explained、スライド）",
+          "        └── <NN>_<ページ>/ 1 ページ分（README=表紙、00_originals、解説メモ 5 本、docs/=スライド、.work/=作業用）",
           "```", ""]
     by = OrderedDict()
     for r in rows:

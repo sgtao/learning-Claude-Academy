@@ -1,27 +1,64 @@
-###### [toTopPage](../../../README.md)
-###### [toREADME](../README.md)
-# 3-05-04 プロダクト：メトリクスのナラティブ化（★3）
-- 元ページ: https://academy.claude.com/ja/use-cases/metrics-narrative（取得: 2026-11-24）
-- 所要: 10 分（学習メモの値。本文に分数が無いことがある）　内容の種類: 技術・ハウツー　状態: 完了（現在の状態は[台帳](../../../00_index.md)が正）
+###### [toTopPage](./README.md)
+###### [toREADME](./README.md)
+# 資料：プロダクト：メトリクスのナラティブ化（★3）
+- `title`: プロダクト：メトリクスのナラティブ化（★3）
+- `url`: https://academy.claude.com/ja/use-cases/metrics-narrative
+- `source_format`: html
+- `retrieved_at`: 2026-11-24T09:49:48+09:00
+- `profile`: article
+- `content_type`: 技術・ハウツー
 
-## 成果物
-| 種類 | ファイル |
-|---|---|
-| 原本 | [00_originals/metrics-narrative.md](./00_originals/metrics-narrative.md) |
-| 解説メモ（入口） | [metrics-narrative_explained/README.md](./metrics-narrative_explained/README.md) |
-| 解説スライド | [metrics-narrative-explained-slides.html](./metrics-narrative-explained-slides.html)（原稿: [.md](./metrics-narrative-explained-slides.md)） |
+-----
+[toTop](#totoppage)
+## セクション
+分割なし
 
-## 検査（2026-11-24 に実際に出力を確認）
-- 解説メモ: `check_docs.py` で 12 PASS
-- スライド: 10 枚／lint 0
-- 数字の照合: 出典の無い数字 0 件
-- リンク切れ: 0 件
-- 印の件数: 解説メモの【補足】25・【推測】5、スライドの（要確認: 0
+-----
+[toTop](#totoppage)
+## 概要
+Product Managementプラグインに同梱された`/metrics-review`などの分析スキルを使い、Claude Coworkに「今週の数値はなぜ動いたのか」をナラティブ（説明文）にまとめさせる手順の記事です。コネクタを設定し、AmplitudeやMixpanelのCSV、先週のナラティブ、チェンジログを1つのフォルダに置いて指定します。続いて、アクティベーションファネルの異常探し、プラン・プラットフォーム・サインアップ元での要因特定、リリース内容との照合、2つのチャート付きのナラティブ作成を頼むプロンプトが示され、依頼の6つの工夫が解説されます。最後に、スキルのカスタマイズと`/schedule`による毎週の自動実行、共有による週次レポートの一貫性が語られます。本文に図はなく、ボタンやリンクの記法が残っています。
 
-## 確認していないこと
-- 原本のリンク先の中身、画像・動画
-- 手順を実際に自分のアカウントで操作した結果
-- 読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
+-----
+[toTop](#totoppage)
+## 生成AIの総括
+### 数値の「なぜ」を、毎週同じ型で書き続ける仕組みを作る
+- 横断分析：
+  - 依頼の設計：異常探し、セグメントの順序、リリースとの照合、チャート数の上限、不確実な点の指摘は、どれも出力を「根拠のある、絞られた形」にそろえる工夫である。
+  - 材料の整え方：コネクタと1つのフォルダ、Coworkプロジェクトにより、数値・過去の文章・変更の記録が毎回同じ場所から読める状態になる。
+  - 育てる流れ：1回の依頼で終わらせず、フィードバックでスキルを編集し、`/schedule`で自動化し、共有する、という段階的な運用になっている。
+  - 【補足】人の役割：Coworkが下書きと根拠の整理を担い、人は不確実な点を中心に確認し、因果仮説をチームの行動に結びつける。
+- 一言まとめ：型を決めた依頼を1回通し、それをスキルにして、毎週のナラティブを自動で届ける。
+
+-----
+[toTop](#totoppage)
+## 本文
+- [01_source.md](./01_source.md)：入力 Markdown の複製（本文は変更していません）
+
+-----
+[toTop](#totoppage)
+## 解説メモ
+- [02_explanation_memo.md](./02_explanation_memo.md)
+
+-----
+[toTop](#totoppage)
+## FAQ
+- [11_question_and_answer.md](./11_question_and_answer.md)
+
+-----
+[toTop](#totoppage)
+## LLM 用プロンプト
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+<!-- page-status:start -->
+## 状態と関連資料
+- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 原本: [00_originals/metrics-narrative.md](./00_originals/metrics-narrative.md)
+- 解説スライド: [docs/metrics-narrative-explained-slides.html](./docs/metrics-narrative-explained-slides.html)（原稿: [docs/metrics-narrative-explained-slides.md](./docs/metrics-narrative-explained-slides.md)）
+- 確認していないこと（要約）: 原本のリンク先の中身、画像・動画／手順を実際に自分のアカウントで操作した結果／読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
+- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
+<!-- page-status:end -->
 
 -----
 [toTop](#totoppage)

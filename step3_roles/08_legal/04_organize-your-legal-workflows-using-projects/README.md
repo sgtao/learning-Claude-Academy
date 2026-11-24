@@ -1,27 +1,64 @@
-###### [toTopPage](../../../README.md)
-###### [toREADME](../README.md)
-# 3-08-04 法務：Projects で法務ワークフロー整理（★3）
-- 元ページ: https://academy.claude.com/ja/use-cases/organize-your-legal-workflows-using-projects（取得: 2026-11-24）
-- 所要: 16 分（学習メモの値。本文に分数が無いことがある）　内容の種類: 技術・ハウツー　状態: 完了（現在の状態は[台帳](../../../00_index.md)が正）
+###### [toTopPage](./README.md)
+###### [toREADME](./README.md)
+# 資料：法務：Projects で法務ワークフロー整理（★3）
+- `title`: 法務：Projects で法務ワークフロー整理（★3）
+- `url`: https://academy.claude.com/ja/use-cases/organize-your-legal-workflows-using-projects
+- `source_format`: html
+- `retrieved_at`: 2026-11-24T09:49:55+09:00
+- `profile`: article
+- `content_type`: 技術・ハウツー
 
-## 成果物
-| 種類 | ファイル |
-|---|---|
-| 原本 | [00_originals/organize-your-legal-workflows-using-projects.md](./00_originals/organize-your-legal-workflows-using-projects.md) |
-| 解説メモ（入口） | [organize-your-legal-workflows-using-projects_explained/README.md](./organize-your-legal-workflows-using-projects_explained/README.md) |
-| 解説スライド | [organize-your-legal-workflows-using-projects-explained-slides.html](./organize-your-legal-workflows-using-projects-explained-slides.html)（原稿: [.md](./organize-your-legal-workflows-using-projects-explained-slides.md)） |
+-----
+[toTop](#totoppage)
+## セクション
+分割なし
 
-## 検査（2026-11-24 に実際に出力を確認）
-- 解説メモ: `check_docs.py` で 12 PASS
-- スライド: 10 枚／lint 0
-- 数字の照合: 出典の無い数字 0 件
-- リンク切れ: 0 件
-- 印の件数: 解説メモの【補足】11・【推測】3、スライドの（要確認: 0
+-----
+[toTop](#totoppage)
+## 概要
+大規模な契約レビューを一貫させるため、Claudeのプロジェクトに法務の参照資料を登録して使う手順を紹介する記事。週に約30件のNDAを扱う例で、プレイブック・標準の相互NDAテンプレート・容認できない条項のリストをアップロードし、Claudeに基準ガイドとカスタム指示を作らせる。続いて、実際のNDAでの試用、月に約15件のMSAへの展開、新人アソシエイト向けのトレーニング資料化、TeamおよびEnterpriseプランでの共有、3〜5件の検証と調整のコツを述べる。冒頭の画像とアーティファクトへのリンクの中身は、本文からは読み取れていない。
 
-## 確認していないこと
-- 原本のリンク先の中身、画像・動画
-- 手順を実際に自分のアカウントで操作した結果
-- 読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
+-----
+[toTop](#totoppage)
+## 生成AIの総括
+### 暗黙知を「置いておける基準」に変え、少数の実例で育てる
+- 横断分析：
+  - 構造：基準は「参照資料（ナレッジ）」と「毎回の動かし方（カスタム指示）」の 2 層で持たせ、それをプロジェクトが全会話に効かせる。
+  - 因果：基準が文書になっていないほど、Claudeの出力もぶれる。参照資料が充実し、最新であるほど、基準の捉え方が正確になる。
+  - 運用：作って終わりではなく、実際のNDAで試し、レビュー済み 3〜5 件を人の対応と比べて指示を直す。この小さな往復が、一貫性のない大量のレビューを防ぐ。
+  - 展開：同じ構成を、NDAからMSA、他の契約、さらに法務以外の分野（ブランドボイス、報告基準、調査手法）へ移せる。
+- 一言まとめ：基準を資料にして一度登録し、試して直しながら、チーム全員の一貫した作業の土台にする。
+
+-----
+[toTop](#totoppage)
+## 本文
+- [01_source.md](./01_source.md)：入力 Markdown の複製（本文は変更していません）
+
+-----
+[toTop](#totoppage)
+## 解説メモ
+- [02_explanation_memo.md](./02_explanation_memo.md)
+
+-----
+[toTop](#totoppage)
+## FAQ
+- [11_question_and_answer.md](./11_question_and_answer.md)
+
+-----
+[toTop](#totoppage)
+## LLM 用プロンプト
+- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
+
+-----
+[toTop](#totoppage)
+<!-- page-status:start -->
+## 状態と関連資料
+- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 原本: [00_originals/organize-your-legal-workflows-using-projects.md](./00_originals/organize-your-legal-workflows-using-projects.md)
+- 解説スライド: [docs/organize-your-legal-workflows-using-projects-explained-slides.html](./docs/organize-your-legal-workflows-using-projects-explained-slides.html)（原稿: [docs/organize-your-legal-workflows-using-projects-explained-slides.md](./docs/organize-your-legal-workflows-using-projects-explained-slides.md)）
+- 確認していないこと（要約）: 原本のリンク先の中身、画像・動画／手順を実際に自分のアカウントで操作した結果／読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
+- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
+<!-- page-status:end -->
 
 -----
 [toTop](#totoppage)
