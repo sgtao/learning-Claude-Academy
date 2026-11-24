@@ -7,7 +7,7 @@
 ## 薄いページ
 本文が 300 字未満のため、解説メモとスライドは作っていない（本文に無いことを書くことになるため）。
 - 理由: 本文 182 字
-- 原本: [00_originals](./00_originals/)
+- 原本: [00_originals/claude-for-you.md](./00_originals/claude-for-you.md)
 - 文字起こしなど本文を足せたら、`python3 tools/fetch_page.py 4-4 --redo` で作り直せる
 
 -----

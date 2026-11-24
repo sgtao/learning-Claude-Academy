@@ -45,14 +45,21 @@ def head(r, page):
             f"- 所要: {mins}　内容の種類: {r['kind']}　状態: {r['status']}（現在の状態は[台帳](../../../00_index.md)が正）\n")
 
 
+def original_link(page):
+    """原本（00_originals/*.md）へのリンク。フォルダ（./00_originals/）を指すと、VitePress のサイトで切れる。"""
+    o = sorted((Path(page) / "00_originals").glob("*.md"))
+    return f"[00_originals/{o[0].name}](./00_originals/{o[0].name})" if o else "00_originals/"
+
+
 def render(r, page, state="pending", reason=""):
     """解説メモが無いページ（thin / pending / failed / duplicate）の README。"""
     page = Path(page)
+    orig = original_link(page)
     t = nav(page) + head(r, page) + "\n"
     if state == "thin":
-        t += f"## 薄いページ\n本文が 300 字未満のため、解説メモとスライドは作っていない（本文に無いことを書くことになるため）。\n- 理由: {reason}\n- 原本: [00_originals](./00_originals/)\n- 文字起こしなど本文を足せたら、`python3 tools/fetch_page.py {r['id']} --redo` で作り直せる\n"
+        t += f"## 薄いページ\n本文が 300 字未満のため、解説メモとスライドは作っていない（本文に無いことを書くことになるため）。\n- 理由: {reason}\n- 原本: {orig}\n- 文字起こしなど本文を足せたら、`python3 tools/fetch_page.py {r['id']} --redo` で作り直せる\n"
     elif state == "pending":
-        t += (f"## 取得済み（解説は未作成）\n- 原本: [00_originals](./00_originals/)\n"
+        t += (f"## 取得済み（解説は未作成）\n- 原本: {orig}\n"
               f"- {reason}\n- 次: 解説メモ（ced-craft-explanation-docs。作ると、この README が解説メモの表紙に置き換わる）とスライド（ced-websearch-slide-ja。docs/ に置く）を作り、`python3 tools/ledger.py refresh`\n")
     elif state == "failed":
         t += f"## 取得できなかった\n- 理由: {reason}\n- 対処: 強制的な取得（--force）は使わない。ブラウザで本文が読めるなら、Claude in Chrome で読む（ボタンは押さない）\n"

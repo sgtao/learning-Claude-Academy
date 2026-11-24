@@ -3,7 +3,7 @@
 
 使い方:  python3 tools/check_links.py [<フォルダ。既定は 03_outputs 全体>]
 終了コード: 0＝切れ 0 件 / 1＝あり
-http・mailto・claude:// などのスキーム付きと、ページ内の # は対象外。.work/（中間ファイルと working-log.md）と out/ の中は見ない。
+http・mailto・claude:// などのスキーム付きと、ページ内の # は対象外。.work/（中間ファイルと working-log.md）・out/・node_modules/・.vitepress/ の中は見ない。
 """
 import re, sys
 from pathlib import Path
@@ -15,7 +15,7 @@ def broken_links(root):
     bad = []
     for f in sorted(Path(root).rglob("*.md")):
         parts = f.as_posix()
-        if "/out/" in parts or "/.work/" in parts or "/.git/" in parts:
+        if any(x in parts for x in ("/out/", "/.work/", "/.git/", "/node_modules/", "/.vitepress/")):
             continue
         in_code = False
         for ln, line in enumerate(f.read_text(encoding="utf-8").split("\n"), 1):

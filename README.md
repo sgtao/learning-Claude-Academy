@@ -19,6 +19,7 @@ Claude の公式学習ページ（claude.ai/learning、実体は Claude Academy�
 ├── ledger.csv             台帳。全 73 ページの ID・場所・状態・検査結果・学習済みの日（正本）
 ├── tools/                 台帳・索引・検査・参照のスクリプト（tools/README.md）
 ├── .work/                 構造を移したときのスクリプト（migrate-page-structure.sh。一度きり）
+├── .vitepress/            ブラウザで読むための VitePress の設定（config.mjs）。index.md・package.json・.github/workflows/pages.yml とあわせて使う
 ├── step0_intro/           ステップ 0：入口
 ├── step1_basics/          ステップ 1：基礎（Claude 101 の 15 ページ）
 ├── step2_tools/           ステップ 2：道具を整える
@@ -49,6 +50,28 @@ step1_basics/                          ← ステップ
 解説メモがないページ（薄いページ・取得失敗・重複）は、`README.md`（ページの説明）と `00_originals/` だけを置く。
 
 番号（`01_`、`02_`…）は並び順で、学ぶ順と台帳の順にそろえてある。ステップの番号とフォルダ名は台帳の `step` 列と同じ。
+
+## ブラウザで読む（VitePress と GitHub Pages）
+この Markdown を、そのまま VitePress のサイトにして読める（Markdown は写さない。サイドバーは台帳 `ledger.csv` から作る）。
+
+```bash
+npm ci                 # 初回だけ（Node.js 20 以上）
+npm run docs:dev       # 手元で開く（http://localhost:5173/）。保存すると自動で更新される
+npm run docs:build     # 公開用に作る（.vitepress/dist/）。リンク切れがあると失敗する
+python3 tools/test_site.py   # ビルドと中身の検査（一時フォルダに出す）
+```
+
+- 出るもの：ステップ・まとまり・ページの README と解説メモ・FAQ・LLM 用プロンプト・原本、スライド（HTML）、`tools/README.md`。出ないもの：`.work/` の中間ファイル、スライドの原稿 MD、`catalog/`。
+- 表紙の「詳細・経緯・検査の記録」（`.work/working-log.md`）のリンクは、GitHub 上のファイルを開く（`.work/` は VitePress のページにならないため）。
+- 表紙の「原稿」（`docs/*-slides.md`）のリンクは、スライド（HTML）を開く（同じ名前の HTML が出るため）。
+- ページを足したら、台帳を更新（`tools/ledger.py refresh`）すれば、サイドバーに出る。設定は `.vitepress/config.mjs`。
+
+**GitHub Pages**：`main` に push すると `.github/workflows/pages.yml` がビルドして公開する。公開先は `https://<ユーザー名>.github.io/<リポジトリ名>/`。
+最初の 1 回だけ、リポジトリの Settings → Pages → Build and deployment → Source を「GitHub Actions」にする（コマンドなら下）。
+
+```bash
+gh api -X POST repos/<ユーザー名>/<リポジトリ名>/pages -f build_type=workflow
+```
 
 ## URL を 1 つ追加するとき
 プロジェクトのスキル `learning-page`（リポジトリ直下の `.claude/skills/learning-page/`）に従う。取得と台帳は `tools/add_page.py`、解説とスライドは ced-skills、確かめは `tools/ledger.py refresh`。

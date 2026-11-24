@@ -21,6 +21,7 @@
 | `memo.py pages [STEP] GROUP` / `pages -a [STEP]` | まとまりの中のページ（解説メモ）の一覧。`-a` は全ページ（STEP を付けるとそのステップだけ） | 読むページを探すとき |
 | `memo.py info PAGE [--json]` | 表紙 `README.md` のフロントマター（題名・URL・取得日など。無いページは原本の frontmatter） | ページの素性を確かめるとき |
 | `memo.py show PAGE [--only ...]` | 表紙 `README.md`・`.work/intermediate/09_input-memo.md`・`12_LLM_prompts_as_guide.md` を表示（09 か 12 が無いページは README と `01_source`、解説メモが無いページはページの README と原本） | 解説メモを読む・LLM に渡すとき |
+| `test_site.py` | VitePress のサイトの検査（ビルドできる・リンク切れ 0・台帳の全ページが出る・スライドがコピーされる・`.work/` が出ない・base が効く。Node と `npm ci` が要る） | サイトの設定を直したとき、公開の前 |
 | `test_memo.py` | `memo.py` の検査（見本の木と実物の木） | `memo.py` を直したとき |
 
 解説メモの検査（`check_docs.py`）は、ced-skills の `ced-craft-explanation-docs` のものを使う（`page_status.py` が最新の版を探し、ページのフォルダを `--out-dir <ページ>/.work/intermediate` つきで検査する）。
