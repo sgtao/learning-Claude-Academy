@@ -1,0 +1,4451 @@
+<!doctype html>
+<html lang="ja" data-view="list" data-theme="light" data-palette="ocean">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coworkで数値の「なぜ」を書かせる手順</title>
+<style>/* ==== theme-vars.css ==== */
+/* theme-vars.css
+ * ライト/ダークテーマ × カラーパレットのCSS変数定義。
+ * slide-core.css より前に読み込む（変数の先行定義が必要）。
+ *
+ * 2軸構成（v0.6.0）:
+ *   テーマ:   :root（ライト） / [data-theme="dark"]（ダーク）
+ *   パレット: html[data-palette="ocean|forest|sunset|plum|graphite"]
+ *             未指定 = ocean 相当（既定値は :root / [data-theme="dark"] に定義済み）
+ *
+ * 設計判断（v0.6.0）:
+ *   パレットが差し替えるのは --accent / --accent-light / --accent-dim の 3 変数のみ。
+ *   --chart-2〜5 は全パレット共通（多系列グラフの可読性を安定させ、
+ *   5パレット × 2テーマ × 5系列 = 50 値の管理爆発を避ける）。
+ *   --chart-1 は var(--accent) 参照のため、パレットに自動追従する。
+ */
+
+:root {
+  --bg-body: #f0f2f5;
+  --bg-slide: #ffffff;
+  --bg-surface: #f8f9fa;
+  --text-primary: #1a1a1a;
+  --text-secondary: #6b7280;
+  --accent: #2563eb;
+  --accent-light: #eff6ff;
+  --accent-dim: #dbeafe;
+  --border: #e5e7eb;
+  --nav-bg: rgba(0, 0, 0, 0.6);
+  --nav-text: #ffffff;
+  --progress-track: rgba(255, 255, 255, 0.2);
+
+  /* ─── チャート系列色（ライト） ───
+   * --chart-1 は --accent と一致させ、単系列グラフでアクセントと揃える。
+   * 2〜5 系列は Tailwind 系の調和色を採用。
+   */
+  --chart-1: var(--accent);
+  --chart-2: #10b981;
+  --chart-3: #f59e0b;
+  --chart-4: #ef4444;
+  --chart-5: #8b5cf6;
+  --chart-grid: var(--border);
+  --chart-label: var(--text-secondary);
+
+  /* feature-showcase 用（ライト時のみ使用・ダーク時は上書き） */
+  --bg-surface-dark: #161b22;
+  --text-on-dark: #e6edf3;
+  --text-on-dark-2: #8b949e;
+
+  /* 常時ダークな面（point帯・feature-showcase右面）上の強調色。
+   * 値は各パレットのダーク accent と同一（tone: dark の ==強調== と同じ色合い）。
+   * テーマがライトでも、暗い面では --accent（ライト値）ではなくこちらを使う。
+   * パレット別の値は下の各 [data-palette] で上書きする。 */
+  --accent-on-dark: #58a6ff;
+}
+
+[data-theme='dark'] {
+  --bg-body: #0d1117;
+  --bg-slide: #161b22;
+  --bg-surface: #21262d;
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --accent: #58a6ff;
+  --accent-light: #1c2d3f;
+  --accent-dim: #1f3a57;
+  --border: #30363d;
+  --nav-bg: rgba(255, 255, 255, 0.1);
+  --nav-text: #e6edf3;
+  --progress-track: rgba(255, 255, 255, 0.1);
+
+  /* ─── チャート系列色（ダーク） ───
+   * GitHub Primer 系の彩度を抑えた色を採用。
+   * --accent (#58A6FF) との調和を優先。
+   */
+  --chart-1: var(--accent);
+  --chart-2: #3fb950;
+  --chart-3: #d29922;
+  --chart-4: #f85149;
+  --chart-5: #a371f7;
+  --chart-grid: var(--border);
+  --chart-label: var(--text-secondary);
+
+  /* feature-showcase 用（ライト時のみ使用・ダーク時は上書き） */
+  --bg-surface-dark: #161b22;
+  --text-on-dark: #e6edf3;
+  --text-on-dark-2: #8b949e;
+}
+
+/* ==========================================================================
+ * カラーパレット定義（v0.6.0）
+ * ==========================================================================
+ * 特異度の設計:
+ *   [data-palette="x"]                    (0,1,0) … :root と同特異度・後勝ちでライト値が有効
+ *   [data-palette="x"][data-theme="dark"] (0,2,0) … [data-theme="dark"] に勝ちダーク値が有効
+ * ライト側は Tailwind 50/100 系の淡色、ダーク側は各 accent と調和する深色面。
+ * ========================================================================== */
+
+/* ─── 🌊 Ocean（既定と同値・明示指定用） ─── */
+[data-palette='ocean'] {
+  --accent: #2563eb;
+  --accent-light: #eff6ff;
+  --accent-dim: #dbeafe;
+  --accent-on-dark: #58a6ff;
+}
+[data-palette='ocean'][data-theme='dark'] {
+  --accent: #58a6ff;
+  --accent-light: #1c2d3f;
+  --accent-dim: #1f3a57;
+}
+
+/* ─── 🌲 Forest（成長・サステナ） ─── */
+[data-palette='forest'] {
+  --accent: #059669;
+  --accent-light: #ecfdf5;
+  --accent-dim: #d1fae5;
+  --accent-on-dark: #34d399;
+}
+[data-palette='forest'][data-theme='dark'] {
+  --accent: #34d399;
+  --accent-light: #14291e;
+  --accent-dim: #1b3d2b;
+}
+
+/* ─── 🌅 Sunset（情熱・提案） ─── */
+[data-palette='sunset'] {
+  --accent: #ea580c;
+  --accent-light: #fff7ed;
+  --accent-dim: #ffedd5;
+  --accent-on-dark: #fb923c;
+}
+[data-palette='sunset'][data-theme='dark'] {
+  --accent: #fb923c;
+  --accent-light: #2f1d0e;
+  --accent-dim: #45290f;
+}
+
+/* ─── 🍇 Plum（創造・AI系） ─── */
+[data-palette='plum'] {
+  --accent: #7c3aed;
+  --accent-light: #f5f3ff;
+  --accent-dim: #ede9fe;
+  --accent-on-dark: #a78bfa;
+}
+[data-palette='plum'][data-theme='dark'] {
+  --accent: #a78bfa;
+  --accent-light: #221a38;
+  --accent-dim: #322659;
+}
+
+/* ─── ⬛ Graphite（ミニマル・モノトーン） ─── */
+[data-palette='graphite'] {
+  --accent: #334155;
+  --accent-light: #f1f5f9;
+  --accent-dim: #e2e8f0;
+  --accent-on-dark: #94a3b8;
+}
+[data-palette='graphite'][data-theme='dark'] {
+  --accent: #94a3b8;
+  --accent-light: #202834;
+  --accent-dim: #2b3648;
+}
+
+/* ─── 🔶 Ruby（情熱・警告に寄らない鮮やかな赤） ─── */
+[data-palette='ruby'] {
+  --accent: #dc2626;
+  --accent-light: #fef2f2;
+  --accent-dim: #fee2e2;
+  --accent-on-dark: #f87171;
+}
+[data-palette='ruby'][data-theme='dark'] {
+  --accent: #f87171;
+  --accent-light: #341414;
+  --accent-dim: #4a1c1c;
+}
+
+/* ─── ✨ Gold（高級感・信頼） ─── */
+[data-palette='gold'] {
+  --accent: #d97706;
+  --accent-light: #fffbeb;
+  --accent-dim: #fef3c7;
+  --accent-on-dark: #fbbf24;
+}
+[data-palette='gold'][data-theme='dark'] {
+  --accent: #fbbf24;
+  --accent-light: #372910;
+  --accent-dim: #4f3a17;
+}
+
+/* ==== slide-core.css ==== */
+/* slide-core.css
+ * 16:9固定サイズのスライドビューポートと、
+ * hero モード時のスケーリング・レイアウト。
+ * theme-vars.css の読み込み後に適用すること。
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg-body);
+  color: var(--text-primary);
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+/* ─── スケーラー（hero時: 絶対中央配置） ─── */
+.slide-scaler {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* JS: transform: translate(-50%, -50%) scale(ratio) */
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+  width: 960px;
+  height: 540px;
+}
+
+/* ─── スライド本体（960×540px 固定） ─── */
+.slide {
+  position: absolute;
+  inset: 0;
+  width: 960px;
+  height: 540px;
+  background: var(--bg-slide);
+  border-radius: 8px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ─── スライド内コンテンツラッパ ─── */
+/* list時にJS側でscale変換するためのラッパ。hero時はそのまま表示。 */
+.slide-inner {
+  width: 100%;
+  height: 100%;
+  padding: 52px 72px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* ==== nav-controls.css ==== */
+/* nav-controls.css
+ * 右上コントロールクラスタ（テーマ・ビュー切替・エクスポートボタン）、
+ * 左右ナビ矢印、プログレスバー、スライド番号。
+ *
+ * Phase 3 改修:
+ *   - .export-menu (ドロップダウンの親コンテナ) を追加
+ *   - .export-dropdown (ドロップダウン本体) を追加
+ *   - .kbd (キーボードショートカット表示) を追加
+ */
+
+/* ─── 右上コントロールクラスタ ─── */
+/* v0.4.10: .preview-pane 内部へ移設したため fixed → absolute
+   （.preview-pane は position: relative 済み・app.css）。 */
+.control-cluster {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  display: flex;
+  gap: 8px;
+  z-index: 100;
+}
+
+.control-cluster button {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  background: var(--nav-bg);
+  color: var(--nav-text);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.control-cluster button:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+[data-theme='dark'] .control-cluster button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* 今のビューで使えないボタン（🗒️ ノート・🎞️ サムネ帯、編集のみレイアウトでの一部）は
+   隠さず薄く表示する。ビューを切り替えてもボタンの数と位置が変わらない（v0.6.1）。 */
+.control-cluster > button:disabled,
+.control-cluster .export-menu > button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.control-cluster > button:disabled:hover,
+.control-cluster .export-menu > button:disabled:hover {
+  background: var(--nav-bg);
+}
+
+/* ─── モバイル幅でのControlCluster調整（v0.4.10） ─── */
+@media (max-width: 600px) {
+  .control-cluster {
+    top: 8px;
+    right: 8px;
+    gap: 4px;
+  }
+  .control-cluster button {
+    width: 32px;
+    height: 32px;
+    font-size: 15px;
+  }
+}
+
+/* ─── エクスポートメニュー（Phase 3 追加） ─── */
+/* .control-cluster 内の他のボタンと同じ形状を保ちつつ、
+   ドロップダウンメニューを抱える親コンテナ。 */
+.export-menu {
+  position: relative;
+  display: inline-block;
+}
+
+/* ─── エクスポートドロップダウン（Phase 3 追加） ─── */
+/* #export-toggle ボタンの下に表示されるメニューパネル。
+   hidden 属性で開閉する。 */
+.export-dropdown {
+  position: absolute;
+  top: 44px; /* control-cluster のボタン高さ 36px + gap 8px */
+  right: 0;
+  background: var(--bg-slide);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  padding: 6px;
+  min-width: 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 150;
+}
+
+.export-dropdown[hidden] {
+  display: none;
+}
+
+/* ─── ドロップダウン内のボタン（Phase 3 追加） ─── */
+/* control-cluster の他のボタンとは異なるスタイル（横長・左寄せテキスト）。
+   !important は使わず、より具体的なセレクタで上書きする。 */
+.control-cluster .export-dropdown button {
+  width: 100%;
+  height: auto;
+  background: transparent;
+  color: var(--text-primary);
+  border: none;
+  border-radius: 4px;
+  padding: 10px 12px;
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  transition: background 0.15s;
+}
+
+.control-cluster .export-dropdown button:hover {
+  background: var(--accent-light);
+  color: var(--accent);
+}
+
+[data-theme='dark'] .control-cluster .export-dropdown button:hover {
+  background: var(--accent-dim);
+  color: var(--accent);
+}
+
+/* ─── キーボードショートカット表示（Phase 3 追加） ─── */
+/* ドロップダウン内のボタン右端に表示される [P] [Shift+S] などの小バッジ。 */
+.export-dropdown .kbd {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 6px;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.control-cluster .export-dropdown button:hover .kbd {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ─── 左右ナビ矢印 ─── */
+.nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 80px;
+  background: var(--nav-bg);
+  color: var(--nav-text);
+  border: none;
+  border-radius: 4px;
+  font-size: 32px;
+  cursor: pointer;
+  opacity: 0.4;
+  transition: opacity 0.2s;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav-arrow:hover {
+  opacity: 0.85;
+}
+.nav-arrow.nav-prev {
+  left: 8px;
+}
+.nav-arrow.nav-next {
+  right: 8px;
+}
+.nav-arrow[hidden] {
+  display: none;
+}
+
+/* ─── プログレスバー（最上部） ─── */
+#progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--accent);
+  transition: width 0.3s ease;
+  z-index: 200;
+}
+
+/* ─── スライド番号（右下） ─── */
+#slide-counter {
+  position: absolute;
+  bottom: 16px;
+  right: 20px;
+  font-size: 13px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text-secondary);
+  z-index: 10;
+}
+
+/* ─── カラーパレットメニュー ─── */
+/* export-menu と同じドロップダウン規約（hidden 属性で開閉・外側クリックで閉じる）。 */
+.palette-menu {
+  position: relative;
+  display: inline-block;
+}
+.palette-dropdown {
+  position: absolute;
+  top: 44px;
+  right: 0;
+  background: var(--bg-slide);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  padding: 6px;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 150;
+}
+.palette-dropdown[hidden] {
+  display: none;
+}
+.control-cluster .palette-dropdown button {
+  width: 100%;
+  height: auto;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  transition: background 0.15s;
+}
+/* 絵文字アイコン */
+.control-cluster .palette-dropdown .palette-ico {
+  flex-shrink: 0;
+  width: 1.3em;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1;
+}
+/* 各項目の文字色＝そのパレット固有色（アクティブパレット非依存の固定色）。
+ * 注: 下記の色は theme-vars.css のパレット accent 値と重複管理。
+ *     パレットの色を変える場合は両ファイルを更新すること（意図的な例外）。 */
+.control-cluster .palette-dropdown button.pal-ocean {
+  color: #2563eb;
+}
+.control-cluster .palette-dropdown button.pal-forest {
+  color: #059669;
+}
+.control-cluster .palette-dropdown button.pal-sunset {
+  color: #ea580c;
+}
+.control-cluster .palette-dropdown button.pal-plum {
+  color: #7c3aed;
+}
+.control-cluster .palette-dropdown button.pal-graphite {
+  color: #334155;
+}
+.control-cluster .palette-dropdown button.pal-ruby {
+  color: #dc2626;
+}
+.control-cluster .palette-dropdown button.pal-gold {
+  color: #d97706;
+}
+[data-theme='dark'] .control-cluster .palette-dropdown button.pal-ocean {
+  color: #58a6ff;
+}
+[data-theme='dark'] .control-cluster .palette-dropdown button.pal-forest {
+  color: #34d399;
+}
+[data-theme='dark'] .control-cluster .palette-dropdown button.pal-sunset {
+  color: #fb923c;
+}
+[data-theme='dark'] .control-cluster .palette-dropdown button.pal-plum {
+  color: #a78bfa;
+}
+[data-theme='dark'] .control-cluster .palette-dropdown button.pal-graphite {
+  color: #94a3b8;
+}
+[data-theme='dark'] .control-cluster .palette-dropdown button.pal-ruby {
+  color: #f87171;
+}
+[data-theme='dark'] .control-cluster .palette-dropdown button.pal-gold {
+  color: #fbbf24;
+}
+/* ホバーは背景のみ変更（固有色を保持するため color は指定しない） */
+.control-cluster .palette-dropdown button:hover {
+  background: var(--accent-light);
+}
+[data-theme='dark'] .control-cluster .palette-dropdown button:hover {
+  background: var(--accent-dim);
+}
+.control-cluster .palette-dropdown button.is-active {
+  background: var(--accent-dim);
+  color: var(--accent);
+  font-weight: 600;
+}
+/* スワッチ（各パレットの accent 見本）。
+   UI 備品のため直接色指定を許容（スライド内 SVG の色直書き禁止ルールとは別扱い）。 */
+.palette-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+}
+.swatch-ocean {
+  background: #2563eb;
+}
+.swatch-forest {
+  background: #059669;
+}
+.swatch-sunset {
+  background: #ea580c;
+}
+.swatch-plum {
+  background: #7c3aed;
+}
+.swatch-graphite {
+  background: #334155;
+}
+.swatch-ruby {
+  background: #dc2626;
+}
+.swatch-gold {
+  background: #d97706;
+}
+
+/* ==========================================================================
+ * スピーカーノートのポップアップ（v0.6.0）
+ *   hero ビューの右上 🗒️ ボタン（#notes-toggle）で開く浮かぶパネル（非モーダル）。
+ *   書き出しHTML（core/standalone/notesPopup.ts）とアプリ（NotesPopup.tsx）で
+ *   同じ DOM・クラス名を使い、このCSSを共有する。
+ *   色は既存のCSS変数のみ（ライト/ダーク × 全パレットで読める）。
+ * ========================================================================== */
+/* 現在のスライドにノートが無いときは薄く見せる（押すと「（ノートなし）」） */
+.control-cluster #notes-toggle.is-empty {
+  opacity: 0.45;
+}
+
+.control-cluster #notes-toggle[aria-expanded='true'] {
+  background: var(--accent);
+  color: var(--nav-text);
+}
+
+/* ポップアップ本体: 右上ボタン群の真下。.export-dropdown と同じ置き方（top 44px）。 */
+.notes-popup {
+  position: absolute;
+  top: 44px;
+  right: 0;
+  width: min(360px, calc(100vw - 32px));
+  max-height: min(60vh, 480px);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-slide);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  z-index: 150;
+}
+
+.notes-popup[hidden] {
+  display: none;
+}
+
+/* 上部のヘッダー: 🗒️ ／ ◀ 前へ ／ 次へ ▶ ／（右寄せ）ページ番号 ／ ✕ */
+.notes-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+
+.notes-title {
+  padding: 0 4px 0 2px;
+}
+
+.notes-page {
+  margin-left: auto;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.notes-body {
+  flex: 1 1 auto;
+  min-height: 3em;
+  overflow-y: auto;
+  padding: 12px 14px;
+  font-size: 14px;
+  line-height: 1.7;
+  text-align: left;
+}
+
+.notes-body p {
+  margin: 0 0 0.7em;
+}
+
+.notes-body p:last-child {
+  margin-bottom: 0;
+}
+
+.notes-body .notes-empty {
+  color: var(--text-secondary);
+}
+
+/* .control-cluster button（36×36・暗い丸角）より具体的なセレクタで、ポップアップ内のボタンだけ上書きする */
+.control-cluster .notes-popup button {
+  width: auto;
+  height: auto;
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-size: 12px;
+  white-space: nowrap;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.control-cluster .notes-popup button:hover:not(:disabled) {
+  background: var(--accent-light);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+[data-theme='dark'] .control-cluster .notes-popup button:hover:not(:disabled) {
+  background: var(--accent-dim);
+}
+
+.control-cluster .notes-popup button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.control-cluster .notes-popup #notes-close {
+  padding: 2px 8px;
+  border: none;
+  background: transparent;
+  font-size: 14px;
+}
+
+@media (max-width: 600px) {
+  .notes-popup {
+    top: 40px;
+  }
+}
+
+/* ==== figure.css ==== */
+/* figure.css
+ * スライド内の画像フィギュア（.slide-figure）スタイル。
+ * 統合順の正は SKILL.md（参照ファイルガイド／Step 4）を参照。
+ */
+
+/* ─── フィギュアコンテナ ─── */
+.slide-figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+}
+
+/* ─── 画像本体 ─── */
+.slide-figure img {
+  max-width: 100%;
+  max-height: 200px;
+  /* スライド高さ 540px に対して余白を確保 */
+  object-fit: contain;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  display: block;
+}
+
+/* ─── 出典キャプション ─── */
+.slide-figure figcaption {
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+  text-align: center;
+  line-height: 1.4;
+}
+
+.slide-figure figcaption a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.slide-figure figcaption a:hover {
+  text-decoration: underline;
+}
+
+/* ─── フォールバックプレースホルダー ─── */
+.slide-figure-fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  max-height: 200px;
+  min-height: 80px;
+  border-radius: 6px;
+  border: 1px dashed var(--border);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  padding: 12px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.slide-figure-fallback .fallback-icon {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.slide-figure-fallback a {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.7rem;
+}
+
+/* ─── 画像右配置（リスト系スライドとの併用） ─── */
+.slide-with-figure {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.slide-with-figure .slide-figure {
+  width: 220px;
+  flex-shrink: 0;
+}
+
+/* ==== chart.css ==== */
+/* chart.css
+ * SVG グラフ要素のスタイル。
+ * 統合順の正は SKILL.md（参照ファイルガイド／Step 4）を参照。
+ *
+ * 設計原則:
+ *   1. 色のハードコード禁止。すべて theme-vars.css の --chart-* を参照する。
+ *   2. SVG はインライン展開のみ（<img src="*.svg"> 不可）。CSS 変数を効かせるため。
+ *   3. font-family は継承（本文の Noto Sans JP を引き継ぐ）。
+ */
+
+/* ─── チャートコンテナ ─── */
+.slide-chart {
+  width: 100%;
+  max-height: 320px;
+  display: block;
+  margin: 0 auto;
+}
+
+.chart-svg {
+  width: 100%;
+  height: auto;
+  max-height: 320px;
+  overflow: visible;
+  display: block;
+}
+
+/* ─── 系列色クラス（塗り：バー・ドーナツ・散布図点） ─── */
+.chart-series-1 {
+  fill: var(--chart-1);
+}
+.chart-series-2 {
+  fill: var(--chart-2);
+}
+.chart-series-3 {
+  fill: var(--chart-3);
+}
+.chart-series-4 {
+  fill: var(--chart-4);
+}
+.chart-series-5 {
+  fill: var(--chart-5);
+}
+
+/* ─── 系列色クラス（線：折れ線） ─── */
+.chart-line-1 {
+  stroke: var(--chart-1);
+  fill: none;
+  stroke-width: 2.5;
+}
+.chart-line-2 {
+  stroke: var(--chart-2);
+  fill: none;
+  stroke-width: 2.5;
+}
+.chart-line-3 {
+  stroke: var(--chart-3);
+  fill: none;
+  stroke-width: 2.5;
+}
+.chart-line-4 {
+  stroke: var(--chart-4);
+  fill: none;
+  stroke-width: 2.5;
+}
+.chart-line-5 {
+  stroke: var(--chart-5);
+  fill: none;
+  stroke-width: 2.5;
+}
+
+/* ─── 軸・グリッド ─── */
+.chart-axis {
+  stroke: var(--chart-grid);
+  stroke-width: 1;
+  fill: none;
+}
+
+.chart-grid-line {
+  stroke: var(--chart-grid);
+  stroke-width: 1;
+  stroke-dasharray: 2 3;
+  fill: none;
+}
+
+/* ─── ラベル・テキスト ─── */
+.chart-label {
+  fill: var(--chart-label);
+  font-size: 11px;
+  font-family: inherit;
+}
+
+.chart-axis-label {
+  fill: var(--text-secondary);
+  font-size: 10px;
+  font-family: inherit;
+}
+
+.chart-value {
+  fill: var(--text-primary);
+  font-size: 11px;
+  font-weight: 600;
+  font-family: inherit;
+}
+
+.chart-title {
+  fill: var(--text-primary);
+  font-size: 13px;
+  font-weight: 700;
+  font-family: inherit;
+}
+
+/* ─── 凡例 ─── */
+.chart-legend {
+  fill: var(--text-secondary);
+  font-size: 10px;
+  font-family: inherit;
+}
+
+/* ─── 出典 ─── */
+.chart-source {
+  fill: var(--text-secondary);
+  font-size: 9px;
+  font-family: inherit;
+  font-style: italic;
+}
+
+/* ─── ドット（折れ線頂点・散布図点） ─── */
+.chart-dot {
+  stroke: var(--bg-slide);
+  stroke-width: 1.5;
+}
+
+/* ==== diagram.css ==== */
+/* ============================================================
+ * diagram.css  —  インラインSVG図解スタイル
+ * 統合順の正は SKILL.md（参照ファイルガイド／Step 4）を参照。
+ * 原則: 色はすべて CSS変数経由（SVG属性への直書き #色 は禁止）。外部参照ゼロ。
+ *       アクセントは常に --accent（chart-1 と同思想）。
+ * ============================================================ */
+
+/* 図の外枠（slide-chart と同列の配置コンテナ） */
+.slide-diagram {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.diagram-svg {
+  width: 100%;
+  height: auto;
+  max-height: 420px;
+  overflow: visible;
+}
+
+/* ノード（矩形 / 円 共通） */
+.diagram-node {
+  fill: var(--bg-surface);
+  stroke: var(--border);
+  stroke-width: 1.5;
+}
+
+/* 強調ノード（1図につき主役を1つ程度） */
+.diagram-node-accent {
+  fill: var(--accent-dim);
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+/* ノード内テキスト */
+.diagram-label {
+  fill: var(--text-primary);
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+/* 補足テキスト（小） */
+.diagram-sublabel {
+  fill: var(--text-secondary);
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 13px;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+/* 接続線・矢印 */
+.diagram-edge {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+/* 矢印の頭（marker 内の path に付与） */
+.diagram-arrowhead {
+  fill: var(--accent);
+}
+
+/* 図の出典 */
+.diagram-source {
+  fill: var(--text-secondary);
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 13px;
+}
+
+/* 印刷時もコントラストを保つ（色はテーマ変数任せ） */
+@media print {
+  .diagram-svg {
+    max-height: none;
+  }
+}
+
+/* ==== list-view.css ==== */
+/* list-view.css
+ * 一覧表示モード（body[data-view="list"]）のスタイル。
+ * hero モードのスタイルを上書きするため、!important を多用している。
+ * slide-core.css の後に読み込むこと。
+ */
+
+/* ─── html・body: スクロール有効化 ─── */
+/* hero時は overflow:hidden のため、両方に !important で上書きが必要 */
+html[data-view='list'],
+body[data-view='list'] {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  height: auto !important;
+  min-height: 100vh;
+}
+
+/* ─── スケーラー: 縦並びフレックスに変換 ─── */
+body[data-view='list'] .slide-scaler {
+  position: relative;
+  top: auto;
+  left: auto;
+  width: 100%;
+  height: auto;
+  transform: none !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: 72px 5vw 64px;
+}
+
+/* ─── スライド枠: hero と同じ 960×540 の箱を丸ごと scale する（v0.6.1） ─── */
+/* --list-scale（= 表示幅 / 960）は JS が .slide-scaler に設定する。
+   箱の中身（.slide-inner を持たない型・.slide-point など絶対配置の要素）も同じ比率で縮むので、
+   狭い画面でも hero と同じ見た目になり、point の吹き出しが本文に重ならない。
+   scale() は レイアウト上の大きさを変えないため、負のマージンで縮んだ分の余白を詰める。
+   横は左右同量にして transform-origin: top center と釣り合わせ、中央に置く。 */
+body[data-view='list'] .slide {
+  --s: var(--list-scale, 1);
+  position: relative;
+  inset: auto;
+  width: 960px;
+  height: 540px;
+  margin: 0 calc(480px * (var(--s) - 1)) calc(540px * (var(--s) - 1));
+  transform: scale(var(--s));
+  transform-origin: top center;
+  overflow: hidden;
+  opacity: 1;
+  pointer-events: auto;
+  cursor: pointer;
+  flex-shrink: 0;
+  /* ホバーで浮かせる動きは個別の translate プロパティで行う。transform（縮小）に transition を
+     掛けると、初回表示で --list-scale が入る瞬間に 960px → 縮小後 のアニメーションが見えてしまう */
+  transition:
+    box-shadow 0.2s,
+    translate 0.2s;
+}
+
+body[data-view='list'] .slide:hover {
+  translate: 0 -4px;
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.4);
+}
+
+/* ─── スライド番号バッジ（右上） ─── */
+/* スライドごと縮むため、バッジだけ縮小の逆数で大きさを保つ（読める大きさのまま） */
+body[data-view='list'] .slide::after {
+  content: attr(data-num);
+  position: absolute;
+  top: calc(12px / var(--s));
+  right: calc(16px / var(--s));
+  font-size: calc(11px / var(--s));
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text-secondary);
+  background: var(--bg-surface);
+  padding: calc(3px / var(--s)) calc(8px / var(--s));
+  border-radius: calc(10px / var(--s));
+  border: 1px solid var(--border);
+  z-index: 5;
+}
+
+/* PNG/ZIP の書き出し中（対象に data-capture が付く間）は番号バッジを画像に写さない。
+   html2canvas は擬似要素を元のドキュメントのスタイルから読むため、複製側ではなくここで消す。
+   バッジは --list-scale の逆数で大きさを保つので、そのまま写ると大きく写ってしまう */
+.slide[data-capture]::after {
+  display: none !important;
+}
+
+/* ─── ナビ矢印・カウンター・プログレスバーを非表示 ─── */
+body[data-view='list'] .nav-arrow,
+body[data-view='list'] #slide-counter,
+body[data-view='list'] #progress-bar {
+  display: none;
+}
+
+/* ==========================================================================
+ * 高さ可変スライド — .slide-fit（Phase 5 追加）
+ * ==========================================================================
+ *
+ * 一覧テーブル・長いリストなど、960×540px に収まらないコンテンツ用。
+ * hero モードでは通常の 960×540 固定を維持（下部は非表示）。
+ * list モードでのみ高さをコンテンツに追従させる。
+ *
+ * 使い方: <section class="slide slide-fit" id="sN">
+ *
+ * 注意:
+ *   - hero モードの slide-core.css は変更不要（height:540px + overflow:hidden が防御）
+ *   - このクラスは「参照用の一覧表」に限定し、メインコンテンツには使わない
+ *   - print.css の @media print でも同様の高さ可変が必要なため、
+ *     print.css 側にも .slide-fit 対応ルールを追加すること
+ * ========================================================================== */
+
+/* ─── スライド枠: 高さ可変に（箱ごと scale しない。幅は従来どおり画面幅に追従） ─── */
+body[data-view='list'] .slide.slide-fit {
+  width: min(90vw, 960px);
+  height: fit-content;
+  min-height: 200px;
+  margin: 0;
+  transform: none;
+  overflow: visible;
+}
+
+/* slide-fit は縮小しないので、バッジも元の大きさに戻す */
+body[data-view='list'] .slide.slide-fit::after {
+  top: 12px;
+  right: 16px;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 10px;
+}
+
+/* ─── 内部コンテンツラッパ: absolute → relative に変更 ─── */
+/* 通常スライドは absolute + scale() で 960×540 を縮小表示するが、
+   slide-fit では relative + 親幅追従にしてコンテンツ全体を表示する。
+   scaleListSlides() の transform: scale() も無効化する。 */
+body[data-view='list'] .slide.slide-fit .slide-inner {
+  position: relative;
+  width: 100%;
+  height: auto;
+  min-height: 200px;
+  transform: none !important;
+  /* padding は通常スライドと同じ値を維持 */
+  padding: 32px 48px;
+}
+
+/* ─── slide-fit 内のテーブル: 横スクロール対応 ─── */
+/* テーブル幅がスライド幅を超える場合にも対応 */
+body[data-view='list'] .slide.slide-fit table {
+  width: 100%;
+  font-size: 0.82rem;
+  border-collapse: collapse;
+}
+
+body[data-view='list'] .slide.slide-fit td,
+body[data-view='list'] .slide.slide-fit th {
+  padding: 4px 8px;
+}
+
+/* ==== print.css ==== */
+/* print.css
+ * 印刷・PDF エクスポート用スタイル。
+ * 統合順の正は SKILL.md（参照ファイルガイド／Step 4）を参照。
+ * （必ず最後に読み込む。他の CSS を @media print で上書きするため）
+ *
+ * 設計原則:
+ *   1. hero / list どちらのモードから印刷しても 1 ページ = 1 スライドになる。
+ *      → @media print 内で hero モードの opacity/position/transform をすべて上書き。
+ *      → exportPDF() 経由でも Ctrl+P 直接押下でも同じ結果になる「二重防御」。
+ *   2. 印刷時はライトテーマ強制（インク節約・コントラスト確保）。
+ *   3. コントロール類・ナビ矢印・プログレスバーは非表示。
+ *   4. 用紙サイズは 16:9（1280×720px）固定、余白ゼロでスライドを全面表示。
+ *   5. .slide-fit スライドは印刷時も高さ可変（Phase 5 追加）。
+ */
+
+/* ==========================================================================
+ * 1. 画面表示時のエクスポート準備状態
+ *    exportPDF() が body に .exporting-pdf を付与する。
+ *    Ctrl+P 直接押下ルートでは付与されないため、@media print 側でも保険を入れる。
+ * ========================================================================== */
+body.exporting-pdf .slide {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+/* ==========================================================================
+ * 2. 印刷時のスタイル（@media print）
+ *    Ctrl+P 直接押下ルートでも 1 ページ = 1 スライドが成立するよう、
+ *    hero モードの CSS をここですべて上書きする。
+ * ========================================================================== */
+@media print {
+  /* ─── 2-1. ライトテーマ強制（CSS 変数の上書き） ─── */
+  /* :root と [data-theme="dark"] の両方を上書きする必要がある。
+       [data-theme="dark"] の方が特異度が高いため明示的に再定義。 */
+  :root,
+  [data-theme='dark'] {
+    --bg-body: #ffffff;
+    --bg-slide: #ffffff;
+    --bg-surface: #f8f9fa;
+    --text-primary: #000000;
+    --text-secondary: #4b5563;
+    --accent: #2563eb;
+    --accent-light: #eff6ff;
+    --accent-dim: #dbeafe;
+    --border: #d1d5db;
+    /* チャート系列色はライトテーマの値を維持 */
+    --chart-1: var(--accent);
+    --chart-2: #10b981;
+    --chart-3: #f59e0b;
+    --chart-4: #ef4444;
+    --chart-5: #8b5cf6;
+    --chart-grid: var(--border);
+    --chart-label: var(--text-secondary);
+  }
+
+  /* ─── 2-1b. パレット別 accent（v0.6.0）: 印刷時はライト値を強制 ─── */
+  /* 2-1 の上書きは Ocean（既定）の accent を含むため、他パレット選択時は
+       各パレットの「ライトテーマ値」をここで再指定する（インク節約・コントラスト確保）。
+       特異度 (0,2,1) > 2-1 の (0,1,0) および theme-vars.css のパレットルール (0,2,0)。 */
+  html[data-palette='forest'],
+  html[data-palette='forest'][data-theme='dark'] {
+    --accent: #059669;
+    --accent-light: #ecfdf5;
+    --accent-dim: #d1fae5;
+  }
+  html[data-palette='sunset'],
+  html[data-palette='sunset'][data-theme='dark'] {
+    --accent: #ea580c;
+    --accent-light: #fff7ed;
+    --accent-dim: #ffedd5;
+  }
+  html[data-palette='plum'],
+  html[data-palette='plum'][data-theme='dark'] {
+    --accent: #7c3aed;
+    --accent-light: #f5f3ff;
+    --accent-dim: #ede9fe;
+  }
+  html[data-palette='graphite'],
+  html[data-palette='graphite'][data-theme='dark'] {
+    --accent: #334155;
+    --accent-light: #f1f5f9;
+    --accent-dim: #e2e8f0;
+  }
+  /* ocean は 2-1 の既定値がそのまま適用される（再指定不要） */
+  /* ─── 2-2. ページ設定（1280×720 landscape、余白ゼロ） ─── */
+  @page {
+    size: 1280px 720px landscape;
+    margin: 0;
+  }
+
+  /* ─── 2-3. html / body のスクロール制御を解除 ─── */
+  /* hero モード時の overflow: hidden、list モード時の overflow: auto を
+       どちらも visible に戻し、印刷エンジンに任せる。 */
+  html,
+  body,
+  html[data-view='list'],
+  body[data-view='list'] {
+    overflow: visible !important;
+    height: auto !important;
+    min-height: 0 !important;
+    background: #ffffff !important;
+  }
+
+  /* ─── 2-3b. エディタモード（アプリ本体）でも全ページを印刷する ─── */
+  /* app.css が html[data-mode='edit'] / その body に overflow:hidden・height:100%（!important）を
+       かけているため、上の 2-3 より詳細度が高く、印刷でも「画面1枚分の高さ」で切られて
+       1ページ目しか PDF にならなかった。印刷時だけ解除する。app.css は print.css より後に
+       読み込まれ、同じ !important・同じ詳細度だと負けるため、:root を足して詳細度を上げている。
+       #root も height:100% の flex 列なので、高さを内容に任せる。 */
+  html[data-mode='edit']:root,
+  html[data-mode='edit']:root body {
+    overflow: visible !important;
+    height: auto !important;
+  }
+  #root {
+    height: auto !important;
+    display: block !important;
+  }
+
+  /* ─── 2-4. 非表示要素 ─── */
+  /* インタラクション系の UI は印刷物に含めない。 */
+  .control-cluster,
+  .export-menu,
+  .export-dropdown,
+  .nav-arrow,
+  .thumb-strip,
+  .overview-grid,
+  .help-popup,
+  #progress-bar,
+  #slide-counter {
+    display: none !important;
+  }
+
+  /* list モードのスライド番号バッジも非表示 */
+  body[data-view='list'] .slide::after {
+    display: none !important;
+  }
+
+  /* ─── 2-5. スケーラーを通常配置に戻す ─── */
+  /* hero モードの position: fixed + transform: scale() と、
+       list モードの flex 縦並びの両方を解除し、
+       単純な block 要素として印刷フローに乗せる。 */
+  .slide-scaler {
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    width: auto !important;
+    height: auto !important;
+    display: block !important;
+    padding: 0 !important;
+    gap: 0 !important;
+  }
+
+  /* ─── 2-6. スライド本体：1 ページ = 1 スライド ─── */
+  /* hero モードの absolute 配置・opacity: 0 を完全に解除し、
+       list モードの aspect-ratio・min/max width も解除する。 */
+  .slide,
+  body[data-view='list'] .slide {
+    position: relative !important;
+    inset: auto !important;
+    top: auto !important;
+    left: auto !important;
+    width: 1280px !important;
+    height: 720px !important;
+    max-width: none !important;
+    aspect-ratio: auto !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    cursor: default !important;
+    background: var(--bg-slide) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    transform: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    flex-shrink: 0 !important;
+
+    /* 1 スライド = 1 ページの強制 */
+    page-break-after: always;
+    break-after: page;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* 最終スライドの後ろに空白ページを作らない。
+       アプリ本体ではスライドの後ろに #slide-counter 等の兄弟要素があり :last-child に
+       当たらないため、:last-of-type（section）でも指定する。 */
+  .slide:last-child,
+  section.slide:last-of-type {
+    page-break-after: auto;
+    break-after: auto;
+  }
+
+  /* hover トランジションを切る（印刷で意味がない） */
+  .slide:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  /* ─── 2-6b. slide-fit：印刷時も高さ可変（Phase 5 追加） ─── */
+  /* 一覧テーブル等の長いコンテンツを持つスライドは、
+       印刷時にも高さを可変にして全件を出力する。
+       page-break-inside: avoid を解除し、ページ跨ぎを許容する。 */
+  .slide.slide-fit,
+  body[data-view='list'] .slide.slide-fit {
+    height: auto !important;
+    min-height: 720px;
+    overflow: visible !important;
+    page-break-inside: auto;
+    break-inside: auto;
+  }
+
+  .slide.slide-fit .slide-inner,
+  body[data-view='list'] .slide.slide-fit .slide-inner {
+    height: auto !important;
+    min-height: 720px;
+  }
+
+  /* ─── 2-6c. スピーカーノート（note:） ─── */
+  /* 既定（data-notes が on 以外）はノートを出さず、従来どおりスライドのみ。
+       ノート表示オンのときは「スライド（1ページ）＋その直下にノート」の配布資料形式にする:
+       スライドを高さ可変にし、ノートはスライド本体の下（次ページ以降に流れてよい）へ置く。
+       data-notes の切替UIは閲覧UI側の担当。 */
+  .slide-notes {
+    display: none !important;
+  }
+  body[data-notes='on'] .slide,
+  body[data-notes='on'][data-view='list'] .slide {
+    height: auto !important;
+    overflow: visible !important;
+    page-break-inside: auto;
+    break-inside: auto;
+  }
+  body[data-notes='on'] .slide .slide-notes {
+    display: block !important;
+    box-sizing: border-box;
+    width: 1280px;
+    padding: 28px 96px 40px;
+    color: var(--text-primary);
+    background: var(--bg-surface);
+    border-top: 2px solid var(--border);
+    font-size: 18px;
+    line-height: 1.7;
+  }
+  body[data-notes='on'] .slide .slide-notes p {
+    margin: 0 0 0.6em;
+  }
+
+  /* ─── 2-7. 内部コンテンツ：1280×720 にスケールアップ ─── */
+  /* 元の 960×540 から 1280×720 への拡大は transform でなく padding 調整で吸収。
+       transform: scale() を使うと印刷時に位置ずれが起きやすいため避ける。 */
+  .slide-inner,
+  body[data-view='list'] .slide-inner {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 1280px !important;
+    height: 720px !important;
+    padding: 70px 96px !important;
+    transform: none !important;
+    transform-origin: top left !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+
+  /* ─── 2-8. テキストの可読性確保 ─── */
+  /* リンク色を保持（PDF でクリック可能にするブラウザもある） */
+  a {
+    color: var(--accent) !important;
+    text-decoration: underline !important;
+  }
+
+  /* ─── 2-9. 画像・グラフのサイズ調整 ─── */
+  /* 印刷時は高さ制約を緩めて画質を担保 */
+  .slide-figure img {
+    max-height: 280px !important;
+  }
+  .slide-figure-fallback {
+    max-height: 280px !important;
+  }
+  .slide-chart {
+    max-height: 440px !important;
+  }
+  .chart-svg {
+    max-height: 440px !important;
+  }
+
+  /* ─── feature-showcase の右ダーク面は印刷でもダーク維持 ─── */
+  /* ライト強制の例外。構造の視認性を優先する。 */
+  .feature-right {
+    background: var(--bg-surface-dark) !important;
+  }
+  .feature-right,
+  .feature-right .feat-desc {
+    color: var(--text-on-dark) !important;
+  }
+  .feature-right .feature-num,
+  .feature-right .feat-label {
+    color: var(--accent-on-dark) !important;
+  }
+
+  /* ─── 2-10. 色の印刷を強制（重要） ─── */
+  /* ブラウザのデフォルトは「背景色・画像を印刷しない」設定の場合があるため、
+       全要素で color-adjust を exact に。アクセントカラーやチャートが
+       白黒にならないよう保証する。 */
+  *,
+  *::before,
+  *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+}
+
+/* ==== content.css ==== */
+/* content.css
+ * 元スキルでは「デッキ側 <style> に追記」されていたコンテンツCSSの静的移植。
+ * example-outputs の定番スタイル + feature-showcase / comparison-chart /
+ * レイアウトバリアント（two-col / title-xl / compact）を統合。
+ * 色は必ず CSS 変数経由（ハードコード禁止のルールを踏襲）。
+ */
+
+/* ─── 汎用 ─── */
+.slide-inner.top {
+  justify-content: flex-start;
+  padding-top: 48px;
+}
+.hl {
+  color: var(--accent);
+}
+code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.88em;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.08em 0.4em;
+}
+
+/* ─── title ─── */
+.eyebrow {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  margin-bottom: 1.1rem;
+}
+h1 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+}
+h1 .hl,
+h1 .accent {
+  color: var(--accent);
+}
+.subtitle {
+  margin-top: 1.1rem;
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.badges {
+  margin-top: 1.7rem;
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+.badge {
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.38em 0.85em;
+  border-radius: 999px;
+  background: var(--accent-dim);
+  color: var(--accent);
+}
+
+/* ─── 見出し・区切り ─── */
+.slide-title {
+  font-size: 1.55rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.slide-divider {
+  width: 56px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--accent);
+  margin: 0.7rem 0 1.2rem;
+}
+.lead {
+  font-size: 1.02rem;
+  line-height: 1.85;
+}
+.lead strong {
+  color: var(--accent);
+}
+
+/* ─── points ─── */
+ul.points {
+  list-style: none;
+}
+ul.points li {
+  position: relative;
+  padding: 0.4em 0 0.4em 1.4em;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+ul.points li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.9em;
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  background: var(--accent);
+}
+ul.points li strong {
+  color: var(--accent);
+}
+ul.points li .sub {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-top: 0.15em;
+  line-height: 1.5;
+}
+
+/* ─── summary（番号丸バッジ） ─── */
+.summary-list {
+  list-style: none;
+  counter-reset: s;
+}
+.summary-list li {
+  counter-increment: s;
+  position: relative;
+  padding: 0.5em 0 0.5em 2.3em;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.summary-list li::before {
+  content: counter(s);
+  position: absolute;
+  left: 0;
+  top: 0.4em;
+  width: 1.55em;
+  height: 1.55em;
+  background: var(--accent-dim);
+  color: var(--accent);
+  border-radius: 50%;
+  font-size: 0.82rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.summary-list li strong {
+  color: var(--accent);
+}
+.summary-list li .sub {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-top: 0.15em;
+}
+
+/* ─── table ─── */
+.cmp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  margin-top: 0.2rem;
+}
+.cmp-table th,
+.cmp-table td {
+  text-align: left;
+  padding: 0.45em 0.6em;
+  border-bottom: 1px solid var(--border);
+  line-height: 1.45;
+  vertical-align: top;
+}
+.cmp-table thead th {
+  background: var(--bg-surface);
+  font-weight: 700;
+  border-bottom: 2px solid var(--accent);
+}
+.cmp-table tbody th {
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.cmp-table td .hl {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* ─── sources ─── */
+ul.links {
+  list-style: none;
+}
+ul.links li {
+  padding: 0.4em 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+ul.links li a {
+  color: var(--accent);
+  text-decoration: none;
+  word-break: break-all;
+}
+ul.links li a:hover {
+  text-decoration: underline;
+}
+ul.links li .src-note {
+  color: var(--text-secondary);
+}
+
+/* ─── note ─── */
+.note {
+  margin-top: 1rem;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ─── figure フォールバック補助 ─── */
+.slide-figure-fallback .fallback-alt {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: 0.4rem;
+}
+
+/* ─── feature-showcase（v0.6.2 相当） ─── */
+.slide.feature-showcase .slide-inner {
+  flex-direction: row;
+  padding: 0;
+  gap: 0;
+}
+.feature-left {
+  flex: 1 1 50%;
+  padding: 52px 48px 52px 72px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--bg-slide);
+}
+.feature-left h2 {
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.feature-left .feat-lead {
+  margin-top: 1.1rem;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+/* 右面は常にダーク面。この面の強調色は --accent ではなく --accent-on-dark を使う
+ * （ライト側の --accent は暗い背景で読みにくい）。 */
+.feature-right {
+  flex: 1 1 50%;
+  padding: 52px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--bg-surface-dark);
+  color: var(--text-on-dark);
+  position: relative;
+}
+.feature-num {
+  position: absolute;
+  top: 28px;
+  right: 40px;
+  font-size: 3.2rem;
+  font-weight: 700;
+  color: var(--accent-on-dark);
+  opacity: 0.5;
+  font-family: 'JetBrains Mono', monospace;
+}
+.feat-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent-on-dark);
+  letter-spacing: 0.12em;
+}
+.feat-heading {
+  margin-top: 0.4rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.feat-sub {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-on-dark-2);
+  line-height: 1.6;
+}
+.feat-list {
+  list-style: none;
+  margin-top: 1.3rem;
+}
+.feat-list li {
+  display: flex;
+  gap: 0.7em;
+  padding: 0.45em 0;
+  align-items: baseline;
+}
+.feat-ico {
+  color: var(--accent-on-dark);
+  font-size: 0.7rem;
+}
+.feat-label {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+.feat-desc {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-on-dark-2);
+  margin-top: 0.1em;
+  line-height: 1.5;
+}
+
+/* ─── comparison-chart 左パネル ─── */
+.slide-with-description {
+  display: flex;
+  gap: 2.2rem;
+  align-items: center;
+  width: 100%;
+}
+.cmp-left {
+  flex: 0 0 38%;
+}
+.cmp-right {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.cmp-big {
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.1;
+}
+.cmp-big small {
+  font-size: 1.1rem;
+  margin-left: 0.25em;
+}
+.cmp-left h2 {
+  margin-top: 0.8rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+.cmp-divider {
+  width: 44px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--accent);
+  margin: 0.8rem 0;
+}
+.cmp-lead {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+}
+.cmp-stats {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.1rem;
+}
+.cmp-stat {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.7rem 0.9rem;
+}
+.cmp-stat-num {
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+.cmp-stat-label {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+}
+
+/* comparison-chart 用のSVG補助クラス（chart.css に無い追加分） */
+.chart-neutral {
+  fill: var(--border);
+}
+.chart-center-big {
+  font-size: 20px;
+  font-weight: 700;
+  fill: var(--text-primary);
+  font-family: inherit;
+}
+.chart-ba-arrow {
+  stroke: var(--text-secondary);
+  stroke-width: 3;
+  fill: none;
+}
+.chart-arrowhead {
+  fill: var(--text-secondary);
+}
+.diagram-center {
+  fill: var(--text-secondary);
+  font-size: 15px;
+}
+
+/* ─── レイアウトバリアント（slide-layouts.md） ─── */
+.layout-two-col {
+  columns: 2;
+  column-gap: 2rem;
+}
+.layout-two-col li {
+  break-inside: avoid;
+}
+.layout-title-xl h1 {
+  font-size: 3.2rem;
+}
+.layout-title-xl {
+  padding: 64px 88px;
+}
+ul.layout-compact li,
+ol.layout-compact li {
+  padding-top: 0.15em;
+  padding-bottom: 0.15em;
+  font-size: 0.88rem;
+}
+table.layout-compact th,
+table.layout-compact td {
+  padding: 0.3em 0.5em;
+  font-size: 0.76rem;
+}
+
+/* ─── split-image（v0.2.3: title 左テキスト＋右画像） ─── */
+.layout-split-image {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  padding: 0;
+  height: 100%;
+}
+.layout-split-image .split-text {
+  flex: 0 0 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48px 40px;
+  box-sizing: border-box;
+}
+.layout-split-image .split-image {
+  flex: 0 0 50%;
+  overflow: hidden;
+  position: relative;
+}
+.layout-split-image .split-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* split-image のテキスト側は余白調整 */
+.layout-split-image h1 {
+  font-size: 2.4rem;
+  margin: 0 0 0.3em;
+}
+.layout-split-image .subtitle {
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* feature-showcase: 左右反転
+ * データ（left:/right:）の意味は変えず、表示位置だけを入れ替える。
+ * 既存の .feature-showcase .slide-inner と詳細度が同点にならないよう明示的に上げている。 */
+.slide.feature-showcase .slide-inner.layout-reverse {
+  flex-direction: row-reverse;
+}
+
+/* figure: 分割レイアウト*/
+.figure-split {
+  display: flex;
+  gap: 2rem;
+  align-items: stretch;
+  flex: 1;
+  min-height: 0;
+}
+.figure-split--right {
+  flex-direction: row-reverse;
+}
+.figure-split-image {
+  flex: 0 0 48%;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--bg-surface);
+}
+.figure-split-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.figure-split-body {
+  flex: 1 1 48%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding-top: 0.75rem;
+}
+.figure-split-body figcaption {
+  margin-top: auto;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* ==== app.css ==== */
+/* app.css
+ * アプリシェル（ヘッダー・エディタ2ペイン・プレビュー埋め込み）のスタイル。
+ * 元スキルのCSSは「デッキが全画面」を前提とするため、
+ * ここでエディタモード時のコンテナ制約への適応を行う。
+ */
+
+/* ─── エディタモードでは html/body のスクロール制御をアプリ側が持つ ─── */
+html[data-mode='edit'],
+html[data-mode='edit'] body {
+  overflow: hidden !important;
+  height: 100% !important;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── ヘッダー ─── */
+.app-header {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 16px;
+  background: var(--bg-slide);
+  border-bottom: 1px solid var(--border);
+  z-index: 1200;
+}
+.app-header .app-logo {
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+.app-header .app-logo .hl {
+  color: var(--accent);
+}
+.app-header .deck-title {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.app-header button {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 0.8rem;
+  font-family: inherit;
+  padding: 0.35em 0.9em;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.app-header button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.app-header button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.app-header button.primary:hover {
+  opacity: 0.88;
+  color: #fff;
+}
+
+/* ─── 2ペインレイアウト ─── */
+.workspace {
+  flex: 1 1 auto;
+  display: flex;
+  min-height: 0;
+}
+.editor-pane {
+  flex: 0 0 44%;
+  min-width: 320px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--border);
+  background: var(--bg-slide);
+}
+.editor-pane textarea {
+  flex: 1 1 auto;
+  width: 100%;
+  resize: none;
+  border: none;
+  outline: none;
+  padding: 16px 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--text-primary);
+  background: var(--bg-slide);
+  tab-size: 2;
+}
+.editor-status {
+  flex: 0 0 auto;
+  padding: 6px 14px;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 12px;
+}
+/* ─── エディタ内 MD保存ボタン（v0.1.2 追加） ─── */
+.status-save-btn {
+  margin-left: auto;
+  padding: 2px 10px;
+  font-size: 0.72rem;
+  font-family: inherit;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    color 0.15s,
+    border-color 0.15s;
+}
+.status-save-btn:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* ─── 警告パネル ─── */
+.warnings-panel {
+  flex: 0 0 auto;
+  max-height: 130px;
+  overflow-y: auto;
+  border-top: 1px solid var(--border);
+  background: var(--bg-surface);
+  padding: 8px 14px;
+  font-size: 0.72rem;
+  line-height: 1.6;
+}
+.warnings-panel .warn-item {
+  color: var(--text-secondary);
+}
+.warnings-panel .warn-item::before {
+  content: '⚠ ';
+}
+
+/* ─── プレビューペイン ─── */
+.preview-pane {
+  flex: 1 1 auto;
+  position: relative;
+  min-width: 0;
+  background: var(--bg-body);
+  overflow: hidden;
+}
+
+/* deck-container: present モードでは全画面、edit モードではペイン内 */
+.deck-container {
+  position: absolute;
+  inset: 0;
+}
+/* コンテナ埋め込みのため fixed → absolute に変更（元CSSの上書き） */
+.deck-container .slide-scaler {
+  position: absolute;
+}
+.deck-container #progress-bar {
+  position: absolute;
+}
+
+/* list ビューはコンテナ内スクロールに変換 */
+.deck-container[data-view='list'] {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.deck-container[data-view='list'] .slide-scaler {
+  position: relative;
+  top: auto;
+  left: auto;
+  width: 100%;
+  height: auto;
+  transform: none !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: 56px 4vw 64px;
+}
+/* 960×540 の箱ごと scale する（v0.6.1）。--list-scale（= 表示幅 / 960）は SlideDeck.tsx が
+   .slide-scaler に設定する。縮んだ分の余白は負のマージンで詰める（詳細は list-view.css） */
+.deck-container[data-view='list'] .slide {
+  --s: var(--list-scale, 1);
+  position: relative;
+  inset: auto;
+  width: 960px;
+  height: 540px;
+  margin: 0 calc(480px * (var(--s) - 1)) calc(540px * (var(--s) - 1));
+  transform: scale(var(--s));
+  transform-origin: top center;
+  overflow: hidden;
+  opacity: 1;
+  pointer-events: auto;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+/* slide-fit: list時は高さ可変・箱ごと scale しない（元 list-view.css の思想を踏襲） */
+.deck-container[data-view='list'] .slide.slide-fit {
+  width: min(90%, 960px);
+  height: auto;
+  margin: 0;
+  transform: none;
+}
+.deck-container[data-view='list'] .slide.slide-fit .slide-inner {
+  position: relative;
+  height: auto;
+  min-height: 540px;
+}
+/* スライド番号バッジ（listビュー）。スライドごと縮むため縮小の逆数で大きさを保つ */
+.deck-container[data-view='list'] .slide::after {
+  content: attr(data-num);
+  position: absolute;
+  right: calc(10px / var(--s));
+  bottom: calc(8px / var(--s));
+  font-size: calc(11px / var(--s));
+  color: var(--text-secondary);
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.1em 0.7em;
+  z-index: 5;
+}
+.deck-container[data-view='list'] .slide.slide-fit::after {
+  right: 10px;
+  bottom: 8px;
+  font-size: 0.7rem;
+}
+
+/* 空デッキプレースホルダ */
+.empty-deck {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  text-align: center;
+  line-height: 2;
+}
+
+/* ─── プロンプトモーダル ─── */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+.modal {
+  width: min(720px, 92vw);
+  max-height: 84vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-slide);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 16px 60px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+.modal-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.modal-head input {
+  flex: 1 1 auto;
+  font-family: inherit;
+  font-size: 0.85rem;
+  padding: 0.35em 0.7em;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+}
+.modal-body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 14px 16px;
+}
+.modal-body pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  line-height: 1.65;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+.modal-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 10px 16px;
+  border-top: 1px solid var(--border);
+}
+.modal-foot button {
+  font-family: inherit;
+  font-size: 0.82rem;
+  padding: 0.4em 1.1em;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+.modal-foot button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* ─── present モードではヘッダーを最小化 ─── */
+html[data-mode='present'] .app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: transparent;
+  border-bottom: none;
+  pointer-events: none;
+}
+html[data-mode='present'] .app-header > * {
+  pointer-events: auto;
+}
+html[data-mode='present'] .app-header .deck-title,
+html[data-mode='present'] .app-header .app-logo {
+  display: none;
+}
+
+/* 印刷時はアプリUIを隠す */
+@media print {
+  .app-header,
+  .editor-pane,
+  .control-cluster,
+  .warnings-panel {
+    display: none !important;
+  }
+  .workspace {
+    display: block;
+  }
+  .preview-pane,
+  .deck-container {
+    position: static !important;
+    overflow: visible !important;
+  }
+}
+
+/* v0.2.4: deckLint 警告パネル */
+.lint-panel {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.lint-panel--empty {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+.lint-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  padding: 4px 6px;
+  border-radius: 4px;
+}
+.lint-item--error {
+  background: rgba(220, 38, 38, 0.08);
+}
+.lint-item--warn {
+  background: rgba(217, 119, 6, 0.08);
+}
+.lint-item--info {
+  background: rgba(37, 99, 235, 0.08);
+}
+.lint-message {
+  flex: 1;
+}
+.lint-jump {
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+
+/* v0.2.7: editor-toolbar / template-menu */
+.editor-toolbar {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-surface);
+}
+
+.template-menu {
+  position: relative;
+}
+.template-menu__trigger {
+  font-size: 0.75rem;
+  font-family: inherit;
+  padding: 3px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-slide);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+.template-menu__trigger:hover,
+.template-menu__trigger[aria-expanded='true'] {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.template-menu__panel {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 1300;
+  min-width: 220px;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 6px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-slide);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+}
+.template-menu__group-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  padding: 6px 8px 2px;
+}
+.template-menu__item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-size: 0.78rem;
+  font-family: inherit;
+  padding: 5px 8px;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+.template-menu__item:hover {
+  background: var(--accent-light);
+  color: var(--accent);
+}
+
+/* v0.2.8: help-modal / help-toast */
+.help-modal {
+  width: min(720px, 92vw);
+  max-height: 82vh;
+  display: flex;
+  flex-direction: column;
+}
+.help-modal__tabs {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+}
+.help-modal__tabs button {
+  font-size: 0.72rem;
+  font-family: inherit;
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-slide);
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.help-modal__tabs button.active,
+.help-modal__tabs button[aria-pressed='true'] {
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+}
+.help-modal__body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+}
+.help-modal__cheatsheet {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.help-modal__cheatsheet li {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+.help-modal__cheat-label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+.help-modal__cheatsheet pre {
+  margin: 0;
+  font-size: 0.72rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.help-modal__shortcuts {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+.help-modal__shortcuts td {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.help-modal__shortcuts kbd {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.76rem;
+  padding: 2px 6px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--bg-surface);
+}
+.help-modal__rules {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 0.86rem;
+  line-height: 1.9;
+}
+
+.help-toast {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1400;
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: var(--text-primary);
+  color: var(--bg-slide);
+  font-size: 0.8rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
+  cursor: pointer;
+  animation: help-toast-fade 6s ease forwards;
+}
+@keyframes help-toast-fade {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* v0.2.8-fix: help-modal cheat-code copy button */
+.help-modal__cheat-code {
+  position: relative;
+}
+.help-modal__copy-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 1;
+  font-size: 0.8rem;
+  line-height: 1;
+  padding: 4px 6px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-slide);
+  color: var(--text-secondary);
+  cursor: pointer;
+  opacity: 0.7;
+}
+.help-modal__copy-btn:hover {
+  opacity: 1;
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ==== steps.css ==== */
+/* steps.css — v0.2.0 Studio拡張のスタイルを1ファイルに集約。
+ *
+ * 収録内容:
+ *   §1 スライド単位ダーク（.slide--dark のCSS変数上書き）
+ *   §2 共通ヘッダ拡張（.slide-badge / .slide-lead / .slide-point）
+ *   §3 steps type（カード型ステップフロー・ratio帯）
+ *
+ * 設計:
+ * - 色は必ずCSS変数経由（ハードコード禁止規約）。ただし §1 は
+ *   theme-vars.css の [data-theme='dark'] と同値の「変数定義」なので例外
+ * - 優先順位「グローバルテーマ < スライドtone」は、変数を .slide 要素に
+ *   定義し直すことで（継承の近接性により）!important なしで成立する
+ * - main.tsx で app.css の後に import する（新規セレクタのみのため順序に
+ *   よる既存スタイルへの影響はない）
+ * - SSOT リファクタ時に theme-vars / content への再配置を検討
+ */
+
+/* ==========================================================================
+ * §1 スライド単位ダーク（ディレクティブ tone: dark → .slide--dark）
+ * 値は theme-vars.css の [data-theme='dark'] 系と同一。
+ * グローバルテーマが既にダークの場合は同値上書き（無害）。
+ * ========================================================================== */
+
+.slide.slide--dark {
+  --bg-slide: #161b22;
+  --bg-surface: #21262d;
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --border: #30363d;
+  --accent: #58a6ff;
+  --accent-light: #1c2d3f;
+  --accent-dim: #1f3a57;
+  --chart-2: #3fb950;
+  --chart-3: #d29922;
+  --chart-4: #f85149;
+  --chart-5: #a371f7;
+  color: var(--text-primary);
+}
+
+/* パレット別 accent（theme-vars.css の [data-palette][data-theme='dark'] と同値） */
+[data-palette='forest'] .slide.slide--dark {
+  --accent: #34d399;
+  --accent-light: #14291e;
+  --accent-dim: #1b3d2b;
+}
+[data-palette='sunset'] .slide.slide--dark {
+  --accent: #fb923c;
+  --accent-light: #2f1d0e;
+  --accent-dim: #45290f;
+}
+[data-palette='plum'] .slide.slide--dark {
+  --accent: #a78bfa;
+  --accent-light: #221a38;
+  --accent-dim: #322659;
+}
+[data-palette='graphite'] .slide.slide--dark {
+  --accent: #94a3b8;
+  --accent-light: #202834;
+  --accent-dim: #2b3648;
+}
+
+/* ==========================================================================
+ * §2 共通ヘッダ拡張（badge / lead / point）
+ * ========================================================================== */
+
+/* 見出し行: badge ピルと slide-title を横並びに */
+.slide-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.slide-badge {
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 0.32em 0.85em;
+  border-radius: 6px;
+  background: var(--accent);
+  color: var(--bg-slide);
+}
+
+/* title スライド（h1）で badge 単独行になる場合の余白 */
+.slide-title-row + h1 {
+  margin-top: 0.8rem;
+}
+
+.slide-lead {
+  margin-top: 0.55rem;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* 下部の強調帯（point:） */
+.slide-point {
+  position: absolute;
+  left: 48px;
+  right: 48px;
+  bottom: 26px;
+  padding: 0.55em 1.1em;
+  border-radius: 6px;
+  background: var(--bg-surface-dark);
+  color: var(--text-on-dark);
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.slide-point::before {
+  content: '💡 ';
+}
+/* point帯は常にダーク面（--bg-surface-dark）。ライト側の --accent（濃い青など）は
+ * 暗い面で読みにくいため、暗い面用の強調色を使う（tone: dark の ==強調== と同じ色合い）。
+ * tone: dark のスライドでは帯が面＋枠のパネルに変わり、スライドの --accent がそのまま読めるため対象外。 */
+.slide:not(.slide--dark) .slide-point .hl {
+  color: var(--accent-on-dark);
+}
+/* ダークスライド上では地色と同化するため、面＋枠のパネルに切り替える */
+.slide--dark .slide-point {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+
+/* スピーカーノート（note:）。既定は非表示（HTML側にも hidden 属性あり）。
+ * 表示の切替（body[data-notes='on']）は閲覧UI側の担当。印刷時の表示ルールは print.css。
+ * 配色は既存変数のみ（ライト/ダーク × 全パレットで読める）。 */
+.slide-notes {
+  display: none;
+}
+
+/* ==========================================================================
+ * §3 steps（カード型ステップフロー）
+ * ========================================================================== */
+
+.steps-flow {
+  display: flex;
+  align-items: stretch;
+  gap: 44px;
+  margin-top: 0.6rem;
+}
+
+/* 系統色の順繰り割当（決定論）。--chart-1 は var(--accent) 参照のため
+ * パレット・tone に自動追従する */
+.steps-item:nth-child(5n + 1) {
+  --step-color: var(--chart-1);
+}
+.steps-item:nth-child(5n + 2) {
+  --step-color: var(--chart-2);
+}
+.steps-item:nth-child(5n + 3) {
+  --step-color: var(--chart-3);
+}
+.steps-item:nth-child(5n + 4) {
+  --step-color: var(--chart-4);
+}
+.steps-item:nth-child(5n + 5) {
+  --step-color: var(--chart-5);
+}
+
+.steps-item {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  gap: 0.5rem;
+  padding: 1.3rem 0.9rem 1.1rem;
+  border-radius: 8px;
+  background: var(--bg-surface);
+}
+
+/* カード間の矢印（gap: 44px の中央に配置） */
+.steps-item + .steps-item::before {
+  content: '→';
+  position: absolute;
+  left: -34px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+/* cards スタイル: 上ボーダーで系統色を示す */
+.steps-cards .steps-item {
+  border-top: 4px solid var(--step-color);
+}
+
+/* circled スタイル: 連番丸バッジ */
+.steps-circled .steps-item {
+  padding-top: 1.1rem;
+}
+.steps-num {
+  width: 2.1em;
+  height: 2.1em;
+  border-radius: 50%;
+  background: var(--step-color);
+  color: var(--bg-slide);
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* カード単位の見た目変種 */
+.steps-item--dark {
+  background: var(--bg-surface-dark);
+  color: var(--text-on-dark);
+}
+.steps-item--dark .steps-desc {
+  color: var(--text-on-dark-2);
+}
+.steps-item--outline {
+  background: var(--bg-slide);
+  border: 2px solid var(--step-color);
+}
+.steps-cards .steps-item--outline {
+  /* outline は全周枠のため上ボーダーの二重線を避ける */
+  border-top-width: 2px;
+}
+
+.steps-icon {
+  font-size: 1.7rem;
+  line-height: 1;
+}
+.steps-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.steps-desc {
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+/* ─── ratio 帯（セグメント＋凡例） ─── */
+.steps-ratio-wrap {
+  margin-top: 1.6rem;
+}
+.steps-ratio {
+  display: flex;
+  height: 14px;
+  border-radius: 7px;
+  overflow: hidden;
+  background: var(--bg-surface);
+}
+.steps-ratio-seg:nth-child(5n + 1) {
+  background: var(--chart-1);
+}
+.steps-ratio-seg:nth-child(5n + 2) {
+  background: var(--chart-2);
+}
+.steps-ratio-seg:nth-child(5n + 3) {
+  background: var(--chart-3);
+}
+.steps-ratio-seg:nth-child(5n + 4) {
+  background: var(--chart-4);
+}
+.steps-ratio-seg:nth-child(5n + 5) {
+  background: var(--chart-5);
+}
+.steps-ratio-legend {
+  display: flex;
+  margin-top: 0.45rem;
+}
+.steps-ratio-label {
+  min-width: 0;
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 0.3em;
+}
+
+/* ─── 印刷（PDF）: point帯・カード面の背景色を維持 ─── */
+@media print {
+  .slide-point,
+  .steps-item,
+  .steps-num,
+  .steps-ratio-seg {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+/* ==========================================================================
+ * steps: layout: grid
+ * 矢印（::before）を非表示にし、flex-wrap で複数列に折り返す。
+ * style（cards/circled）とは直交する概念のため、既存クラスと併用する。
+ * ========================================================================== */
+.steps-grid {
+  /* grid4col: flex-wrapの実測px依存をやめ、CSS Gridで4列固定にする。
+   * hero view は 960x540px 固定・overflow: hidden（slide-fit は list view のみ有効）
+   * のため、items上限8個（2行x4列）を前提に設計している。 */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.steps-grid .steps-item + .steps-item::before {
+  content: none;
+}
+
+/* grid-top-padding: steps, layout: grid のみ上部余白を縮小。
+ * .slide-inner の padding: 52px 72px + justify-content: center を、
+ * このバリアントだけ padding-top: 26px（半分）+ 上詰めに上書きする。
+ * セレクタは .slide-inner.steps-inner-grid（詳細度0,2,0）で
+ * ベースの .slide-inner（0,1,0）より確実に優先させる。 */
+.slide-inner.steps-inner-grid {
+  padding-top: 26px;
+  justify-content: flex-start;
+}
+
+/* ==== timeline-sidelist.css ==== */
+/* timeline-sidelist.css — v0.2.1 Studio拡張のスタイル
+ *
+ * §1 diagram-timeline（タイムライン図）
+ * §2 chart layout: side-list（チャート＋サイドパネル）
+ *
+ * main.tsx で steps.css の後に import する。
+ */
+
+/* ==========================================================================
+ * §1 タイムライン図
+ * ========================================================================== */
+
+/* チック線: 軸より少し細いが、視覚的に軸〜ラベルまで連続した1本に見える太さ */
+.tl-tick {
+  stroke-width: 2;
+}
+
+/* マイルストーンの先端丸 */
+.tl-dot {
+  fill: var(--accent);
+}
+
+/* ==========================================================================
+ * §2 チャート side-list レイアウト
+ * ========================================================================== */
+
+.chart-side-list {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  flex: 1;
+  min-height: 0;
+}
+
+.chart-side-list > .slide-chart {
+  flex: 0 0 58%;
+  max-height: 280px;
+}
+
+.chart-side-panel {
+  flex: 1 1 38%;
+  min-width: 0;
+  overflow-y: auto;
+  max-height: 360px;
+}
+
+.chart-side-panel h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.6rem;
+  line-height: 1.35;
+}
+
+.chart-side-panel ul.points li {
+  font-size: 0.82rem;
+  padding: 0.25em 0 0.25em 1.2em;
+  line-height: 1.5;
+}
+
+.chart-side-panel ul.points li::before {
+  top: 0.65em;
+  width: 0.4em;
+  height: 0.4em;
+}
+
+.chart-side-panel ul.points li .sub {
+  font-size: 0.72rem;
+}
+
+/* ─── 印刷（PDF）───  */
+@media print {
+  .tl-dot {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+/* ==== contrast.css ==== */
+/* contrast.css
+ * contrast type（v0.2.3）: 「例示（左）vs 結論の連鎖（右）」の対比構図。
+ * - 左: タグ付き行のリスト（AIの推測、など）
+ * - 右: label/text の連鎖 + connector（矢印）+ tone: warn（弱点強調）
+ * 色は theme-vars.css の変数を参照し、ハードコード禁止規約に準拠。
+ */
+
+.contrast-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+  margin-top: 1rem;
+}
+
+/* ─── 左: 例示ボックス ─── */
+.contrast-example {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-surface);
+  padding: 1.2rem 1.4rem;
+}
+
+.contrast-example-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.8rem;
+  color: var(--text-primary);
+}
+
+.contrast-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.contrast-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+}
+
+.contrast-tag {
+  flex-shrink: 0;
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.15em 0.6em;
+  border-radius: 999px;
+  background: var(--accent-soft, var(--bg-surface));
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  white-space: nowrap;
+}
+
+.contrast-text {
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ─── 右: 結論の連鎖 ─── */
+.contrast-verdict {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.contrast-verdict-item {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-surface);
+  padding: 0.9rem 1.2rem;
+}
+
+.contrast-verdict-label {
+  flex-shrink: 0;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--accent);
+}
+
+.contrast-verdict-text {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+/* tone: warn（弱点の強調表示） */
+.contrast-verdict-item--warn {
+  border-color: var(--warn, #d97757);
+  background: var(--warn-soft, var(--bg-surface));
+}
+.contrast-verdict-item--warn .contrast-verdict-label {
+  color: var(--warn, #d97757);
+}
+
+/* connector（矢印・「↓ でも」等） */
+.contrast-connector {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+/* ダークトーン（tone: dark ディレクティブとの併存） */
+.slide--dark .contrast-example,
+.slide--dark .contrast-verdict-item {
+  background: var(--bg-surface-dark, var(--bg-surface));
+  border-color: var(--border-dark, var(--border));
+}
+
+/* ==== svg-figure.css ==== */
+/* svg-figure.css
+ * svg-figure type: mermaid journey / gantt 記法の独自SVG描画。
+ * 色は必ず theme-vars.css の --chart-* / --text-* / --accent 経由（ハードコード禁止規約に準拠）。
+ * main.tsx で contrast.css の後に import する。
+ */
+
+.svg-figure-body {
+  display: flex;
+  gap: 24px;
+  flex: 1;
+  min-height: 0;
+}
+.svg-figure-body .svg-figure-diagram {
+  flex: 1; /* notes無しなら全幅 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+.svg-figure-body.with-notes .svg-figure-diagram {
+  flex: 2; /* notes有りなら左2/3 */
+}
+.svg-figure-body .svg-figure-notes {
+  flex: 1; /* 右1/3 */
+  min-width: 0;
+  font-size: 0.9em;
+}
+.svg-figure-body .svg-figure-notes ul.points li {
+  font-size: 0.82rem;
+}
+
+.svg-figure-svg {
+  width: 100%;
+  height: auto;
+  max-height: 380px;
+  overflow: visible;
+  display: block;
+}
+
+/* ─── journey ─── */
+.svg-journey-band {
+  fill: var(--bg-surface);
+}
+.svg-journey-band--alt {
+  fill: var(--accent-light);
+}
+.svg-journey-section-label {
+  fill: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 700;
+  font-family: inherit;
+}
+.svg-journey-line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+.svg-journey-dot {
+  stroke: var(--bg-slide);
+  stroke-width: 1.5;
+}
+.svg-journey-task-label {
+  fill: var(--text-primary);
+  font-size: 12px;
+  font-family: inherit;
+}
+
+/* ─── gantt ─── */
+.svg-gantt-section-label {
+  fill: var(--text-primary);
+  font-size: 12px;
+  font-weight: 700;
+  font-family: inherit;
+}
+.svg-gantt-row-label {
+  fill: var(--text-secondary);
+  font-size: 11px;
+  font-family: inherit;
+}
+.svg-gantt-bar {
+  opacity: 0.9;
+}
+.svg-gantt-bar--done {
+  opacity: 0.4;
+}
+.svg-gantt-bar--active {
+  opacity: 1;
+  stroke: var(--bg-slide);
+  stroke-width: 1;
+}
+.svg-gantt-bar--crit {
+  stroke: var(--chart-4);
+  stroke-width: 2;
+}
+.svg-gantt-milestone {
+  stroke: var(--bg-slide);
+  stroke-width: 1;
+}
+
+/* ─── 印刷（PDF）: 色を維持 ─── */
+@media print {
+  .svg-journey-dot,
+  .svg-gantt-bar,
+  .svg-gantt-milestone {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+/* ==== overview.css ==== */
+/* overview.css
+ * 閲覧UI（v0.6.1）: サムネ帯（T）・一覧グリッド（G）・ページ番号入力（J）のスタイル。
+ * 書き出しHTML（core/standalone/overviewRuntime.ts）とアプリ（Overview*.tsx）で
+ * 同じ DOM・クラス名を使い、このCSSを共有する。設計: 02_viewer-ui-plan.md §4-1〜§4-5。
+ *
+ * サムネは「960×540 の箱（.thumb-stage）を scale() で縮小」して作る。縮小率は JS が
+ * .thumb-stage に設定する。中身はスライドの複製なので、パレット・ライト/ダークには
+ * CSS 変数だけで追従する（色は既存の変数のみ）。
+ * CSS 統合順: 一番最後（svg-figure の後）。印刷では print.css が非表示にする。
+ */
+
+/* ─── 右上ボタン（一覧・サムネ帯） ─── */
+.control-cluster #strip-toggle[aria-expanded='true'],
+.control-cluster #grid-toggle[aria-expanded='true'] {
+  background: var(--accent);
+  color: var(--nav-text);
+}
+
+/* ─── サムネ（帯・グリッド共通） ─── */
+.thumb {
+  position: relative;
+  flex: 0 0 auto;
+  width: 144px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: none;
+  color: var(--text-primary);
+  font: inherit;
+  cursor: pointer;
+}
+.thumb:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+.thumb-frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 6px;
+  background: var(--bg-slide);
+  box-shadow: 0 0 0 1px var(--border);
+}
+.thumb:hover .thumb-frame {
+  box-shadow: 0 0 0 2px var(--accent);
+}
+.thumb.is-current .thumb-frame {
+  box-shadow: 0 0 0 3px var(--accent);
+}
+.thumb-stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 960px;
+  height: 540px;
+  transform-origin: top left;
+  pointer-events: none;
+}
+/* 複製したスライドは hero の「非アクティブ（opacity 0）」ではなく常に見せる。
+   list ビューの縮小（--list-scale・負のマージン）も受けないよう固定する。 */
+.thumb-stage .slide {
+  position: absolute;
+  inset: 0;
+  width: 960px;
+  height: 540px;
+  margin: 0;
+  opacity: 1;
+  transform: none;
+  border-radius: 0;
+  box-shadow: none;
+  transition: none;
+  pointer-events: none;
+}
+.thumb-stage .slide::after {
+  display: none;
+}
+.thumb-num {
+  position: absolute;
+  left: 4px;
+  bottom: 4px;
+  z-index: 2;
+  padding: 1px 6px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  line-height: 1.5;
+}
+.thumb.is-current .thumb-num {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--nav-text);
+}
+
+/* ─── サムネ帯（hero・list の画面下部。既定は閉） ─── */
+.thumb-strip {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 60;
+  box-sizing: border-box;
+  height: 112px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 12px 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border);
+  scrollbar-width: thin;
+}
+.thumb-strip[hidden] {
+  display: none;
+}
+
+/* ─── 一覧グリッド（G。画面全体に重ねる） ─── */
+.overview-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  align-content: start;
+  padding: 64px 5vw 48px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--bg-body);
+}
+.overview-grid[hidden] {
+  display: none;
+}
+.overview-grid .thumb {
+  width: auto;
+}
+.overview-grid .thumb-num {
+  left: 8px;
+  bottom: 8px;
+  font-size: 12px;
+}
+
+/* アプリ: .deck-container（position: absolute）の内側に収める */
+.deck-container .thumb-strip,
+.deck-container .overview-grid {
+  position: absolute;
+}
+
+/* list でもサムネ帯を出す（v0.6.1）。
+   書き出しHTML: 画面下に固定（上の .thumb-strip）。最後のスライドが帯に隠れないよう下に余白を足す。
+   アプリ: list は .deck-container 内スクロールなので、帯はスクロール領域の底に貼り付ける（sticky）。
+   sticky は流れの末尾に自分の高さ分の場所を取るので、余白の追加は要らない。 */
+@media screen {
+  body[data-strip='on'][data-view='list'] .slide-scaler {
+    padding-bottom: calc(64px + 112px);
+  }
+  .deck-container[data-view='list'] .thumb-strip {
+    position: sticky;
+    bottom: 0;
+  }
+}
+
+/* ─── ページ番号の入力（#slide-counter をクリック／J） ─── */
+#slide-counter {
+  cursor: pointer;
+}
+#slide-counter .counter-input {
+  width: 4.5em;
+  padding: 1px 4px;
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  background: var(--bg-slide);
+  color: var(--text-primary);
+  font: inherit;
+  text-align: right;
+}
+#slide-counter .counter-input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* ─── ショートカットのヘルプ（書き出しHTMLの ? キー。core/standalone/helpPopup.ts） ─── */
+.help-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.35);
+}
+.help-popup[hidden] {
+  display: none;
+}
+.help-panel {
+  width: min(560px, 100%);
+  max-height: min(80vh, 640px);
+  overflow-y: auto;
+  background: var(--bg-slide);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+}
+.help-header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-slide);
+}
+.help-header h2 {
+  margin: 0;
+  font-size: 16px;
+}
+#help-close {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 14px;
+  cursor: pointer;
+}
+#help-close:hover,
+#help-close:focus-visible {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+}
+.help-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.help-table th,
+.help-table td {
+  padding: 7px 16px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+.help-table th {
+  width: 1%; /* キーの列は中身の幅に詰める（nowrap） */
+  font-weight: normal;
+  white-space: nowrap;
+  color: var(--text-secondary);
+}
+.help-table tr:last-child th,
+.help-table tr:last-child td {
+  border-bottom: none;
+}
+.help-table kbd {
+  display: inline-block;
+  min-width: 1.6em;
+  padding: 1px 6px;
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  text-align: center;
+}
+
+/* v0.4.10 Step7回帰対応: 共有テーマCSS（nav-controls.css）はSPAの.preview-pane
+   相対配置を前提にposition: absoluteだが、スタンドアロン出力には.preview-paneが
+   無くdocumentがそのままスクロールする（listビュー等）ため、position: fixedへ
+   戻してビューポートに固定する。 */
+.control-cluster{position:fixed}
+</style>
+</head>
+<body data-view="list">
+<div class="control-cluster">
+  <div id="notes-popup" class="notes-popup" role="dialog" aria-label="スピーカーノート" hidden>
+    <div class="notes-header">
+      <span class="notes-title" aria-hidden="true">🗒️</span>
+      <button id="notes-prev" type="button" onclick="navigate(-1)">◀ 前へ</button>
+      <button id="notes-next" type="button" onclick="navigate(1)">次へ ▶</button>
+      <span id="notes-page" class="notes-page"></span>
+      <button id="notes-close" type="button" onclick="closeNotes()" aria-label="ノートを閉じる" title="閉じる（Esc）">✕</button>
+    </div>
+    <div id="notes-body" class="notes-body"></div>
+  </div>
+  <button id="notes-toggle" type="button" onclick="toggleNotes()" title="ノート（N）" aria-label="スピーカーノート" aria-expanded="false">🗒️</button>
+  <button id="view-toggle" onclick="toggleView()" title="表示切替（V）">▭</button>
+  <button id="grid-toggle" type="button" onclick="toggleGrid()" title="一覧グリッド（G）" aria-label="一覧グリッド" aria-expanded="false">▦</button>
+  <button id="strip-toggle" type="button" onclick="toggleStrip()" title="サムネ帯（T）" aria-label="サムネ帯" aria-expanded="false">🎞️</button>
+  <button id="theme-toggle" onclick="toggleTheme()" title="テーマ切替"><span id="theme-icon">🌙</span></button>
+  <div class="palette-menu">
+    <button id="palette-toggle" onclick="togglePaletteMenu()" title="カラーパレット">🎨</button>
+    <div id="palette-dropdown" class="palette-dropdown" hidden role="menu">
+        <button type="button" role="menuitem" class="pal-ocean is-active" data-palette-opt="ocean" onclick="setPalette('ocean')"><span class="palette-ico">🌊</span>Ocean（既定）</button>
+        <button type="button" role="menuitem" class="pal-ruby" data-palette-opt="ruby" onclick="setPalette('ruby')"><span class="palette-ico">🔶</span>Ruby</button>
+        <button type="button" role="menuitem" class="pal-forest" data-palette-opt="forest" onclick="setPalette('forest')"><span class="palette-ico">🌲</span>Forest</button>
+        <button type="button" role="menuitem" class="pal-sunset" data-palette-opt="sunset" onclick="setPalette('sunset')"><span class="palette-ico">🌅</span>Sunset</button>
+        <button type="button" role="menuitem" class="pal-plum" data-palette-opt="plum" onclick="setPalette('plum')"><span class="palette-ico">🍇</span>Plum</button>
+        <button type="button" role="menuitem" class="pal-gold" data-palette-opt="gold" onclick="setPalette('gold')"><span class="palette-ico">✨</span>Gold</button>
+        <button type="button" role="menuitem" class="pal-graphite" data-palette-opt="graphite" onclick="setPalette('graphite')"><span class="palette-ico">⬛</span>Graphite</button>
+    </div>
+  </div>
+  <div class="export-menu">
+    <button id="export-toggle" onclick="toggleExportMenu()" title="エクスポート">📥</button>
+    <div id="export-dropdown" class="export-dropdown" hidden role="menu">
+      <button type="button" role="menuitem" onclick="exportPDF(); closeExportMenu();">📄 PDFとして印刷 <span class="kbd">P</span></button>
+      <button type="button" role="menuitem" onclick="exportSinglePNG(); closeExportMenu();">🖼️ このスライドをPNG <span class="kbd">Shift+S</span></button>
+      <button type="button" role="menuitem" onclick="exportAllPNG(); closeExportMenu();">📦 全スライドをZIP <span class="kbd">Shift+P</span></button>
+      <button type="button" role="menuitem" onclick="saveMd(); closeExportMenu();">📝 スライドMDを保存</button>
+    </div>
+  </div>
+</div>
+<div id="progress-bar"></div>
+<div class="slide-scaler">
+<button class="nav-arrow nav-prev" id="btn-prev" onclick="navigate(-1)" hidden>&#8249;</button>
+<button class="nav-arrow nav-next" id="btn-next" onclick="navigate(1)" hidden>&#8250;</button>
+<section id="s1" class="slide active" data-num="1 / 10"><div class="slide-inner"><h1>Coworkで数値の「なぜ」を<br/>書かせる手順</h1><p class="subtitle">メトリクスのナラティブ化：初めて読む人向けの解説</p><div class="badges"><span class="badge">技術・ハウツー</span><span class="badge">Claude Cowork</span><span class="badge">初学者向け</span></div></div><aside class="slide-notes" aria-label="スピーカーノート" hidden=""><p>元ページは Claude Academy のユースケース「メトリクスのナラティブ化」。この資料は、その解説メモをもとにしています。</p></aside></section>
+<section id="s2" class="slide" data-num="2 / 10"><div class="slide-inner"><div class="slide-title-row"><span class="slide-badge">全体像</span><div class="slide-title">この資料で分かること</div></div><p class="slide-lead">毎週の「なぜ数値が動いたのか」を、Coworkに下書きさせる流れ</p><div class="slide-divider"></div><ul class="points"><li><strong>ねらい</strong>：数値が動いた理由を、文章（ナラティブ）にまとめさせる</li><li><strong>材料</strong>：CSV、先週のナラティブ、チェンジログを1つのフォルダに置く</li><li><strong>頼み方</strong>：1つの依頼文に、異常探しから2つのチャートまで入れる</li><li><strong>育て方</strong>：スキルにして、毎週月曜の自動実行まで進める</li></ul></div><div class="slide-point">1回頼んで終わりにせず、スキルにして毎週回すところまでが一連の流れ</div></section>
+<section id="s3" class="slide" data-num="3 / 10"><div class="slide-inner"><div class="slide-title-row"><span class="slide-badge">用語</span><div class="slide-title">先に知っておく言葉</div></div><p class="slide-lead">【補足】解説メモの補足による説明です（本文に定義はありません）</p><div class="slide-divider"></div><ul class="points"><li><strong>ナラティブ</strong>：「何が起きたのか、なぜなのか」を説明する文章</li><li><strong>アクティベーションファネル</strong>：利用者が使い始めるまでの段階を並べたものと考えられる</li><li><strong>セグメント化</strong>：プラン、プラットフォーム、サインアップ元で分けて要因を特定すること</li><li><strong>チェンジログ</strong>：同じ期間にリリースされた内容の記録</li><li><strong>スキル</strong>：やり方をまとめて呼び出せるもの。<code>/metrics-review</code> がその例</li></ul></div></section>
+<section id="s4" class="slide" data-num="4 / 10"><div class="slide-inner"><div class="slide-title-row"><span class="slide-badge">準備</span><div class="slide-title">準備は、<span class="hl">3つ</span></div></div><p class="slide-lead">つなぐ → 置く → 残す</p><div class="slide-divider"></div><div class="steps-flow steps-cards"><div class="steps-item"><div class="steps-icon">🔌</div><div class="steps-title">コネクタを設定</div><div class="steps-desc">カスタマイズ → コネクタ。権限とアクセスは自分で管理する</div></div><div class="steps-item"><div class="steps-icon">📁</div><div class="steps-title">フォルダに集める</div><div class="steps-desc">CSV、先週のナラティブ、チェンジログを1つのフォルダに入れ、Coworkに指定する</div></div><div class="steps-item"><div class="steps-icon">🧠</div><div class="steps-title">プロジェクトを作る</div><div class="steps-desc">毎週書くなら、そのフォルダから。定義・指示・記憶が紐づいたままになる</div></div></div></div><div class="slide-point">Coworkは、ナラティブとチャート画像を同じフォルダに書き戻す</div></section>
+<section id="s5" class="slide" data-num="5 / 10"><div class="slide-inner"><div class="slide-title-row"><span class="slide-badge">依頼</span><div class="slide-title">依頼文は、<span class="hl">1文で5つ頼む</span></div></div><p class="slide-lead">今週のアクティベーションファネルの例</p><div class="slide-divider"></div><div class="steps-flow steps-circled"><div class="steps-item"><div class="steps-num">1</div><div class="steps-icon">🔍</div><div class="steps-title">異常探し</div><div class="steps-desc">動いたステップをファネル全体から探させる</div></div><div class="steps-item"><div class="steps-num">2</div><div class="steps-icon">🧩</div><div class="steps-title">セグメント化</div><div class="steps-desc">プラン、プラットフォーム、サインアップ元</div></div><div class="steps-item"><div class="steps-num">3</div><div class="steps-icon">🔗</div><div class="steps-title">照合</div><div class="steps-desc">同じ期間にリリースされた内容と突き合わせる</div></div><div class="steps-item"><div class="steps-num">4</div><div class="steps-icon">📊</div><div class="steps-title">チャート2つ</div><div class="steps-desc">論拠を証明するものだけに絞る</div></div><div class="steps-item"><div class="steps-num">5</div><div class="steps-icon">📝</div><div class="steps-title">ナラティブ</div><div class="steps-desc">何が起きたのか、なぜなのか</div></div></div></div><div class="slide-point">切り口、照合先、出力の形まで、先に指定しておく</div></section>
+<section id="s6" class="slide" data-num="6 / 10"><div class="slide-inner top"><div class="slide-title-row"><span class="slide-badge">工夫</span><div class="slide-title">依頼の6つの工夫</div></div><div class="slide-divider"></div><table class="cmp-table"><thead><tr><th>工夫</th><th>何のため</th></tr></thead><tbody><tr><th>根拠を求める</th><td>最初に気づいた指標に固執せず、動いたステップを探させる</td></tr><tr><th>セグメントを指定する</th><td>変化の大部分を説明する1つのセグメントを指させる</td></tr><tr><th>変化した内容と照合する</th><td>相関関係を、チームが行動できる因果仮説に変える</td></tr><tr><th>チャートの数に上限を置く</th><td>ビフォーアフターとセグメント分割に絞る</td></tr><tr><th>手本を追加する</th><td>構成と文体を自分に合わせてもらう</td></tr><tr><th>不確実な点の指摘を頼む</th><td>下書きで最初に確認すべき箇所が分かる</td></tr></tbody></table></div></section>
+<section id="s7" class="slide" data-num="7 / 10"><div class="slide-inner"><div class="slide-title-row"><span class="slide-badge">運用</span><div class="slide-title">育てて、回して、共有する</div></div><p class="slide-lead">1回の依頼で終わらせない</p><div class="slide-divider"></div><div class="steps-flow steps-cards"><div class="steps-item"><div class="steps-icon">🛠️</div><div class="steps-title">スキルにする</div><div class="steps-desc">これまでの作業をスキルにするか、フィードバックで /metrics-review を編集。数分の会話でよい</div></div><div class="steps-item"><div class="steps-icon">⏰</div><div class="steps-title">自動で実行</div><div class="steps-desc">/schedule で設定。例は毎週月曜の午前7時、週次で10%以上動いたものを指摘</div></div><div class="steps-item"><div class="steps-icon">🤝</div><div class="steps-title">共有する</div><div class="steps-desc">どのPMでも同じ構成で答えられ、誰の数値でも一貫したレポートになる</div></div></div></div><div class="slide-point">プラグインのスキルは、あくまで出発点</div></section>
+<section id="s8" class="slide" data-num="8 / 10"><div class="slide-inner"><div class="slide-title-row"><span class="slide-badge">注意</span><div class="slide-title">つまずく所と、本文に無いこと</div></div><div class="slide-divider"></div><ul class="points"><li><strong>プラグインが使えない</strong>：導入の手順は飛ばせる。ただし代わりの進め方は本文に書かれていない</li><li><strong>因果は仮説</strong>：チェンジログと照合しても確定ではない。自信がない部分から確認する</li><li><strong>本文に無い</strong>：CSVの列、チャートの種類、チェンジログの書式、スケジュールの制限</li><li><strong>出典</strong>：<a href="#" target="_blank" rel="noreferrer">解説メモ（README）</a>・<a href="https://academy.claude.com/ja/use-cases/metrics-narrative" target="_blank" rel="noreferrer">原本ページ</a></li></ul></div></section>
+<section id="s9" class="slide" data-num="9 / 10"><div class="slide-inner"><div class="slide-title-row"><span class="slide-badge">まとめ</span><div class="slide-title">まとめと、次の一歩</div></div><div class="slide-divider"></div><ol class="summary-list"><li>材料を1つのフォルダに集め、Coworkに指定する</li><li>異常探し、セグメント、照合、2つのチャート、ナラティブを1文で頼む</li><li>「自信がない部分」から確認し、気に入った進め方をスキルにする</li><li>毎週の説明が決まっているなら、自動実行にする</li></ol></div><div class="slide-point">次の一歩：自分の仕事で渡せる3種類のファイル（数値、前週の文章、変更の記録）が何にあたるか、書き出す</div></section>
+<section id="s10" class="slide" data-num="10 / 10"><div class="slide-inner top"><div class="slide-title-row"><div class="slide-title">出典</div></div><div class="slide-divider"></div><ul class="links"><li><a href="#" target="_blank" rel="noreferrer">解説メモ（README）</a><span class="src-note"> — 概要と総括</span></li><li><a href="#" target="_blank" rel="noreferrer">解説メモ（本体）</a><span class="src-note"> — 手順と6つの工夫</span></li><li><a href="#" target="_blank" rel="noreferrer">FAQ</a><span class="src-note"> — よくある質問</span></li><li><a href="https://academy.claude.com/ja/use-cases/metrics-narrative" target="_blank" rel="noreferrer">原本ページ</a><span class="src-note"> — Claude Academy（取得: 2026-11-24）</span></li></ul></div></section>
+<div id="slide-counter">1 / 10</div>
+</div>
+<div id="thumb-strip" class="thumb-strip" role="toolbar" aria-label="サムネイル帯" hidden></div>
+<div id="overview-grid" class="overview-grid" role="group" aria-label="スライド一覧" hidden></div>
+<div id="help-popup" class="help-popup" hidden>
+  <div class="help-panel" role="dialog" aria-modal="true" aria-labelledby="help-title">
+    <div class="help-header">
+      <h2 id="help-title">キーボードショートカット</h2>
+      <button id="help-close" type="button" onclick="closeHelp()" aria-label="ヘルプを閉じる" title="閉じる（Esc）">✕</button>
+    </div>
+    <table class="help-table">
+      <tbody>
+      <tr><th scope="row"><kbd>→</kbd> / <kbd>Space</kbd></th><td>次のスライドへ（一覧表示ではスクロール）</td></tr>
+      <tr><th scope="row"><kbd>←</kbd> / <kbd>Shift+Space</kbd></th><td>前のスライドへ（一覧表示ではスクロール）</td></tr>
+      <tr><th scope="row"><kbd>Home</kbd> / <kbd>End</kbd></th><td>先頭・末尾のスライドへ</td></tr>
+      <tr><th scope="row"><kbd>Enter</kbd></th><td>一覧表示で、現在のスライドを1枚表示で開く</td></tr>
+      <tr><th scope="row"><kbd>J</kbd></th><td>ページ番号を入力して移動（右下の「3 / 22」をクリックでも可）</td></tr>
+      <tr><th scope="row"><kbd>V</kbd></th><td>一覧表示 ⇄ 1枚表示</td></tr>
+      <tr><th scope="row"><kbd>G</kbd></th><td>一覧グリッドを開閉（矢印で選び、Enter で開く）</td></tr>
+      <tr><th scope="row"><kbd>T</kbd></th><td>サムネ帯を開閉（画面下部。クリックでそのページへ）</td></tr>
+      <tr><th scope="row"><kbd>N</kbd></th><td>スピーカーノートを開閉</td></tr>
+      <tr><th scope="row"><kbd>F</kbd></th><td>全画面表示</td></tr>
+      <tr><th scope="row"><kbd>P</kbd></th><td>PDFとして印刷</td></tr>
+      <tr><th scope="row"><kbd>Shift+S</kbd></th><td>現在のスライドをPNGで保存</td></tr>
+      <tr><th scope="row"><kbd>Shift+P</kbd></th><td>全スライドをZIP（PNG）で保存</td></tr>
+      <tr><th scope="row"><kbd>Esc</kbd></th><td>ヘルプ・グリッド・ノート・メニューを閉じる</td></tr>
+      <tr><th scope="row"><kbd>?</kbd></th><td>このヘルプを開閉</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+const DECK_TITLE = "Coworkで数値の「なぜ」を書かせる手順";
+const DECK_MD = "---\ntitle: Coworkで数値の「なぜ」を書かせる手順\npalette: ocean\npurpose: self-study\n---\n<!-- slide: title -->\n# Coworkで数値の「なぜ」を<br>書かせる手順\nsubtitle: メトリクスのナラティブ化：初めて読む人向けの解説\nbadges: [技術・ハウツー, Claude Cowork, 初学者向け]\nnote: 元ページは Claude Academy のユースケース「メトリクスのナラティブ化」。この資料は、その解説メモをもとにしています。\n---\n<!-- slide: points -->\nbadge: 全体像\n## この資料で分かること\nlead: 毎週の「なぜ数値が動いたのか」を、Coworkに下書きさせる流れ\n- **ねらい**：数値が動いた理由を、文章（ナラティブ）にまとめさせる\n- **材料**：CSV、先週のナラティブ、チェンジログを1つのフォルダに置く\n- **頼み方**：1つの依頼文に、異常探しから2つのチャートまで入れる\n- **育て方**：スキルにして、毎週月曜の自動実行まで進める\npoint: 1回頼んで終わりにせず、スキルにして毎週回すところまでが一連の流れ\n---\n<!-- slide: points -->\nbadge: 用語\n## 先に知っておく言葉\nlead: 【補足】解説メモの補足による説明です（本文に定義はありません）\n- **ナラティブ**：「何が起きたのか、なぜなのか」を説明する文章\n- **アクティベーションファネル**：利用者が使い始めるまでの段階を並べたものと考えられる\n- **セグメント化**：プラン、プラットフォーム、サインアップ元で分けて要因を特定すること\n- **チェンジログ**：同じ期間にリリースされた内容の記録\n- **スキル**：やり方をまとめて呼び出せるもの。`/metrics-review` がその例\n---\n<!-- slide: steps -->\nbadge: 準備\n## 準備は、==3つ==\nlead: つなぐ → 置く → 残す\n```steps\nstyle: cards\nitems:\n  - icon: \"🔌\"\n    title: コネクタを設定\n    desc: カスタマイズ → コネクタ。権限とアクセスは自分で管理する\n  - icon: \"📁\"\n    title: フォルダに集める\n    desc: CSV、先週のナラティブ、チェンジログを1つのフォルダに入れ、Coworkに指定する\n  - icon: \"🧠\"\n    title: プロジェクトを作る\n    desc: 毎週書くなら、そのフォルダから。定義・指示・記憶が紐づいたままになる\n```\npoint: Coworkは、ナラティブとチャート画像を同じフォルダに書き戻す\n---\n<!-- slide: steps -->\nbadge: 依頼\n## 依頼文は、==1文で5つ頼む==\nlead: 今週のアクティベーションファネルの例\n```steps\nstyle: circled\nitems:\n  - icon: \"🔍\"\n    title: 異常探し\n    desc: 動いたステップをファネル全体から探させる\n  - icon: \"🧩\"\n    title: セグメント化\n    desc: プラン、プラットフォーム、サインアップ元\n  - icon: \"🔗\"\n    title: 照合\n    desc: 同じ期間にリリースされた内容と突き合わせる\n  - icon: \"📊\"\n    title: チャート2つ\n    desc: 論拠を証明するものだけに絞る\n  - icon: \"📝\"\n    title: ナラティブ\n    desc: 何が起きたのか、なぜなのか\n```\npoint: 切り口、照合先、出力の形まで、先に指定しておく\n---\n<!-- slide: table -->\nbadge: 工夫\n## 依頼の6つの工夫\n| 工夫 | 何のため |\n|---|---|\n| 根拠を求める | 最初に気づいた指標に固執せず、動いたステップを探させる |\n| セグメントを指定する | 変化の大部分を説明する1つのセグメントを指させる |\n| 変化した内容と照合する | 相関関係を、チームが行動できる因果仮説に変える |\n| チャートの数に上限を置く | ビフォーアフターとセグメント分割に絞る |\n| 手本を追加する | 構成と文体を自分に合わせてもらう |\n| 不確実な点の指摘を頼む | 下書きで最初に確認すべき箇所が分かる |\n---\n<!-- slide: steps -->\nbadge: 運用\n## 育てて、回して、共有する\nlead: 1回の依頼で終わらせない\n```steps\nstyle: cards\nitems:\n  - icon: \"🛠️\"\n    title: スキルにする\n    desc: これまでの作業をスキルにするか、フィードバックで /metrics-review を編集。数分の会話でよい\n  - icon: \"⏰\"\n    title: 自動で実行\n    desc: /schedule で設定。例は毎週月曜の午前7時、週次で10%以上動いたものを指摘\n  - icon: \"🤝\"\n    title: 共有する\n    desc: どのPMでも同じ構成で答えられ、誰の数値でも一貫したレポートになる\n```\npoint: プラグインのスキルは、あくまで出発点\n---\n<!-- slide: points -->\nbadge: 注意\n## つまずく所と、本文に無いこと\n- **プラグインが使えない**：導入の手順は飛ばせる。ただし代わりの進め方は本文に書かれていない\n- **因果は仮説**：チェンジログと照合しても確定ではない。自信がない部分から確認する\n- **本文に無い**：CSVの列、チャートの種類、チェンジログの書式、スケジュールの制限\n- **出典**：[解説メモ（README）](./metrics-narrative_explained/README.md)・[原本ページ](https://academy.claude.com/ja/use-cases/metrics-narrative)\n---\n<!-- slide: summary -->\nbadge: まとめ\n## まとめと、次の一歩\n1. 材料を1つのフォルダに集め、Coworkに指定する\n2. 異常探し、セグメント、照合、2つのチャート、ナラティブを1文で頼む\n3. 「自信がない部分」から確認し、気に入った進め方をスキルにする\n4. 毎週の説明が決まっているなら、自動実行にする\npoint: 次の一歩：自分の仕事で渡せる3種類のファイル（数値、前週の文章、変更の記録）が何にあたるか、書き出す\n---\n<!-- slide: sources -->\n## 出典\n- [解説メモ（README）](./metrics-narrative_explained/README.md) — 概要と総括\n- [解説メモ（本体）](./metrics-narrative_explained/02_explanation_memo.md) — 手順と6つの工夫\n- [FAQ](./metrics-narrative_explained/11_question_and_answer.md) — よくある質問\n- [原本ページ](https://academy.claude.com/ja/use-cases/metrics-narrative) — Claude Academy（取得: 2026-11-24）\n";
+const PALETTES = ['ocean', 'forest', 'sunset', 'plum', 'graphite', 'ruby', 'gold'];
+
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+let cur = 0;
+let currentView = (document.documentElement.dataset.view === 'hero') ? 'hero' : 'list';
+let openMenu = null; // 'palette' | 'export' | null
+
+/* ─── ユーティリティ（exporters.ts の sanitize/timestamp と同一ロジック） ─── */
+function sanitizeName(s) {
+  return s.replace(/[\\\/:*?"<>|]/g, '_').slice(0, 60);
+}
+function timestampStr() {
+  var now = new Date();
+  function pad(n) { return String(n).padStart(2, '0'); }
+  return String(now.getFullYear()).slice(2) + pad(now.getMonth() + 1) + pad(now.getDate()) +
+    pad(now.getHours()) + pad(now.getMinutes()) + pad(now.getSeconds());
+}
+function downloadBlob(blob, filename) {
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+/* ─── fit-slide.js ─── */
+function fitSlide() {
+  var scaler = document.querySelector('.slide-scaler');
+  if (!scaler) return;
+  var vw = window.innerWidth;
+  var vh = window.innerHeight;
+  var ratio = Math.min(vw / 960, vh / 540) * 0.92;
+  scaler.style.transform = 'translate(-50%, -50%) scale(' + ratio + ')';
+}
+window.addEventListener('resize', function () {
+  if (currentView === 'hero') fitSlide();
+  if (currentView === 'list') scaleListSlides();
+});
+
+/* ─── theme-toggle.js ─── */
+function toggleTheme() {
+  var isDark = document.documentElement.dataset.theme === 'dark';
+  document.documentElement.dataset.theme = isDark ? 'light' : 'dark';
+  document.getElementById('theme-icon').textContent = isDark ? '🌙' : '☀️';
+}
+
+/* ─── view-toggle.js ─── */
+function toggleView() {
+  currentView = (currentView === 'hero') ? 'list' : 'hero';
+  applyView();
+}
+function applyView() {
+  document.documentElement.dataset.view = currentView;
+  document.body.dataset.view = currentView;
+  document.getElementById('view-toggle').textContent = (currentView === 'hero') ? '☰' : '▭';
+  if (currentView === 'hero') {
+    slides.forEach(function (s, i) { s.classList.toggle('active', i === cur); });
+    fitSlide();
+    update();
+  } else {
+    scaleListSlides();
+  }
+}
+/* list ビュー: 各スライドを 960×540 の箱ごと scale する（CSS が --list-scale を使う）。
+   .slide-inner を持たない型や point 吹き出しも hero と同じ比率で縮む。 */
+function scaleListSlides() {
+  requestAnimationFrame(function () {
+    var scaler = document.querySelector('.slide-scaler');
+    if (!scaler) return;
+    var w = Math.min(document.documentElement.clientWidth * 0.9, 960);
+    scaler.style.setProperty('--list-scale', String(w / 960));
+  });
+}
+slides.forEach(function (slide, i) {
+  slide.addEventListener('click', function () {
+    if (currentView !== 'list') return;
+    cur = i;
+    currentView = 'hero';
+    applyView();
+  });
+});
+
+/* ─── navigation.js ─── */
+function navigate(dir) {
+  if (currentView === 'list') return;
+  slides[cur].classList.remove('active');
+  cur = Math.max(0, Math.min(total - 1, cur + dir));
+  slides[cur].classList.add('active');
+  update();
+}
+function update() {
+  var bar = document.getElementById('progress-bar');
+  if (bar) bar.style.width = ((cur + 1) / total * 100) + '%';
+  var counter = document.getElementById('slide-counter');
+  if (counter) counter.textContent = (cur + 1) + ' / ' + total;
+  updateArrows();
+}
+function updateArrows() {
+  var prev = document.getElementById('btn-prev');
+  var next = document.getElementById('btn-next');
+  if (prev) prev.hidden = (currentView === 'list') || (cur === 0);
+  if (next) next.hidden = (currentView === 'list') || (cur === total - 1);
+}
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+  } else {
+    document.exitFullscreen();
+  }
+}
+
+document.addEventListener('keydown', function (e) {
+  var t = e.target;
+  if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+  if (e.ctrlKey || e.metaKey) return;
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); navigate(1); return; }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); navigate(-1); return; }
+  if (e.key === 'f' || e.key === 'F') { toggleFullscreen(); return; }
+  if (e.key === 'v' || e.key === 'V') { toggleView(); return; }
+  if (e.shiftKey && e.key === 'P') { e.preventDefault(); exportAllPNG(); return; }
+  if (e.shiftKey && (e.key === 'S' || e.key === 's')) { e.preventDefault(); exportSinglePNG(); return; }
+  if (!e.shiftKey && (e.key === 'p' || e.key === 'P')) { e.preventDefault(); exportPDF(); return; }
+  if (e.key === 'Escape' && openMenu) { closeAllMenus(); e.preventDefault(); }
+});
+
+/* ─── palette-toggle.js ─── */
+function setPalette(p) {
+  if (PALETTES.indexOf(p) === -1) return;
+  document.documentElement.dataset.palette = p;
+  document.querySelectorAll('[data-palette-opt]').forEach(function (btn) {
+    btn.classList.toggle('is-active', btn.getAttribute('data-palette-opt') === p);
+  });
+}
+function togglePaletteMenu() {
+  openMenu = (openMenu === 'palette') ? null : 'palette';
+  syncMenus();
+}
+
+/* ─── メニュー開閉共通（export-menu.js相当） ─── */
+function toggleExportMenu() {
+  openMenu = (openMenu === 'export') ? null : 'export';
+  syncMenus();
+}
+function closeExportMenu() { openMenu = null; syncMenus(); }
+function closeAllMenus() { openMenu = null; syncMenus(); }
+function syncMenus() {
+  var pd = document.getElementById('palette-dropdown');
+  var ed = document.getElementById('export-dropdown');
+  if (pd) pd.hidden = (openMenu !== 'palette');
+  if (ed) ed.hidden = (openMenu !== 'export');
+}
+document.addEventListener('click', function (e) {
+  if (!e.target.closest('.palette-menu') && !e.target.closest('.export-menu')) {
+    closeAllMenus();
+  }
+});
+
+/* ─── export-pdf.js ─── */
+function exportPDF() {
+  var prevView = currentView;
+  currentView = 'list';
+  applyView();
+  var restore = function () {
+    currentView = prevView;
+    applyView();
+    window.removeEventListener('afterprint', restore);
+  };
+  window.addEventListener('afterprint', restore);
+  requestAnimationFrame(function () { requestAnimationFrame(function () { window.print(); }); });
+}
+
+/* ─── export-png.js ─── */
+var HTML2CANVAS_CDN = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
+var JSZIP_CDN = 'https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js';
+
+function loadScript(src) {
+  return new Promise(function (resolve, reject) {
+    if (document.querySelector('script[src="' + src + '"]')) return resolve();
+    var s = document.createElement('script');
+    s.src = src;
+    s.async = false;
+    s.onload = function () { resolve(); };
+    s.onerror = function () { reject(new Error('Failed to load: ' + src)); };
+    document.head.appendChild(s);
+  });
+}
+function buildCanvasOptions() {
+  return {
+    width: 960,
+    height: 540,
+    scale: 2,
+    useCORS: true,
+    allowTaint: false,
+    backgroundColor: getComputedStyle(document.body).backgroundColor,
+    logging: false,
+    // スピーカーノート（note:）はスライド画像に写さない（PNG/ZIPは常にスライドのみ）
+    ignoreElements: function (el) {
+      return !!(el.classList && el.classList.contains('slide-notes'));
+    },
+    onclone: function (clonedDoc) {
+      // hero ビューでは親 .slide-scaler に scale(ratio) がかかっている。
+      // 残すと PNG が拡大・切れ・文字間隔崩れを起こすため外す。
+      var sc = clonedDoc.querySelector('.slide-scaler');
+      if (sc) sc.style.setProperty('transform', 'none', 'important');
+      // キャプチャ対象を 960×540・transform なし・不透明に固定する
+      // （list ビューの縮小幅 / 非アクティブスライドの opacity:0 に左右されない）
+      var t = clonedDoc.querySelector('[data-capture]');
+      if (t) {
+        [['width', '960px'], ['height', '540px'], ['aspect-ratio', 'auto'], ['transform', 'none'], ['margin', '0'], ['opacity', '1']]
+          .forEach(function (kv) { t.style.setProperty(kv[0], kv[1], 'important'); });
+        var inner = t.querySelector('.slide-inner');
+        if (inner) inner.style.setProperty('transform', 'none', 'important');
+      }
+    },
+  };
+}
+/* 対象スライドに印を付けて html2canvas に渡す（onclone が印で対象を特定する） */
+async function captureSlide(slide) {
+  slide.setAttribute('data-capture', '1');
+  try {
+    return await html2canvas(slide, buildCanvasOptions());
+  } finally {
+    slide.removeAttribute('data-capture');
+  }
+}
+function showExportError(action, error) {
+  var message = [
+    action + 'に失敗しました。', '',
+    '考えられる原因：',
+    '・ネットワーク接続が不安定（CDN ロード失敗）',
+    '・外部画像が CORS 未対応',
+    '・ブラウザがダウンロードをブロックした', '',
+    'オフライン環境では P キーから PDF エクスポートをご利用ください。', '',
+    '詳細: ' + (error.message || error),
+  ].join('\n');
+  alert(message);
+  console.error('[' + action + '] ' + (error.message || error), error);
+}
+async function exportSinglePNG() {
+  try {
+    await loadScript(HTML2CANVAS_CDN);
+    var canvas = await captureSlide(slides[cur]);
+    canvas.toBlob(function (blob) {
+      if (!blob) return showExportError('PNGエクスポート', new Error('PNG生成に失敗しました'));
+      downloadBlob(blob, sanitizeName(DECK_TITLE) + '-slide' + (cur + 1) + '.png');
+    }, 'image/png');
+  } catch (e) {
+    showExportError('PNGエクスポート', e);
+  }
+}
+async function exportAllPNG() {
+  try {
+    await Promise.all([loadScript(HTML2CANVAS_CDN), loadScript(JSZIP_CDN)]);
+    var zip = new JSZip();
+    for (var i = 0; i < slides.length; i++) {
+      var canvas = await captureSlide(slides[i]);
+      var dataUrl = canvas.toDataURL('image/png');
+      var base64 = dataUrl.split(',')[1];
+      zip.file('slide-' + String(i + 1).padStart(2, '0') + '.png', base64, { base64: true });
+    }
+    var blob = await zip.generateAsync({ type: 'blob' });
+    downloadBlob(blob, sanitizeName(DECK_TITLE) + '-slides.zip');
+  } catch (e) {
+    showExportError('ZIPエクスポート', e);
+  }
+}
+
+/* ─── MD保存（アプリ固有・埋め込んだ原稿をそのままダウンロード） ─── */
+function saveMd() {
+  var ts = timestampStr();
+  var safe = sanitizeName(DECK_TITLE);
+  var filename = safe ? ('MD-' + ts + '_Slide-' + safe + '.md') : ('MD-' + ts + '_Slide.md');
+  downloadBlob(new Blob([DECK_MD], { type: 'text/markdown;charset=utf-8' }), filename);
+}
+
+/* ─── 初期化 ─── */
+applyView();
+
+
+/* ─── ノートポップアップ（hero ビュー専用・v0.6.0） ─── */
+var notesOpen = false;
+function currentNotesHtml() {
+  var aside = slides[cur] ? slides[cur].querySelector('.slide-notes') : null;
+  return aside ? aside.innerHTML : '';
+}
+function refreshNotes() {
+  var btn = document.getElementById('notes-toggle');
+  var pop = document.getElementById('notes-popup');
+  if (!btn || !pop) return;
+  var hero = (currentView === 'hero');
+  var html = currentNotesHtml();
+  btn.classList.toggle('is-empty', !html);
+  btn.setAttribute('aria-expanded', String(hero && notesOpen));
+  pop.hidden = !(hero && notesOpen);
+  if (pop.hidden) return;
+  var body = document.getElementById('notes-body');
+  body.innerHTML = html || '<p class="notes-empty">（ノートなし）</p>';
+  body.scrollTop = 0;
+  document.getElementById('notes-page').textContent = (cur + 1) + ' / ' + total;
+  document.getElementById('notes-prev').disabled = (cur === 0);
+  document.getElementById('notes-next').disabled = (cur === total - 1);
+}
+function toggleNotes() {
+  /* list・グリッド中: hero に移って（現在のスライドの）ノートを開く。1回のキー／クリックで届く */
+  if (currentView !== 'hero') {
+    notesOpen = true;
+    currentView = 'hero';
+    applyView();
+    return;
+  }
+  notesOpen = !notesOpen;
+  refreshNotes();
+}
+function closeNotes() {
+  notesOpen = false;
+  refreshNotes();
+}
+var baseUpdate = update;
+update = function () { baseUpdate(); refreshNotes(); };
+var baseApplyView = applyView;
+applyView = function () { baseApplyView(); refreshNotes(); };
+(function () {
+  var pop = document.getElementById('notes-popup');
+  if (pop) {
+    /* ボタンをマウスで押してもフォーカスを奪わない（Space がスライド送りのまま効く） */
+    pop.addEventListener('mousedown', function (e) {
+      if (e.target.closest('button')) e.preventDefault();
+    });
+  }
+})();
+document.addEventListener('keydown', function (e) {
+  var t = e.target;
+  if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+  if (e.ctrlKey || e.metaKey || e.altKey || e.defaultPrevented) return;
+  if (!e.shiftKey && (e.key === 'n' || e.key === 'N')) { toggleNotes(); return; }
+  if (e.key === 'Escape' && notesOpen && currentView === 'hero') { closeNotes(); e.preventDefault(); }
+});
+refreshNotes();
+
+
+/* ─── 閲覧UI: サムネ帯・一覧グリッド・ページ指定移動（v0.6.1） ─── */
+/* サムネ帯の開閉は list と hero で別々に持つ。list は既定で表示（キーで送る足場）、hero は既定で閉（発表の邪魔をしない） */
+var stripOpenByView = { hero: false, list: true };
+function isStripOpen() { return currentView === 'hero' || currentView === 'list' ? stripOpenByView[currentView] : false; }
+var prevViewBeforeGrid = 'hero';
+var thumbBuilt = { strip: false, grid: false };
+var thumbObserver = null;
+var gridWasOpen = false;
+var prevAppliedView = null;
+var expectedScrollY = -1; /* 自分で動かしたスクロール位置。この位置のスクロールは現在ページの追従に使わない */
+var inPrint = false;
+
+function stripEl() { return document.getElementById('thumb-strip'); }
+function gridEl() { return document.getElementById('overview-grid'); }
+function clampIndex(i) { return Math.max(0, Math.min(total - 1, i)); }
+
+/* スライド表示領域: サムネ帯が開いている間はその高さ分だけ上に縮める */
+fitSlide = function () {
+  var scaler = document.querySelector('.slide-scaler');
+  if (!scaler) return;
+  var strip = stripEl();
+  var inset = (currentView === 'hero' && stripOpenByView.hero && strip) ? strip.offsetHeight : 0;
+  var vw = window.innerWidth;
+  var vh = window.innerHeight - inset;
+  var ratio = Math.min(vw / 960, vh / 540) * 0.92;
+  scaler.style.top = inset ? (vh / 2) + 'px' : '';
+  scaler.style.transform = 'translate(-50%, -50%) scale(' + ratio + ')';
+};
+
+/* ── サムネの生成（複製・縮小・遅延） ── */
+function cloneForThumb(slide, tag) {
+  var c = slide.cloneNode(true);
+  c.classList.remove('active');
+  c.removeAttribute('id');
+  c.removeAttribute('data-capture');
+  c.setAttribute('aria-hidden', 'true');
+  c.querySelectorAll('.slide-notes').forEach(function (n) { n.remove(); });
+  /* SVG 内の id（グラデーション・マーカー）が複製で重複しないよう付け替え、参照も書き換える */
+  var map = {};
+  c.querySelectorAll('[id]').forEach(function (el) {
+    var nid = tag + '-' + el.id;
+    map[el.id] = nid;
+    el.id = nid;
+  });
+  var keys = Object.keys(map);
+  if (keys.length) {
+    c.querySelectorAll('*').forEach(function (el) {
+      Array.prototype.forEach.call(el.attributes, function (a) {
+        if (a.value.indexOf('#') === -1) return;
+        var v = a.value;
+        keys.forEach(function (k) {
+          v = v.split('url(#' + k + ')').join('url(#' + map[k] + ')');
+          if (v === '#' + k) v = '#' + map[k];
+        });
+        if (v !== a.value) a.value = v;
+      });
+    });
+  }
+  return c;
+}
+function layoutThumb(frame) {
+  var stage = frame.firstChild;
+  var w = frame.clientWidth;
+  if (stage && w) stage.style.transform = 'scale(' + (w / 960) + ')';
+}
+function layoutThumbs(container) {
+  container.querySelectorAll('.thumb-frame').forEach(layoutThumb);
+}
+function fillThumb(frame) {
+  if (frame.dataset.filled) return;
+  frame.dataset.filled = '1';
+  var i = parseInt(frame.dataset.index, 10);
+  frame.firstChild.appendChild(cloneForThumb(slides[i], frame.dataset.tag + (i + 1)));
+  layoutThumb(frame);
+}
+function getThumbObserver() {
+  if (thumbObserver || typeof IntersectionObserver === 'undefined') return thumbObserver;
+  thumbObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      fillThumb(en.target);
+      thumbObserver.unobserve(en.target);
+    });
+  }, { rootMargin: '160px' });
+  return thumbObserver;
+}
+function buildThumbs(container, tag) {
+  var obs = getThumbObserver();
+  for (var i = 0; i < total; i++) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'thumb';
+    b.dataset.index = String(i);
+    b.setAttribute('aria-label', (i + 1) + '枚目');
+    var frame = document.createElement('span');
+    frame.className = 'thumb-frame';
+    frame.dataset.index = String(i);
+    frame.dataset.tag = tag;
+    var stage = document.createElement('span');
+    stage.className = 'thumb-stage';
+    frame.appendChild(stage);
+    var num = document.createElement('span');
+    num.className = 'thumb-num';
+    num.textContent = String(i + 1);
+    b.appendChild(frame);
+    b.appendChild(num);
+    container.appendChild(b);
+    if (obs) obs.observe(frame); else fillThumb(frame);
+  }
+}
+function markCurrentThumbs() {
+  [stripEl(), gridEl()].forEach(function (c) {
+    if (!c) return;
+    c.querySelectorAll('.thumb').forEach(function (b) {
+      var on = (parseInt(b.dataset.index, 10) === cur);
+      b.classList.toggle('is-current', on);
+      if (on) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current');
+    });
+  });
+}
+function centerCurrentThumb(container, horizontal) {
+  var b = container.querySelector('.thumb[data-index="' + cur + '"]');
+  if (!b) return;
+  if (horizontal) container.scrollLeft = b.offsetLeft - (container.clientWidth - b.offsetWidth) / 2;
+  else container.scrollTop = b.offsetTop - (container.clientHeight - b.offsetHeight) / 2;
+}
+
+/* ── 表示の同期（ビュー切替・移動のたびに呼ぶ） ── */
+function syncOverview() {
+  var strip = stripEl();
+  var grid = gridEl();
+  if (!strip || !grid) return;
+  var hero = (currentView === 'hero');
+  var showStrip = isStripOpen();
+  var showGrid = (currentView === 'grid');
+  if (showStrip && !thumbBuilt.strip) { buildThumbs(strip, 's'); thumbBuilt.strip = true; }
+  if (showGrid && !thumbBuilt.grid) { buildThumbs(grid, 'g'); thumbBuilt.grid = true; }
+  strip.hidden = !showStrip;
+  grid.hidden = !showGrid;
+  document.body.dataset.strip = showStrip ? 'on' : 'off';
+  var st = document.getElementById('strip-toggle');
+  if (st) st.setAttribute('aria-expanded', String(showStrip));
+  var gt = document.getElementById('grid-toggle');
+  if (gt) gt.setAttribute('aria-expanded', String(showGrid));
+  if (showStrip) { layoutThumbs(strip); markCurrentThumbs(); centerCurrentThumb(strip, true); }
+  if (showGrid) {
+    layoutThumbs(grid);
+    markCurrentThumbs();
+    centerCurrentThumb(grid, false);
+    if (!gridWasOpen) {
+      var cb = grid.querySelector('.thumb.is-current');
+      if (cb) cb.focus({ preventScroll: true });
+    }
+  }
+  /* グリッドを閉じたとき、隠れたグリッド内のサムネにフォーカスが残ると、矢印・Space が
+     グリッド側に奪われてページ送りが効かなくなる。フォーカスを外す */
+  if (gridWasOpen && !showGrid && grid.contains(document.activeElement)) document.activeElement.blur();
+  gridWasOpen = showGrid;
+  if (hero) fitSlide();
+}
+
+var overviewBaseUpdate = update;
+update = function () {
+  overviewBaseUpdate();
+  /* URL #番号 を現在ページに更新（履歴は増やさない）。hero のときだけ */
+  if (currentView === 'hero') {
+    try { history.replaceState(null, '', '#' + (cur + 1)); } catch (e) { /* file:// 等で不可なら諦める */ }
+  }
+  syncOverview();
+};
+var overviewBaseApplyView = applyView;
+applyView = function () {
+  var was = prevAppliedView;
+  overviewBaseApplyView();
+  syncOverview();
+  /* list に入ったら、現在のスライドが見える位置までスクロールする（hero／グリッドから戻ったとき） */
+  if (currentView === 'list' && was && was !== 'list') scheduleListScroll(cur);
+  prevAppliedView = currentView;
+};
+var overviewBaseNavigate = navigate;
+navigate = function (dir) {
+  if (currentView === 'grid') return; /* グリッド中の矢印・Space はフォーカス移動に使う */
+  /* list: ← → Space で前後のスライドへスクロールする（現在のスライドを1つ動かす） */
+  if (currentView === 'list') { listGo(cur + dir); return; }
+  overviewBaseNavigate(dir);
+};
+window.addEventListener('resize', function () {
+  if (currentView === 'grid' && gridEl()) layoutThumbs(gridEl());
+  if (isStripOpen() && stripEl()) layoutThumbs(stripEl());
+});
+
+/* ── 開閉・移動 ── */
+function toggleStrip() {
+  /* グリッド中に T: グリッドを閉じて、直前のビュー（hero／list）でサムネ帯を開く */
+  if (currentView === 'grid') { stripOpenByView[prevViewBeforeGrid] = true; closeGrid(); return; }
+  stripOpenByView[currentView] = !stripOpenByView[currentView];
+  syncOverview();
+}
+function toggleGrid() {
+  if (currentView === 'grid') { closeGrid(); return; }
+  prevViewBeforeGrid = currentView;
+  currentView = 'grid';
+  applyView();
+}
+function closeGrid() {
+  currentView = prevViewBeforeGrid;
+  applyView();
+}
+function goTo(i) {
+  if (currentView === 'list') { listGo(i); return; }
+  if (currentView !== 'hero') return;
+  navigate(clampIndex(i) - cur);
+}
+
+/* ── list ビュー: 現在のスライドの追従とスクロール ──
+   list では「画面の上から数えて半分より多く見えている最初のスライド」を現在のスライド（cur）とする。
+   サムネ帯の強調・N／J で hero へ移るときの行き先・Shift+S の PNG の対象になる。 */
+function listScrollTo(i) {
+  var s = slides[i];
+  if (!s) return;
+  var y = s.getBoundingClientRect().top + window.pageYOffset - 72; /* .slide-scaler の上 padding */
+  window.scrollTo(0, Math.max(0, y));
+  expectedScrollY = window.pageYOffset;
+}
+function scheduleListScroll(i) {
+  requestAnimationFrame(function () { requestAnimationFrame(function () { listScrollTo(i); }); });
+}
+function afterListMove() {
+  markCurrentThumbs();
+  var strip = stripEl();
+  if (strip && !strip.hidden) centerCurrentThumb(strip, true);
+}
+function listGo(i) {
+  cur = clampIndex(i);
+  listScrollTo(cur);
+  afterListMove();
+}
+function listIndexAtScroll() {
+  var doc = document.documentElement;
+  if (window.pageYOffset <= 1) return 0;
+  if (window.pageYOffset + window.innerHeight >= doc.scrollHeight - 2) return total - 1;
+  /* 画面の上から数えて、半分より多く見えている最初のスライド */
+  for (var i = 0; i < total; i++) {
+    var r = slides[i].getBoundingClientRect();
+    if (r.bottom > r.height * 0.5) return i;
+  }
+  return total - 1;
+}
+var listScrollQueued = false;
+window.addEventListener('scroll', function () {
+  if (currentView !== 'list' || inPrint || listScrollQueued) return;
+  listScrollQueued = true;
+  requestAnimationFrame(function () {
+    listScrollQueued = false;
+    if (currentView !== 'list' || inPrint || Math.abs(window.pageYOffset - expectedScrollY) <= 2) return;
+    var i = listIndexAtScroll();
+    if (i !== cur) { cur = i; afterListMove(); }
+  });
+}, { passive: true });
+window.addEventListener('beforeprint', function () { inPrint = true; });
+window.addEventListener('afterprint', function () { inPrint = false; });
+function openFromGrid(i) {
+  cur = clampIndex(i);
+  currentView = 'hero';
+  applyView();
+}
+
+/* ── ページ指定移動: カウンターを数字入力欄に ── */
+function startJump() {
+  /* list・グリッド中に J: hero に移ってから番号入力に入る（1回のキーで届く） */
+  if (currentView !== 'hero') { currentView = 'hero'; applyView(); }
+  var counter = document.getElementById('slide-counter');
+  if (!counter || counter.querySelector('input')) return;
+  var input = document.createElement('input');
+  input.type = 'number';
+  input.min = '1';
+  input.max = String(total);
+  input.value = String(cur + 1);
+  input.className = 'counter-input';
+  input.setAttribute('aria-label', '移動先のページ番号');
+  counter.textContent = '';
+  counter.appendChild(input);
+  counter.appendChild(document.createTextNode(' / ' + total));
+  input.focus();
+  input.select();
+  var done = false;
+  function finish(go) {
+    if (done) return;
+    done = true;
+    var v = parseInt(input.value, 10);
+    if (go && !isNaN(v)) goTo(v - 1); else update();
+  }
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); finish(true); }
+    else if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); finish(false); }
+  });
+  input.addEventListener('blur', function () { finish(false); });
+}
+(function () {
+  var counter = document.getElementById('slide-counter');
+  if (counter) {
+    counter.title = 'クリックでページ番号を入力（J）';
+    counter.addEventListener('click', function (e) {
+      if (e.target && e.target.tagName === 'INPUT') return;
+      startJump();
+    });
+  }
+})();
+
+/* ── クリック・フォーカスの扱い ── */
+(function () {
+  var strip = stripEl();
+  var grid = gridEl();
+  if (strip) {
+    strip.addEventListener('click', function (e) {
+      var b = e.target.closest ? e.target.closest('.thumb') : null;
+      if (b) goTo(parseInt(b.dataset.index, 10));
+    });
+    /* マウスで押してもフォーカスを奪わない（押したあとも Space がスライド送りのまま効く） */
+    strip.addEventListener('mousedown', function (e) {
+      if (e.target.closest && e.target.closest('.thumb')) e.preventDefault();
+    });
+  }
+  if (grid) {
+    grid.addEventListener('click', function (e) {
+      var b = e.target.closest ? e.target.closest('.thumb') : null;
+      if (b) openFromGrid(parseInt(b.dataset.index, 10));
+    });
+    /* 矢印キーでフォーカス移動、Enter / Space で開く（document 側の →/Space 送りへ伝えない） */
+    grid.addEventListener('keydown', function (e) {
+      var b = e.target.closest ? e.target.closest('.thumb') : null;
+      var idx = b ? parseInt(b.dataset.index, 10) : cur;
+      var k = e.key;
+      if (k === 'Enter' || k === ' ') {
+        e.preventDefault();
+        e.stopPropagation();
+        openFromGrid(idx);
+        return;
+      }
+      var cols = gridColumns(grid);
+      var next = null;
+      if (k === 'ArrowRight') next = idx + 1;
+      else if (k === 'ArrowLeft') next = idx - 1;
+      else if (k === 'ArrowDown') next = idx + cols;
+      else if (k === 'ArrowUp') next = idx - cols;
+      else if (k === 'Home') next = 0;
+      else if (k === 'End') next = total - 1;
+      else return;
+      e.preventDefault();
+      e.stopPropagation();
+      if (next < 0 || next > total - 1) return;
+      var nb = grid.querySelector('.thumb[data-index="' + next + '"]');
+      if (nb) nb.focus();
+    });
+  }
+})();
+function gridColumns(grid) {
+  var bs = grid.querySelectorAll('.thumb');
+  if (!bs.length) return 1;
+  var top = bs[0].offsetTop;
+  var n = 0;
+  for (var i = 0; i < bs.length; i++) {
+    if (bs[i].offsetTop === top) n++; else break;
+  }
+  return Math.max(1, n);
+}
+
+/* ── キー: G グリッド / T サムネ帯 / J 番号入力 / Home・End / Esc でグリッドを閉じる。どのビューからでも1回のキーで届く ── */
+/* Shift+Space: 前のスライドへ（hero はページ、list はスクロール）。既存のキー処理は Shift を見ずに
+   Space を「次へ」にするため、それより先（キャプチャ段階）で受けて止める。グリッド中は対象外 */
+document.addEventListener('keydown', function (e) {
+  var t = e.target;
+  if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  if (e.key !== ' ' || !e.shiftKey || currentView === 'grid') return;
+  e.preventDefault();
+  e.stopPropagation();
+  navigate(-1);
+}, true);
+
+document.addEventListener('keydown', function (e) {
+  var t = e.target;
+  if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+  if (e.ctrlKey || e.metaKey || e.altKey || e.defaultPrevented) return;
+  /* list の Enter: 現在のスライドを1枚表示で開く（ボタン・リンクにフォーカスがあるときはそちらを優先） */
+  if (e.key === 'Enter' && currentView === 'list' && !(t && (t.tagName === 'BUTTON' || t.tagName === 'A'))) {
+    e.preventDefault();
+    currentView = 'hero';
+    applyView();
+    return;
+  }
+  if (e.key === 'Escape') {
+    if (currentView === 'grid') { closeGrid(); e.preventDefault(); }
+    return;
+  }
+  if (e.shiftKey) return;
+  var k = e.key;
+  if (k === 'g' || k === 'G') { toggleGrid(); return; }
+  /* Home / End: hero はページ移動、list は先頭・末尾へスクロール（グリッド中はグリッド側が処理） */
+  if (k === 'Home' && currentView !== 'grid') { e.preventDefault(); goTo(0); }
+  else if (k === 'End' && currentView !== 'grid') { e.preventDefault(); goTo(total - 1); }
+  else if (k === 'j' || k === 'J') { e.preventDefault(); startJump(); }
+  else if (k === 't' || k === 'T') { toggleStrip(); }
+});
+
+/* ── URL #番号: 開いたときのページ指定と、アドレス欄での変更への追従 ── */
+function hashIndex() {
+  var m = /^#(\d+)$/.exec(location.hash);
+  if (!m) return -1;
+  return clampIndex(parseInt(m[1], 10) - 1);
+}
+window.addEventListener('hashchange', function () {
+  var h = hashIndex();
+  if (h < 0) return;
+  cur = h;
+  currentView = 'hero';
+  applyView();
+});
+(function () {
+  var h = hashIndex();
+  if (h >= 0) cur = h;
+  if (h >= 0) currentView = 'hero';
+})();
+applyView();
+
+
+/* ─── ショートカットのヘルプ（? キー・v0.6.1） ─── */
+function helpEl() { return document.getElementById('help-popup'); }
+function isHelpOpen() { var h = helpEl(); return !!h && !h.hidden; }
+var helpReturnFocus = null;
+function openHelp() {
+  var h = helpEl();
+  if (!h) return;
+  helpReturnFocus = document.activeElement;
+  h.hidden = false;
+  var c = document.getElementById('help-close');
+  if (c) c.focus({ preventScroll: true });
+}
+function closeHelp() {
+  var h = helpEl();
+  if (!h || h.hidden) return;
+  h.hidden = true;
+  /* 開く前のフォーカスへ戻す（グリッドのサムネなど）。戻せなければ外す */
+  if (helpReturnFocus && helpReturnFocus.focus && document.contains(helpReturnFocus)) {
+    helpReturnFocus.focus({ preventScroll: true });
+  } else if (document.activeElement && document.activeElement.blur) {
+    document.activeElement.blur();
+  }
+  helpReturnFocus = null;
+}
+function toggleHelp() { if (isHelpOpen()) closeHelp(); else openHelp(); }
+(function () {
+  var h = helpEl();
+  if (!h) return;
+  /* 背景（パネルの外）をクリックで閉じる */
+  h.addEventListener('click', function (e) { if (e.target === h) closeHelp(); });
+})();
+document.addEventListener('keydown', function (e) {
+  var t = e.target;
+  if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  if (e.key === '?') {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleHelp();
+    return;
+  }
+  if (!isHelpOpen()) return;
+  /* 開いている間は Esc で閉じるだけ。他のキー（ページ送りなど）も裏の画面へ渡さない（Tab は通す） */
+  if (e.key === 'Escape') closeHelp();
+  if (e.key === 'Tab') return;
+  e.stopPropagation();
+  /* ✕ ボタン上の Enter / Space は既定の動作（押す）を残す */
+  var onHelpButton = t && t.tagName === 'BUTTON' && helpEl().contains(t);
+  if (!(onHelpButton && (e.key === 'Enter' || e.key === ' '))) e.preventDefault();
+}, true);
+</script>
+</body>
+</html>
