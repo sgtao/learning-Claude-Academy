@@ -159,8 +159,8 @@ def _pick(tiers, label, q, show):
             return found[0]
         if len(found) > 1:
             lines = "\n".join("  " + show(x) for x in found)
-            raise UserError(f"{label}「{q}」は複数に当たります（{len(found)} 件）。もっと詳しく指定してください:\n{lines}")
-    raise UserError(f"{label}「{q}」は見つかりません")
+            raise UserError(f"{label} '{q}' is ambiguous ({len(found)} matches). Be more specific:\n{lines}")
+    raise UserError(f"{label} '{q}' not found")
 
 
 def resolve_step(pages, q):
@@ -170,7 +170,7 @@ def resolve_step(pages, q):
         [n for n in names if n.lower() == ql or n.split("_")[0].lower() == ql or (ql.isdigit() and n.startswith(f"step{int(ql)}_"))],
         [n for n in names if ql in n.lower()],
     ]
-    return _pick(tiers, "ステップ", q, lambda x: x)
+    return _pick(tiers, "step", q, lambda x: x)
 
 
 def resolve_group(pages, q, step=None):
@@ -181,7 +181,7 @@ def resolve_group(pages, q, step=None):
         [x for x in pairs if ql.isdigit() and x[1].split("_")[0] == ql.zfill(2)],
         [x for x in pairs if ql in x[1].lower()],
     ]
-    return _pick(tiers, "まとまり", q, lambda x: f"{x[0]}/{x[1]}")
+    return _pick(tiers, "group", q, lambda x: f"{x[0]}/{x[1]}")
 
 
 def _normalize_page_query(q):
@@ -209,7 +209,7 @@ def resolve_page(pages, q):
         [p for p in pages if p["name"].lower() == ql or slug(p) == ql or p["rel"].lower().endswith("/" + ql)],
         [p for p in pages if ql in p["rel"].lower() or ql in titles[p["rel"]].lower() or ql in p["ledger_title"].lower()],
     ]
-    return _pick(tiers, "ページ", q, lambda p: f"{p['rel']}  [{p['id'] or '-'}]  {titles[p['rel']]}")
+    return _pick(tiers, "page", q, lambda p: f"{p['rel']}  [{p['id'] or '-'}]  {titles[p['rel']]}")
 
 
 # ---------------------------------------------------------------- 表示する中身
@@ -225,12 +225,12 @@ def show_plan(page):
                       ("input", MEMO_REL, memo),
                       ("prompt", PROMPT_NAME, prompt)]
     if ex is None:
-        note = "解説メモはありません（薄いページ・取得失敗・重複など）。ページの README と原本を表示します。"
+        note = "no explanation memo (thin / failed / duplicate page); showing the page README and the original"
         readme, source = page["path"] / "README.md", originals_md(page)
-        source_label = "00_originals（原本）"
+        source_label = "00_originals (original)"
     else:
         missing = [n for n, f in ((MEMO_REL, memo), (PROMPT_NAME, prompt)) if not f.is_file()]
-        note = f"{' と '.join(missing)} が未作成のため、README と 01_source を表示します。"
+        note = f"{' and '.join(missing)} not created; showing README and 01_source"
         readme, source = ex / "README.md", ex / "01_source.md"
         source_label = "01_source.md"
     plan = []
@@ -248,12 +248,11 @@ def cmd_groups(pages, args, out):
     for s in steps:
         sp = [p for p in pages if p["step"] == s]
         groups = sorted({p["group"] for p in sp})
-        label = common.STEPS.get(s.split("_")[0].replace("step", ""), ("", ""))[1]
-        out.write(f"{s}  {label}  [{len(groups)} まとまり／{len(sp)} ページ]\n")
+        out.write(f"{s}  [{len(groups)} groups / {len(sp)} pages]\n")
         for g in groups:
             gp = [p for p in sp if p["group"] == g]
             done = sum(1 for p in gp if show_plan(p)[0] is None)
-            out.write(f"  {g}  {len(gp)} ページ（解説メモあり {done}）\n")
+            out.write(f"  {g}  {len(gp)} pages (with full memo: {done})\n")
     return 0
 
 
@@ -262,10 +261,10 @@ def cmd_pages(pages, args, out):
     group_q = args.second or args.first
     s, g = resolve_group(pages, group_q, step)
     gp = [p for p in pages if p["step"] == s and p["group"] == g]
-    out.write(f"# {s} / {g}（{len(gp)} ページ）\n\n")
-    out.write("ID\tページ\t解説メモ\t状態\t題名\n")
+    out.write(f"# {s} / {g} ({len(gp)} pages)\n\n")
+    out.write("id\tpage\tmemo\tstatus\ttitle\n")
     for p in gp:
-        has = "あり" if show_plan(p)[0] is None else ("一部" if p["explained"] else "なし")
+        has = "yes" if show_plan(p)[0] is None else ("partial" if p["explained"] else "no")
         out.write(f"{p['id'] or '-'}\t{p['name']}\t{has}\t{p['status'] or '-'}\t{memo_title(p)}\n")
     return 0
 
@@ -281,11 +280,11 @@ def cmd_info(pages, args, out):
     out.write(f"# {title}\n\n")
     out.write(f"- page: {p['rel']}\n")
     out.write(f"- id: {p['id'] or '-'}\n- status: {p['status'] or '-'}\n")
-    out.write(f"- frontmatter_from: {src or '（なし）'}\n\n")
+    out.write(f"- frontmatter_from: {src or '(none)'}\n\n")
     for k, v in fm.items():
         out.write(f"{k}: {v}\n")
     if not fm:
-        out.write("（フロントマターはありません）\n")
+        out.write("(no frontmatter)\n")
     return 0
 
 
@@ -297,32 +296,32 @@ def cmd_show(pages, args, out):
         want = set(args.only)
         plan = [x for x in plan if x[0] in want]
     out.write(f"# {full_title(p)}\n\n")
-    out.write(f"- 場所: {p['rel']}\n- ID: {p['id'] or '-'}　状態: {p['status'] or '-'}\n")
+    out.write(f"- path: {p['rel']}\n- id: {p['id'] or '-'}  status: {p['status'] or '-'}\n")
     if note:
-        out.write(f"- 注記: {note}\n")
+        out.write(f"- note: {note}\n")
     if not plan:
-        out.write("\n（指定に当たる表示対象がありません）\n")
+        out.write("\n(nothing to show for this selection)\n")
     for i, (key, label, f) in enumerate(plan, 1):
-        # 区切りは「［n/N］」付きにして、本文の中の見出し（## 概要 など）と見分けられるようにする
-        out.write(f"\n---\n\n## ［{i}/{len(plan)}］ {label}\n\n（{f.relative_to(root_of)}）\n\n")
+        # 区切りは「[n/N]」付きにして、本文の中の見出し（## 概要 など）と見分けられるようにする
+        out.write(f"\n---\n\n## [{i}/{len(plan)}] {label}\n\n({f.relative_to(root_of)})\n\n")
         out.write(f.read_text(encoding="utf-8").rstrip("\n") + "\n")
     return 0
 
 
 def build_parser():
-    ap = argparse.ArgumentParser(prog="memo.py", description="解説メモを引く参照ツール（読むだけ）")
+    ap = argparse.ArgumentParser(prog="memo.py", description="Look up explanation memos (read-only)")
     sub = ap.add_subparsers(dest="cmd", required=True)
-    g = sub.add_parser("groups", help="ステップごとのまとまりの一覧")
-    g.add_argument("step", nargs="?", help="ステップ（省くと全ステップ）")
-    pg = sub.add_parser("pages", help="まとまりの中のページ一覧")
-    pg.add_argument("first", help="ステップ（2 つ指定のとき）またはまとまり")
-    pg.add_argument("second", nargs="?", help="まとまり")
-    i = sub.add_parser("info", help="README のフロントマター")
+    g = sub.add_parser("groups", help="list groups per step")
+    g.add_argument("step", nargs="?", help="step (omit for all steps)")
+    pg = sub.add_parser("pages", help="list pages in a group")
+    pg.add_argument("first", help="step (when two args are given) or group")
+    pg.add_argument("second", nargs="?", help="group")
+    i = sub.add_parser("info", help="show the README frontmatter")
     i.add_argument("page")
     i.add_argument("--json", action="store_true")
-    s = sub.add_parser("show", help="README・input-memo・LLM プロンプトを表示")
+    s = sub.add_parser("show", help="show README, input memo and LLM prompt")
     s.add_argument("page")
-    s.add_argument("--only", nargs="+", choices=SECTION_KEYS, help="表示する部分（readme input prompt source）")
+    s.add_argument("--only", nargs="+", choices=SECTION_KEYS, help="parts to show")
     return ap
 
 
@@ -337,7 +336,7 @@ def main(argv=None, root=ROOT, out=None, err=None):
         pages = scan(root)
         return {"groups": cmd_groups, "pages": cmd_pages, "info": cmd_info, "show": cmd_show}[args.cmd](pages, args, out)
     except UserError as e:
-        err.write(f"エラー: {e}\n")
+        err.write(f"error: {e}\n")
         return 2
 
 

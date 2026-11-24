@@ -45,6 +45,8 @@ def make_tree(root):
     w(d / "README.md", "PAGE-README-ALPHA2")
     w(d / "alpha_explained/README.md", "# 資料：別のアルファ\n- `title`: 別のアルファ\n\n-----\n")
     w(d / "alpha_explained/01_source.md", "SOURCE-ALPHA2")
+    # フロントマターが無いページ（重複ページなど）
+    w(root / "step2_tools/01_grpB/02_nofm/README.md", "# 2-2 plain page\nPAGE-README-NOFM")
     # 無視される場所
     w(root / "step9_added/01_added/01_x/.work/aborted/x_explained/README.md", "HIDDEN")
     w(root / "step9_added/01_added/01_x/README.md", "PAGE-README-X")
@@ -92,7 +94,7 @@ class FixtureTests(unittest.TestCase):
     def test_groups_unknown_step_fails(self):
         code, _, err = run(self.root, "groups", "77")
         self.assertEqual(code, 2)
-        self.assertIn("見つかりません", err)
+        self.assertIn("not found", err)
 
     # --- 2. まとまり配下のメモ一覧
     def test_pages_lists_all_pages_of_group(self):
@@ -134,6 +136,12 @@ class FixtureTests(unittest.TestCase):
         self.assertIn("source_url: https://example.com/gamma", out)
         self.assertNotIn("ORIGINAL-GAMMA", out)
 
+    def test_info_without_frontmatter(self):
+        code, out, _ = run(self.root, "info", "02_nofm")
+        self.assertEqual(code, 0)
+        self.assertIn("(no frontmatter)", out)
+        self.assertIn("frontmatter_from: (none)", out)
+
     def test_info_json(self):
         import json
         code, out, _ = run(self.root, "info", "1-7", "--json")
@@ -161,7 +169,7 @@ class FixtureTests(unittest.TestCase):
         self.assertIn("EXPLAINED-README-BETA", out)
         self.assertIn("SOURCE-BETA", out)
         self.assertNotIn("PROMPT-BETA", out)               # 12 があっても、out が無ければ代替の形
-        self.assertIn("out/09_input-memo.md", out)         # 無いものを注記する
+        self.assertIn("out/09_input-memo.md not created", out)   # 無いものを注記する
 
     def test_show_page_without_explained_dir(self):
         code, out, _ = run(self.root, "show", "1-9")
@@ -169,7 +177,7 @@ class FixtureTests(unittest.TestCase):
         self.assertIn("PAGE-README-GAMMA", out)
         self.assertIn("ORIGINAL-GAMMA", out)               # 01_source の代わりに原本
         self.assertNotIn("RAW-GAMMA", out)
-        self.assertIn("解説メモはありません", out)
+        self.assertIn("no explanation memo", out)
 
     def test_show_only_option(self):
         code, out, _ = run(self.root, "show", "1-7", "--only", "prompt")
@@ -199,11 +207,62 @@ class FixtureTests(unittest.TestCase):
     def test_unknown_page_fails(self):
         code, out, err = run(self.root, "show", "9-99")
         self.assertEqual(code, 2)
-        self.assertIn("見つかりません", err)
+        self.assertIn("not found", err)
 
     def test_no_command_fails(self):
         code, _, _ = run(self.root)
         self.assertEqual(code, 2)
+
+
+class AsciiOutputTests(unittest.TestCase):
+    """ツール自身の文言（見出し・ラベル・注記・エラー）は ASCII。本文・題名・台帳の値は日本語のまま出る。"""
+
+    @classmethod
+    def setUpClass(cls):
+        cls._td = tempfile.TemporaryDirectory()
+        cls.root = Path(cls._td.name)
+        make_tree(cls.root)
+        # 日本語の題名・状態・本文を、ASCII の枠だけ残して消した出力にして比べる
+        cls.jp = ["アルファ題", "ベータ題", "ガンマ題", "別のアルファ", "完了", "薄いページ",
+                  "アルファ(台帳)", "ベータ(台帳)", "ガンマ(台帳)", "アルファ2(台帳)", "資料", "概要"]
+
+    @classmethod
+    def tearDownClass(cls):
+        cls._td.cleanup()
+
+    def frame(self, text):
+        import re
+        for j in self.jp:
+            text = text.replace(j, "")
+        return text
+
+    def test_frames_are_ascii(self):
+        cases = [("groups",), ("groups", "1"), ("pages", "1", "01"), ("info", "1-7"), ("info", "1-9"),
+                 ("show", "1-7"), ("show", "1-8"), ("show", "1-9"), ("show", "1-7", "--only", "source"),
+                 ("info", "02_nofm"), ("show", "02_nofm")]
+        for argv in cases:
+            code, out, err = run(self.root, *argv)
+            self.assertEqual(code, 0, argv)
+            for line in self.tool_lines(out):
+                f = self.frame(line)
+                self.assertTrue(f.isascii(), (argv, line))
+
+    @staticmethod
+    def tool_lines(out):
+        """ツールが書いた行だけ。show の各区間は、最初の『(パス)』の行までがツールの行で、その後ろはファイルの内容。"""
+        lines = []
+        for i, part in enumerate(out.split("\n---\n")):
+            for ln in part.split("\n"):
+                lines.append(ln)
+                if i > 0 and ln.startswith("(") and ln.endswith(")"):
+                    break
+        return lines
+
+    def test_errors_are_ascii(self):
+        for argv in (("show", "alpha"), ("show", "9-99"), ("groups", "77"), ("pages", "1", "nothing")):
+            code, out, err = run(self.root, *argv)
+            self.assertEqual(code, 2)
+            self.assertTrue(self.frame(err.replace("\n", " ")).isascii(), (argv, err))
 
 
 class RealTreeTests(unittest.TestCase):
