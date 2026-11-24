@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# LLM 用プロンプト：(無題)
-- `title`: (無題)
+# LLM 用プロンプト：エンジニアリング：設計書（RFC）（★1）
+- `title`: エンジニアリング：設計書（RFC）（★1）
 - `url`: https://academy.claude.com/ja/use-cases/design-doc
 
 -----

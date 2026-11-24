@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# 解説メモ：(無題)
-- `title`: (無題)
+# 解説メモ：エンジニアリング：設計書（RFC）（★1）
+- `title`: エンジニアリング：設計書（RFC）（★1）
 - `url`: https://academy.claude.com/ja/use-cases/design-doc
 
 -----

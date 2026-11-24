@@ -1,5 +1,5 @@
 ---
-title: (無題)
+title: マーケティング：ブランドに沿ったコンテンツ（★2）
 source_url: "https://academy.claude.com/ja/use-cases/on-brand-content"
 source_format: html
 conversion: direct

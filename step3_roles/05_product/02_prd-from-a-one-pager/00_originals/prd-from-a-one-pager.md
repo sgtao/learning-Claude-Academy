@@ -1,5 +1,5 @@
 ---
-title: (無題)
+title: プロダクト：PRD 作成（★1）
 source_url: "https://academy.claude.com/ja/use-cases/prd-from-a-one-pager"
 source_format: html
 conversion: direct

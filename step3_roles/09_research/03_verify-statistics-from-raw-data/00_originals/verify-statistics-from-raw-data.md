@@ -1,5 +1,5 @@
 ---
-title: (無題)
+title: 研究：生データから統計を検証（★2）
 source_url: "https://academy.claude.com/ja/use-cases/verify-statistics-from-raw-data"
 source_format: html
 conversion: direct

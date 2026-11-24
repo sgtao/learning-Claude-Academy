@@ -1,5 +1,5 @@
 ---
-title: (無題)
+title: 研究：文献レビュー計画（★1）
 source_url: "https://academy.claude.com/ja/use-cases/plan-your-literature-review"
 source_format: html
 conversion: direct

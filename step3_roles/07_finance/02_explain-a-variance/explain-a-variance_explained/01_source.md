@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# 本文：(無題)
-- `title`: (無題)
+# 本文：財務：差異を説明（★1）
+- `title`: 財務：差異を説明（★1）
 - `url`: https://academy.claude.com/ja/use-cases/explain-a-variance
 - `source_format`: html
 - `retrieved_at`: 2026-11-24T09:49:51+09:00

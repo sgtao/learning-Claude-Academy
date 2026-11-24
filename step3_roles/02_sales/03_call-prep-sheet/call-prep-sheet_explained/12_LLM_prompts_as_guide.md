@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# LLM 用プロンプト：(無題)
-- `title`: (無題)
+# LLM 用プロンプト：営業：商談準備（★2）
+- `title`: 営業：商談準備（★2）
 - `url`: https://academy.claude.com/ja/use-cases/call-prep-sheet
 
 -----

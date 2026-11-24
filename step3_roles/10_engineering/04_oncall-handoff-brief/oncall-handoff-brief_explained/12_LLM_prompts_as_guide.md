@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# LLM 用プロンプト：(無題)
-- `title`: (無題)
+# LLM 用プロンプト：エンジニアリング：オンコール引き継ぎ（★3）
+- `title`: エンジニアリング：オンコール引き継ぎ（★3）
 - `url`: https://academy.claude.com/ja/use-cases/oncall-handoff-brief
 
 -----

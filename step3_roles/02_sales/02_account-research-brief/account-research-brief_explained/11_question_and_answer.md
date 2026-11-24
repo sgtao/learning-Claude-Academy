@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# FAQ：(無題)
-- `title`: (無題)
+# FAQ：営業：アカウントリサーチ（★1）
+- `title`: 営業：アカウントリサーチ（★1）
 - `url`: https://academy.claude.com/ja/use-cases/account-research-brief
 
 -----

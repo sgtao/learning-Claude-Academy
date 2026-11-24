@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# 資料：(無題)
-- `title`: (無題)
+# 資料：研究：生データから統計を検証（★2）
+- `title`: 研究：生データから統計を検証（★2）
 - `url`: https://academy.claude.com/ja/use-cases/verify-statistics-from-raw-data
 - `source_format`: html
 - `retrieved_at`: 2026-11-24T09:49:57+09:00

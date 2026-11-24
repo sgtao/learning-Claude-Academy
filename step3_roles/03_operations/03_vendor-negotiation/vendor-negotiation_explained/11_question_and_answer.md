@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# FAQ：(無題)
-- `title`: (無題)
+# FAQ：オペレーション：ベンダー交渉の準備（★2）
+- `title`: オペレーション：ベンダー交渉の準備（★2）
 - `url`: https://academy.claude.com/ja/use-cases/vendor-negotiation
 
 -----

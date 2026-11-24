@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# 本文：(無題)
-- `title`: (無題)
+# 本文：オペレーション：ワークフロー改善プランナー（★1）
+- `title`: オペレーション：ワークフロー改善プランナー（★1）
 - `url`: https://academy.claude.com/ja/use-cases/workflow-improvement-planner
 - `source_format`: html
 - `retrieved_at`: 2026-11-24T09:49:41+09:00

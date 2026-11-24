@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# 解説メモ：(無題)
-- `title`: (無題)
+# 解説メモ：デザイン：デザイン仕様書（★2）
+- `title`: デザイン：デザイン仕様書（★2）
 - `url`: https://academy.claude.com/ja/use-cases/design-spec-from-threads
 
 -----

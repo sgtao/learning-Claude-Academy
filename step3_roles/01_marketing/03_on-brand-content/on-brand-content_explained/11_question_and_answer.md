@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# FAQ：(無題)
-- `title`: (無題)
+# FAQ：マーケティング：ブランドに沿ったコンテンツ（★2）
+- `title`: マーケティング：ブランドに沿ったコンテンツ（★2）
 - `url`: https://academy.claude.com/ja/use-cases/on-brand-content
 
 -----

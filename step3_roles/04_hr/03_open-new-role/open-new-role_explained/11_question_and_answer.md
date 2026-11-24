@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# FAQ：(無題)
-- `title`: (無題)
+# FAQ：人事：新ポジション開設（★2）
+- `title`: 人事：新ポジション開設（★2）
 - `url`: https://academy.claude.com/ja/use-cases/open-new-role
 
 -----

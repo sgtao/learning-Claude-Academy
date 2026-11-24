@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# 資料：(無題)
-- `title`: (無題)
+# 資料：営業：商談準備（★2）
+- `title`: 営業：商談準備（★2）
 - `url`: https://academy.claude.com/ja/use-cases/call-prep-sheet
 - `source_format`: html
 - `retrieved_at`: 2026-11-24T09:49:40+09:00

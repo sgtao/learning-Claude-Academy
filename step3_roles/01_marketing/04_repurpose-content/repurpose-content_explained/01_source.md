@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# 本文：(無題)
-- `title`: (無題)
+# 本文：マーケティング：チャネル横断で再利用（★3）
+- `title`: マーケティング：チャネル横断で再利用（★3）
 - `url`: https://academy.claude.com/ja/use-cases/repurpose-content
 - `source_format`: html
 - `retrieved_at`: 2026-11-24T09:49:38+09:00

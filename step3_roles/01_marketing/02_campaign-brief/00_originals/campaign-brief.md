@@ -1,5 +1,5 @@
 ---
-title: (無題)
+title: マーケティング：キャンペーンブリーフ（★1）
 source_url: "https://academy.claude.com/ja/use-cases/campaign-brief"
 source_format: html
 conversion: direct

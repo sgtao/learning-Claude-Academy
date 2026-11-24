@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# LLM 用プロンプト：(無題)
-- `title`: (無題)
+# LLM 用プロンプト：研究：助成金の選択肢（★3）
+- `title`: 研究：助成金の選択肢（★3）
 - `url`: https://academy.claude.com/ja/use-cases/work-through-grant-options-in-chat-with-claude
 
 -----
@@ -10,7 +10,7 @@
 下のプロンプトを、生成AIのシステムプロンプト（カスタム指示）に貼り付けると、この資料の内容に沿ってガイドしてくれます。
 
 ```
-> 資料: (無題)
+> 資料: 研究：助成金の選択肢（★3）
 > ステップ: Step 8-B - システムプロンプト
 > 生成日: 2026-11-24
 > モデル: Claude Sonnet 5.5

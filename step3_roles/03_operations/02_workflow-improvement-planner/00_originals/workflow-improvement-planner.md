@@ -1,5 +1,5 @@
 ---
-title: (無題)
+title: オペレーション：ワークフロー改善プランナー（★1）
 source_url: "https://academy.claude.com/ja/use-cases/workflow-improvement-planner"
 source_format: html
 conversion: direct

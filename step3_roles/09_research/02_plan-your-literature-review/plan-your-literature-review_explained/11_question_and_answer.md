@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# FAQ：(無題)
-- `title`: (無題)
+# FAQ：研究：文献レビュー計画（★1）
+- `title`: 研究：文献レビュー計画（★1）
 - `url`: https://academy.claude.com/ja/use-cases/plan-your-literature-review
 
 -----

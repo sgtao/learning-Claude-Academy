@@ -1,5 +1,5 @@
 ---
-title: (無題)
+title: オペレーション：ベンダー交渉の準備（★2）
 source_url: "https://academy.claude.com/ja/use-cases/vendor-negotiation"
 source_format: html
 conversion: direct

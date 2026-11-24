@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# LLM 用プロンプト：(無題)
-- `title`: (無題)
+# LLM 用プロンプト：法務：Projects で法務ワークフロー整理（★3）
+- `title`: 法務：Projects で法務ワークフロー整理（★3）
 - `url`: https://academy.claude.com/ja/use-cases/organize-your-legal-workflows-using-projects
 
 -----

@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# LLM 用プロンプト：(無題)
-- `title`: (無題)
+# LLM 用プロンプト：マーケティング：チャネル横断で再利用（★3）
+- `title`: マーケティング：チャネル横断で再利用（★3）
 - `url`: https://academy.claude.com/ja/use-cases/repurpose-content
 
 -----

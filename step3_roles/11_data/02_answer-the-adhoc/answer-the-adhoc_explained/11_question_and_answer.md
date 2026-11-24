@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# FAQ：(無題)
-- `title`: (無題)
+# FAQ：データ：アドホックなデータ質問に答える（★1）
+- `title`: データ：アドホックなデータ質問に答える（★1）
 - `url`: https://academy.claude.com/ja/use-cases/answer-the-adhoc
 
 -----

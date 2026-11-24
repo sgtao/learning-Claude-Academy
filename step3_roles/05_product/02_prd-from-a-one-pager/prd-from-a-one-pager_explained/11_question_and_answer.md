@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# FAQ：(無題)
-- `title`: (無題)
+# FAQ：プロダクト：PRD 作成（★1）
+- `title`: プロダクト：PRD 作成（★1）
 - `url`: https://academy.claude.com/ja/use-cases/prd-from-a-one-pager
 
 -----

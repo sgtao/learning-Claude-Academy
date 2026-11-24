@@ -1,5 +1,5 @@
 ---
-title: (無題)
+title: 法務：Projects で法務ワークフロー整理（★3）
 source_url: "https://academy.claude.com/ja/use-cases/organize-your-legal-workflows-using-projects"
 source_format: html
 conversion: direct

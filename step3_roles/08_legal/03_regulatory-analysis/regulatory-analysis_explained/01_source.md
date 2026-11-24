@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# 本文：(無題)
-- `title`: (無題)
+# 本文：法務：規制とコンプライアンス（★2）
+- `title`: 法務：規制とコンプライアンス（★2）
 - `url`: https://academy.claude.com/ja/use-cases/regulatory-analysis
 - `source_format`: html
 - `retrieved_at`: 2026-11-24T09:49:54+09:00

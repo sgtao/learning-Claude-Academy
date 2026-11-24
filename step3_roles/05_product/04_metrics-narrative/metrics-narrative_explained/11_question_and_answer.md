@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# FAQ：(無題)
-- `title`: (無題)
+# FAQ：プロダクト：メトリクスのナラティブ化（★3）
+- `title`: プロダクト：メトリクスのナラティブ化（★3）
 - `url`: https://academy.claude.com/ja/use-cases/metrics-narrative
 
 -----

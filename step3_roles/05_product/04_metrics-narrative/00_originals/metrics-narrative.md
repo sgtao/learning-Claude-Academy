@@ -1,5 +1,5 @@
 ---
-title: (無題)
+title: プロダクト：メトリクスのナラティブ化（★3）
 source_url: "https://academy.claude.com/ja/use-cases/metrics-narrative"
 source_format: html
 conversion: direct

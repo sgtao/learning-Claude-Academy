@@ -1,5 +1,5 @@
 ---
-title: (無題)
+title: 法務：法律リサーチ（★1）
 source_url: "https://academy.claude.com/ja/use-cases/legal-research-memo"
 source_format: html
 conversion: direct

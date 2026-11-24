@@ -1,5 +1,5 @@
 ---
-title: (無題)
+title: 人事：新ポジション開設（★2）
 source_url: "https://academy.claude.com/ja/use-cases/open-new-role"
 source_format: html
 conversion: direct

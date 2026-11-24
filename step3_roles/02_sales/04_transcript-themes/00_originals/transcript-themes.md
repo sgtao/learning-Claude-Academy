@@ -1,5 +1,5 @@
 ---
-title: (無題)
+title: 営業：通話記録テーマ抽出（★3）
 source_url: "https://academy.claude.com/ja/use-cases/transcript-themes"
 source_format: html
 conversion: direct

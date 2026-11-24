@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# 本文：(無題)
-- `title`: (無題)
+# 本文：プロダクト：PRD 作成（★1）
+- `title`: プロダクト：PRD 作成（★1）
 - `url`: https://academy.claude.com/ja/use-cases/prd-from-a-one-pager
 - `source_format`: html
 - `retrieved_at`: 2026-11-24T09:49:46+09:00

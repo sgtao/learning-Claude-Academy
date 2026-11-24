@@ -1,5 +1,5 @@
 ---
-title: (無題)
+title: 営業：商談準備（★2）
 source_url: "https://academy.claude.com/ja/use-cases/call-prep-sheet"
 source_format: html
 conversion: direct

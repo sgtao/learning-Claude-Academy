@@ -1,5 +1,5 @@
 ---
-title: (無題)
+title: プロダクト：フィードバック統合（★2）
 source_url: "https://academy.claude.com/ja/use-cases/feedback-synthesis"
 source_format: html
 conversion: direct

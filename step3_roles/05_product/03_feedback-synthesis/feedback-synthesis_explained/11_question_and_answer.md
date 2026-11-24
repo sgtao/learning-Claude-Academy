@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# FAQ：(無題)
-- `title`: (無題)
+# FAQ：プロダクト：フィードバック統合（★2）
+- `title`: プロダクト：フィードバック統合（★2）
 - `url`: https://academy.claude.com/ja/use-cases/feedback-synthesis
 
 -----

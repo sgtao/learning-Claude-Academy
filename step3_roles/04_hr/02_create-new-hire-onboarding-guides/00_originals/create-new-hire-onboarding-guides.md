@@ -1,5 +1,5 @@
 ---
-title: (無題)
+title: 人事：オンボーディングガイド（★1）
 source_url: "https://academy.claude.com/ja/use-cases/create-new-hire-onboarding-guides"
 source_format: html
 conversion: direct

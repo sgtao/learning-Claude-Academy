@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# 本文：(無題)
-- `title`: (無題)
+# 本文：法務：法律リサーチ（★1）
+- `title`: 法務：法律リサーチ（★1）
 - `url`: https://academy.claude.com/ja/use-cases/legal-research-memo
 - `source_format`: html
 - `retrieved_at`: 2026-11-24T09:49:54+09:00

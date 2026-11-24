@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# 資料：(無題)
-- `title`: (無題)
+# 資料：研究：助成金の選択肢（★3）
+- `title`: 研究：助成金の選択肢（★3）
 - `url`: https://academy.claude.com/ja/use-cases/work-through-grant-options-in-chat-with-claude
 - `source_format`: html
 - `retrieved_at`: 2026-11-24T09:49:58+09:00

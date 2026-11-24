@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# LLM 用プロンプト：(無題)
-- `title`: (無題)
+# LLM 用プロンプト：研究：生データから統計を検証（★2）
+- `title`: 研究：生データから統計を検証（★2）
 - `url`: https://academy.claude.com/ja/use-cases/verify-statistics-from-raw-data
 
 -----

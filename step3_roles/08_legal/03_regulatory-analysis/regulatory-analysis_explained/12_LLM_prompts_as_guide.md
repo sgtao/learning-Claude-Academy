@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# LLM 用プロンプト：(無題)
-- `title`: (無題)
+# LLM 用プロンプト：法務：規制とコンプライアンス（★2）
+- `title`: 法務：規制とコンプライアンス（★2）
 - `url`: https://academy.claude.com/ja/use-cases/regulatory-analysis
 
 -----

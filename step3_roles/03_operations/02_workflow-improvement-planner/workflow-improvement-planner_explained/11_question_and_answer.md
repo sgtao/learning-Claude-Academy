@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# FAQ：(無題)
-- `title`: (無題)
+# FAQ：オペレーション：ワークフロー改善プランナー（★1）
+- `title`: オペレーション：ワークフロー改善プランナー（★1）
 - `url`: https://academy.claude.com/ja/use-cases/workflow-improvement-planner
 
 -----

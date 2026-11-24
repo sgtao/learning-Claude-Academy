@@ -1,5 +1,5 @@
 ---
-title: (無題)
+title: デザイン：デザイン仕様書（★2）
 source_url: "https://academy.claude.com/ja/use-cases/design-spec-from-threads"
 source_format: html
 conversion: direct

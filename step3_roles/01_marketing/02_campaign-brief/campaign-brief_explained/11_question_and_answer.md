@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# FAQ：(無題)
-- `title`: (無題)
+# FAQ：マーケティング：キャンペーンブリーフ（★1）
+- `title`: マーケティング：キャンペーンブリーフ（★1）
 - `url`: https://academy.claude.com/ja/use-cases/campaign-brief
 
 -----

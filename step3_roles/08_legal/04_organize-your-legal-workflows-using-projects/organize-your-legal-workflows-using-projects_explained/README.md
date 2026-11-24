@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# 資料：(無題)
-- `title`: (無題)
+# 資料：法務：Projects で法務ワークフロー整理（★3）
+- `title`: 法務：Projects で法務ワークフロー整理（★3）
 - `url`: https://academy.claude.com/ja/use-cases/organize-your-legal-workflows-using-projects
 - `source_format`: html
 - `retrieved_at`: 2026-11-24T09:49:55+09:00

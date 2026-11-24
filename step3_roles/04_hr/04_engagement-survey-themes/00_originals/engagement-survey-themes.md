@@ -1,5 +1,5 @@
 ---
-title: (無題)
+title: 人事：サーベイからアクションプラン（★3）
 source_url: "https://academy.claude.com/ja/use-cases/engagement-survey-themes"
 source_format: html
 conversion: direct

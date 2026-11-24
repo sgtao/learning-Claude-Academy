@@ -1,5 +1,5 @@
 ---
-title: (無題)
+title: 財務：差異を説明（★1）
 source_url: "https://academy.claude.com/ja/use-cases/explain-a-variance"
 source_format: html
 conversion: direct

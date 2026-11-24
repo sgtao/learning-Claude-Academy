@@ -1,5 +1,5 @@
 ---
-title: (無題)
+title: 財務：ビジネスの財務を整理（★2）
 source_url: "https://academy.claude.com/ja/use-cases/organize-your-business-finances"
 source_format: html
 conversion: direct

@@ -1,5 +1,5 @@
 ---
-title: (無題)
+title: 法務：規制とコンプライアンス（★2）
 source_url: "https://academy.claude.com/ja/use-cases/regulatory-analysis"
 source_format: html
 conversion: direct

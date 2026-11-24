@@ -1,5 +1,5 @@
 ---
-title: (無題)
+title: 研究：助成金の選択肢（★3）
 source_url: "https://academy.claude.com/ja/use-cases/work-through-grant-options-in-chat-with-claude"
 source_format: html
 conversion: direct

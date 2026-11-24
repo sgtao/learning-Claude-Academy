@@ -1,5 +1,5 @@
 ---
-title: (無題)
+title: エンジニアリング：設計書（RFC）（★1）
 source_url: "https://academy.claude.com/ja/use-cases/design-doc"
 source_format: html
 conversion: direct

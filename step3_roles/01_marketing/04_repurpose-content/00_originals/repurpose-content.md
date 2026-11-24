@@ -1,5 +1,5 @@
 ---
-title: (無題)
+title: マーケティング：チャネル横断で再利用（★3）
 source_url: "https://academy.claude.com/ja/use-cases/repurpose-content"
 source_format: html
 conversion: direct

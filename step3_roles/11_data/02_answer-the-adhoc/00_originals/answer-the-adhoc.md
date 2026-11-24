@@ -1,5 +1,5 @@
 ---
-title: (無題)
+title: データ：アドホックなデータ質問に答える（★1）
 source_url: "https://academy.claude.com/ja/use-cases/answer-the-adhoc"
 source_format: html
 conversion: direct

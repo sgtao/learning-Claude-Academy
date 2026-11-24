@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# FAQ：(無題)
-- `title`: (無題)
+# FAQ：財務：ビジネスの財務を整理（★2）
+- `title`: 財務：ビジネスの財務を整理（★2）
 - `url`: https://academy.claude.com/ja/use-cases/organize-your-business-finances
 
 -----

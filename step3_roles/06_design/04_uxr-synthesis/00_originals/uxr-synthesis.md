@@ -1,5 +1,5 @@
 ---
-title: (無題)
+title: デザイン：インタビュー統合（★3）
 source_url: "https://academy.claude.com/ja/use-cases/uxr-synthesis"
 source_format: html
 conversion: direct

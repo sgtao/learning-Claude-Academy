@@ -1,7 +1,7 @@
 ###### [toTopPage](./README.md)
 ###### [toREADME](./README.md)
-# 資料：(無題)
-- `title`: (無題)
+# 資料：財務：差異から経営層向けスライド（★3）
+- `title`: 財務：差異から経営層向けスライド（★3）
 - `url`: https://academy.claude.com/ja/use-cases/variance-exec-slides
 - `source_format`: html
 - `retrieved_at`: 2026-11-24T09:49:53+09:00
