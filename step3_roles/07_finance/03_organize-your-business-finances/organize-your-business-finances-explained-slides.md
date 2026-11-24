@@ -81,19 +81,15 @@ lead: 高度な機能の使い方と、確認のしかた
 point: 機能が見えないときは、まず ==ファイルを開いて== 確かめる
 note: 解説メモの FAQ「xlsxwriterとは何か、いつ書くのか」「プレビューに機能が出ないのはなぜか」に対応します。
 ---
-<!-- slide: chart-bar -->
+<!-- slide: table, layout: compact -->
 ## 出力例：収入の配分（2025 年 11 月）
 lead: 当月の収入 22,200 ドルの配分。単位はドル。本文の返答の例の数字
-```chart
-type: bar
-title: 収入の配分（ドル）
-data:
-  - { label: 税金（30%）, value: 6660 }
-  - { label: バッファー（15%）, value: 3330 }
-  - { label: 設備（10%）, value: 2220 }
-  - { label: 手取り収入, value: 8850 }
-source: { name: Claude Academy「ビジネスの財務を整理」の返答の例（取得 2026-11-24）, url: https://academy.claude.com/ja/use-cases/organize-your-business-finances }
-```
+| 項目 | 金額（ドル） | 割合 |
+|---|---|---|
+| 税金 | 6,660 | 30% |
+| バッファー | 3,330 | 15% |
+| 設備 | 2,220 | 10% |
+| 手取り収入 | 8,850 | 総収入の 39.9% |
 note: 年初来の累計は 99,000 ドル（5 社）。トップは Acme Corp の 25,900 ドルと Venture Design Co の 23,700 ドルです。手取り収入は総収入の 39.9% と書かれています。
 ---
 <!-- slide: points -->
