@@ -46,11 +46,6 @@ Claude と一緒に作る成果物「アーティファクト」の解説（Clau
 
 -----
 [toTop](#totoppage)
-## Proposed Prompts
-- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
-
------
-[toTop](#totoppage)
 ## LLM 用プロンプト
 - [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
 

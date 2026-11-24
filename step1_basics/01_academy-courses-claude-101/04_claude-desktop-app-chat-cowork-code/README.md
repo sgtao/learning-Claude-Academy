@@ -46,11 +46,6 @@ Claudeデスクトップアプリでの仕事を、ターンごとのやり取�
 
 -----
 [toTop](#totoppage)
-## Proposed Prompts
-- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
-
------
-[toTop](#totoppage)
 ## LLM 用プロンプト
 - [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
 

@@ -54,11 +54,6 @@ Claude の学習ページ（claude.ai/learning）の入口を起こした資料�
 
 -----
 [toTop](#totoppage)
-## Proposed Prompts
-- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
-
------
-[toTop](#totoppage)
 ## LLM 用プロンプト
 - [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
 

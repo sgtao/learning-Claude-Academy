@@ -46,11 +46,6 @@ Claudeの回答が期待と少し違うときの課題5種（一般的すぎる�
 
 -----
 [toTop](#totoppage)
-## Proposed Prompts
-- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
-
------
-[toTop](#totoppage)
 ## LLM 用プロンプト
 - [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
 

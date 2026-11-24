@@ -46,11 +46,6 @@ Claude 101 はコースのトップページの本文で、本文は短く、概
 
 -----
 [toTop](#totoppage)
-## Proposed Prompts
-- [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
-
------
-[toTop](#totoppage)
 ## LLM 用プロンプト
 - [12_LLM_prompts_as_guide.md](./12_LLM_prompts_as_guide.md)
 
