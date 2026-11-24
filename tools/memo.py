@@ -7,6 +7,7 @@
 使い方（リポジトリのトップ 03_outputs/ から）:
   python3 tools/memo.py groups [STEP]            ステップごとの「まとまり」の一覧（STEP を省くと全ステップ）
   python3 tools/memo.py pages [STEP] GROUP       まとまりの中のページ（解説メモ）の一覧
+  python3 tools/memo.py pages -a [STEP]          全ページの一覧（STEP を付けるとそのステップだけ）
   python3 tools/memo.py info PAGE [--json]       解説メモの README のフロントマター（題名・URL・取得日など）
   python3 tools/memo.py show PAGE [--only ...]   README・out/09_input-memo.md・12_LLM_prompts_as_guide.md を表示
                                                  （out か 12 が無いページは README と 01_source を表示）
@@ -246,26 +247,38 @@ def show_plan(page):
 def cmd_groups(pages, args, out):
     steps = [resolve_step(pages, args.step)] if args.step else sorted({p["step"] for p in pages})
     for s in steps:
-        sp = [p for p in pages if p["step"] == s]
-        groups = sorted({p["group"] for p in sp})
-        out.write(f"{s}  [{len(groups)} groups / {len(sp)} pages]\n")
-        for g in groups:
-            gp = [p for p in sp if p["group"] == g]
-            done = sum(1 for p in gp if show_plan(p)[0] is None)
-            out.write(f"  {g}  {len(gp)} pages (with full memo: {done})\n")
+        out.write(f"{s}\n")
+        for g in sorted({p["group"] for p in pages if p["step"] == s}):
+            out.write(f"  {g}\n")
     return 0
 
 
-def cmd_pages(pages, args, out):
-    step = resolve_step(pages, args.first) if args.second else None
-    group_q = args.second or args.first
-    s, g = resolve_group(pages, group_q, step)
-    gp = [p for p in pages if p["step"] == s and p["group"] == g]
+def _write_group_pages(gp, s, g, out):
     out.write(f"# {s} / {g} ({len(gp)} pages)\n\n")
     out.write("id\tpage\tmemo\tstatus\ttitle\n")
     for p in gp:
         has = "yes" if show_plan(p)[0] is None else ("partial" if p["explained"] else "no")
         out.write(f"{p['id'] or '-'}\t{p['name']}\t{has}\t{p['status'] or '-'}\t{memo_title(p)}\n")
+
+
+def cmd_pages(pages, args, out):
+    if args.all:
+        # -a: every group (of one step, if STEP is given)
+        if args.second:
+            raise UserError("with -a give at most one argument (STEP)")
+        step = resolve_step(pages, args.first) if args.first else None
+        pairs = sorted({(p["step"], p["group"]) for p in pages if step is None or p["step"] == step})
+        for n, (s, g) in enumerate(pairs):
+            if n:
+                out.write("\n")
+            _write_group_pages([p for p in pages if p["step"] == s and p["group"] == g], s, g, out)
+        return 0
+    if not args.first:
+        raise UserError("give [STEP] GROUP, or use -a to list all pages")
+    step = resolve_step(pages, args.first) if args.second else None
+    group_q = args.second or args.first
+    s, g = resolve_group(pages, group_q, step)
+    _write_group_pages([p for p in pages if p["step"] == s and p["group"] == g], s, g, out)
     return 0
 
 
@@ -314,8 +327,9 @@ def build_parser():
     g = sub.add_parser("groups", help="list groups per step")
     g.add_argument("step", nargs="?", help="step (omit for all steps)")
     pg = sub.add_parser("pages", help="list pages in a group")
-    pg.add_argument("first", help="step (when two args are given) or group")
+    pg.add_argument("first", nargs="?", help="step (when two args are given) or group; with -a, the step")
     pg.add_argument("second", nargs="?", help="group")
+    pg.add_argument("-a", "--all", action="store_true", help="list all pages (of one step if STEP is given)")
     i = sub.add_parser("info", help="show the README frontmatter")
     i.add_argument("page")
     i.add_argument("--json", action="store_true")

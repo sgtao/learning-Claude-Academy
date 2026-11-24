@@ -16,8 +16,8 @@
 | `page_readme.py <ID> [--force]` | 検査の結果から、ページの README を作る（完了・薄い・取得済み・失敗・重複） | ページを作ったあと |
 | `catalog.py [--due]` | 公開のサイトマップを取り、台帳の対象の消えた件数と、対象外の件数を報告（`catalog/` に記録）。`--due` は 30 日経過の判定 | 30 日ごと |
 | `upgrade_explained.py <解説メモのフォルダ>` | 旧版のスキルで作った解説メモの形を、今の版にそろえる（本文は変えない） | 旧版のページを直すとき |
-| `memo.py groups [STEP]` | ステップごとの「まとまり」の一覧（ページ数・解説メモの数つき） | 何があるか見たいとき |
-| `memo.py pages [STEP] GROUP` | まとまりの中のページ（解説メモ）の一覧 | 読むページを探すとき |
+| `memo.py groups [STEP]` | ステップごとの「まとまり」の名前だけの一覧 | 何があるか見たいとき |
+| `memo.py pages [STEP] GROUP` / `pages -a [STEP]` | まとまりの中のページ（解説メモ）の一覧。`-a` は全ページ（STEP を付けるとそのステップだけ） | 読むページを探すとき |
 | `memo.py info PAGE [--json]` | 解説メモの README のフロントマター（題名・URL・取得日など） | ページの素性を確かめるとき |
 | `memo.py show PAGE [--only ...]` | 解説メモの README・`out/09_input-memo.md`・`12_LLM_prompts_as_guide.md` を表示（`out` か 12 が無いページは README と `01_source`、解説メモが無いページはページの README と原本） | 解説メモを読む・LLM に渡すとき |
 | `test_memo.py` | `memo.py` の検査（見本の木と実物の木） | `memo.py` を直したとき |
@@ -46,9 +46,10 @@ STEP は `1`・`step1_basics`・`basics`、GROUP は `01`・`01_academy-courses-
 PAGE は台帳の ID（`1-7`）・フォルダ名・slug・パス・名前の一部のどれでもよい（複数に当たると候補を出して止まる）。
 
 ```bash
-python3 tools/memo.py groups                 # 全ステップの「まとまり」
+python3 tools/memo.py groups                 # 全ステップの「まとまり」（名前だけ）
 python3 tools/memo.py groups 3               # ステップ 3 だけ
 python3 tools/memo.py pages 1 01             # ステップ 1 のまとまり 01 のページ
+python3 tools/memo.py pages -a               # 全ページ（`pages -a 3` ならステップ 3 だけ）
 python3 tools/memo.py info 1-7               # フロントマター（--json で JSON）
 python3 tools/memo.py show 1-7               # README ＋ out/09_input-memo.md ＋ 12_LLM_prompts_as_guide.md
 python3 tools/memo.py show 1-7 --only prompt # 一部だけ（readme input prompt source）

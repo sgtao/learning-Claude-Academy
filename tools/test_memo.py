@@ -85,6 +85,11 @@ class FixtureTests(unittest.TestCase):
         for s in ("step1_basics", "step2_tools", "step9_added", "01_grpA", "01_grpB", "01_added"):
             self.assertIn(s, out)
 
+    def test_groups_shows_names_only(self):
+        code, out, _ = run(self.root, "groups")
+        self.assertEqual(out.split("\n")[:-1],
+                         ["step1_basics", "  01_grpA", "step2_tools", "  01_grpB", "step9_added", "  01_added"])
+
     def test_groups_one_step_only(self):
         code, out, _ = run(self.root, "groups", "1")
         self.assertEqual(code, 0)
@@ -103,6 +108,32 @@ class FixtureTests(unittest.TestCase):
         for s in ("07_alpha", "08_beta", "09_gamma", "1-7", "1-9"):
             self.assertIn(s, out)
         self.assertNotIn("01_alpha", out)           # 別ステップのページは出ない
+
+    def test_pages_all(self):
+        code, out, _ = run(self.root, "pages", "-a")
+        self.assertEqual(code, 0)
+        for s in ("# step1_basics / 01_grpA (3 pages)", "# step2_tools / 01_grpB", "# step9_added / 01_added",
+                  "07_alpha", "09_gamma", "01_alpha", "02_nofm", "01_x"):
+            self.assertIn(s, out)
+        self.assertNotIn("aborted", out)
+        self.assertNotIn(".work", out)
+        # 数え合わせ：ページの行の数が scan の件数と一致
+        rows = [l for l in out.split("\n") if "\t" in l and not l.startswith("id\t")]
+        self.assertEqual(len(rows), len(memo.scan(self.root)))
+
+    def test_pages_all_one_step(self):
+        code, out, _ = run(self.root, "pages", "-a", "1")
+        self.assertEqual(code, 0)
+        self.assertIn("07_alpha", out)
+        self.assertNotIn("step2_tools", out)
+
+    def test_pages_all_long_option_and_bad_args(self):
+        self.assertEqual(run(self.root, "pages", "--all")[0], 0)
+        code, _, err = run(self.root, "pages", "-a", "1", "01")
+        self.assertEqual(code, 2)
+        code, _, err = run(self.root, "pages")
+        self.assertEqual(code, 2)
+        self.assertIn("-a", err)
 
     def test_pages_hides_work_dirs(self):
         code, out, _ = run(self.root, "pages", "9", "01_added")
