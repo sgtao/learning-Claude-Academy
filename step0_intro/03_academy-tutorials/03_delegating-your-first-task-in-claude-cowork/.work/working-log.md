@@ -1,5 +1,5 @@
-###### [toTopPage](../../../../README.md)
-###### [toREADME](../../README.md)
+###### [toTopPage](../../README.md)
+###### [toREADME](../README.md)
 # 0-5 Claude Coworkで最初のタスクを委任する（Delegating your first task to Claude）
 - 元ページ: https://academy.claude.com/ja/tutorials/delegating-your-first-task-in-claude-cowork（取得: 2026-11-15／取得手段: Academy 日本語版を url-to-md で変換、`direct`）
 - 所要（ページ表示）: 4 分（本文の先頭に「· 4 min」の表示あり。`/learning` の表示も 4 分）　内容の種類: 技術・ハウツー　状態: 完了

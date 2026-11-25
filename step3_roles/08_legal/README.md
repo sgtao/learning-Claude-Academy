@@ -1,5 +1,5 @@
-###### [toTopPage](../../README.md)
-###### [toREADME](../README.md)
+###### [toTopPage](../README.md)
+###### [toREADME](./README.md)
 # 08_legal
 
 このまとまりのページ。`ledger.csv` から作る。

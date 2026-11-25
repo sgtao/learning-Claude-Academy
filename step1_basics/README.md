@@ -1,5 +1,5 @@
 ###### [toTopPage](../README.md)
-###### [toREADME](../README.md)
+###### [toREADME](./README.md)
 # step1_basics — ステップ 1：基礎（Claude 101）
 
 このステップのページの台帳。`ledger.csv` から作る（表は自動で更新される。外の文章は手で書いてよい）。

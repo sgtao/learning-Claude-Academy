@@ -1,5 +1,5 @@
-###### [toTopPage](../../../../README.md)
-###### [toREADME](../../README.md)
+###### [toTopPage](../../README.md)
+###### [toREADME](../README.md)
 # 0-1 学ぶ（`/learning` 入口）
 - 元ページ: https://claude.ai/learning（取得: 2026-11-15／取得手段: Claude in Chrome。本文を読んで起こした `model-read`）
 - 所要（ページ表示）: －（入口ページ。「はじめに」の 3 本が 4・4・7 分）　内容の種類: 学習・ビジネス　状態: 完了

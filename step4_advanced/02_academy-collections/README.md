@@ -1,5 +1,5 @@
-###### [toTopPage](../../README.md)
-###### [toREADME](../README.md)
+###### [toTopPage](../README.md)
+###### [toREADME](./README.md)
 # 02_academy-collections
 
 このまとまりのページ。`ledger.csv` から作る。

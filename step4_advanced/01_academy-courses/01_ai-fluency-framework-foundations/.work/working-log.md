@@ -1,5 +1,5 @@
-###### [toTopPage](../../../../README.md)
-###### [toREADME](../../README.md)
+###### [toTopPage](../../README.md)
+###### [toREADME](../README.md)
 # 4-1 AI Fluency: Framework and foundations
 - 元ページ: https://academy.claude.com/ja/courses/ai-fluency-framework-foundations（取得: 2026-11-24）
 - 所要: 240 分（学習メモの値。本文に分数が無いことがある）　内容の種類: 学習・ビジネス　状態: 取得済（現在の状態は[台帳](../../../../00_index.md)が正）

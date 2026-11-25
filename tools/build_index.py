@@ -59,12 +59,11 @@ def block(rows, base):
 
 
 def readme_new(kind, d, title, rows):
-    top = rel(d, ROOT / "README.md")
+    top = rel(d, d.parent / "README.md")                 # toTopPage は 1 つ上の README
     if kind == "step":
-        head = f"###### [toTopPage]({top})\n###### [toREADME]({top})\n# {d.name} — {title}\n\nこのステップのページの台帳。`ledger.csv` から作る（表は自動で更新される。外の文章は手で書いてよい）。\n\n## 台帳\n"
+        head = f"###### [toTopPage]({top})\n###### [toREADME](./README.md)\n# {d.name} — {title}\n\nこのステップのページの台帳。`ledger.csv` から作る（表は自動で更新される。外の文章は手で書いてよい）。\n\n## 台帳\n"
     else:
-        up = rel(d, d.parent / "README.md")
-        head = f"###### [toTopPage]({rel(d, ROOT / 'README.md')})\n###### [toREADME]({up})\n# {d.name}\n\nこのまとまりのページ。`ledger.csv` から作る。\n\n"
+        head = f"###### [toTopPage]({top})\n###### [toREADME](./README.md)\n# {d.name}\n\nこのまとまりのページ。`ledger.csv` から作る。\n\n"
     return head + block(rows, d) + "\n"
 
 

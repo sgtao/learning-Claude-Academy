@@ -1,5 +1,5 @@
-###### [toTopPage](../../../../README.md)
-###### [toREADME](../../README.md)
+###### [toTopPage](../../README.md)
+###### [toREADME](../README.md)
 # 3-04-01 人事の役割ページ
 - 元ページ: https://claude.ai/learning/roles/hr（取得: 2026-11-24）
 - 所要: 本文に書かれていない　内容の種類: 学習・ビジネス　状態: 完了（現在の状態は[台帳](../../../../00_index.md)が正）

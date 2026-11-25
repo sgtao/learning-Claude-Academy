@@ -1,5 +1,5 @@
-###### [toTopPage](../../../../README.md)
-###### [toREADME](../../README.md)
+###### [toTopPage](../../README.md)
+###### [toREADME](../README.md)
 # 3-09-03 研究：生データから統計を検証（★2）
 - 元ページ: https://academy.claude.com/ja/use-cases/verify-statistics-from-raw-data（取得: 2026-11-24）
 - 所要: 16 分（学習メモの値。本文に分数が無いことがある）　内容の種類: 技術・ハウツー　状態: 完了（現在の状態は[台帳](../../../../00_index.md)が正）

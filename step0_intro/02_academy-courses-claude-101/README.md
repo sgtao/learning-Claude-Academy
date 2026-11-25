@@ -1,5 +1,5 @@
-###### [toTopPage](../../README.md)
-###### [toREADME](../README.md)
+###### [toTopPage](../README.md)
+###### [toREADME](./README.md)
 # 02_academy-courses-claude-101 — Claude 101（コースのトップ）
 
 ステップ 1 で学ぶコース「Claude 101」の**トップページだけ**（概要・前提・対象）。13 レッスンの一覧・内容・所要時間はこのページの本文には無く、ステップ 1（`12_step1/`）で扱う。

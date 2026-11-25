@@ -1,5 +1,5 @@
 ###### [toTopPage](../README.md)
-###### [toREADME](../README.md)
+###### [toREADME](./README.md)
 # 13_step2 — ステップ 2：道具を整える（共通チュートリアル 3 本）
 
 PLAYBOOK.md の M1 で、このステップの 2-3 だけを実例として作った。残りは M5 で作る。

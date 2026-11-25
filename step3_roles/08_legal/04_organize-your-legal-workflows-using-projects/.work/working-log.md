@@ -1,5 +1,5 @@
-###### [toTopPage](../../../../README.md)
-###### [toREADME](../../README.md)
+###### [toTopPage](../../README.md)
+###### [toREADME](../README.md)
 # 3-08-04 法務：Projects で法務ワークフロー整理（★3）
 - 元ページ: https://academy.claude.com/ja/use-cases/organize-your-legal-workflows-using-projects（取得: 2026-11-24）
 - 所要: 16 分（学習メモの値。本文に分数が無いことがある）　内容の種類: 技術・ハウツー　状態: 完了（現在の状態は[台帳](../../../../00_index.md)が正）

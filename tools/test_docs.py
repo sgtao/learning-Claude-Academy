@@ -47,5 +47,39 @@ class DocsTests(unittest.TestCase):
                 self.assertTrue(v.endswith(" ."), f"{k}: {v!r}（余計な引数がルートと解釈されないよう、末尾に . を付ける）")
 
 
+# 冒頭の戻るリンク（全ページのファイルで同じ規則）
+#   toTopPage＝1 つ上のフォルダの README（ページのフォルダから見て ../README.md）
+#   toREADME ＝そのファイルと同じフォルダの README（README 自身も ./README.md）
+# 作業ログ（.work/working-log.md）は .work/ の中にあるので、ページのフォルダ（../README.md）と 1 つ上（../../README.md）を指す。
+NAV_HEAD = re.compile(r"\A###### \[toTopPage\]\(([^)]*)\)\n###### \[toREADME\]\(([^)]*)\)")
+
+
+def expected_nav(rel):
+    parts = rel.parts
+    if len(parts) == 5 and parts[3] == ".work" and parts[4] == "working-log.md":
+        return ("../../README.md", "../README.md")
+    if parts[0].startswith("step") and len(parts) in (2, 3, 4):     # step / まとまり / ページ（と、その中のファイル）
+        return ("../README.md", "./README.md")
+    return None
+
+
+class NavLinkTests(unittest.TestCase):
+    def test_every_nav_header_follows_the_rule(self):
+        bad, seen = [], 0
+        for p in sorted(ROOT.rglob("*.md")):
+            rel = p.relative_to(ROOT)
+            if any(x in rel.parts for x in ("node_modules", ".git", ".vitepress", "aborted")):
+                continue
+            head = NAV_HEAD.match(p.read_text(encoding="utf-8"))
+            if not head:
+                continue
+            seen += 1
+            want = expected_nav(rel)
+            if want is None or (head.group(1), head.group(2)) != want:
+                bad.append(f"{rel}: {head.group(1)} / {head.group(2)} （期待 {want}）")
+        self.assertGreater(seen, 400, "戻るリンクの見つかった数が少なすぎる（検査の対象を取れていない）")
+        self.assertEqual(bad, [], "\n".join(bad[:20]) + (f"\n...ほか {len(bad) - 20} 件" if len(bad) > 20 else ""))
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

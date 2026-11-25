@@ -1,5 +1,5 @@
-###### [toTopPage](../../README.md)
-###### [toREADME](../README.md)
+###### [toTopPage](../README.md)
+###### [toREADME](./README.md)
 # 03_academy-tutorials — 入口のチュートリアル 4 本（Academy）
 
 `/learning` の「注目のラーニング」「はじめに」に載るチュートリアル。Intro to Claude（5 分）と、Cowork の最初の 3 本（4・4・7 分）。いずれも本文に所要時間は無く、分数は `/learning` の表示（0-1）と学習メモによる。

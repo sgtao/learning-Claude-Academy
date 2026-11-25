@@ -1,5 +1,5 @@
-###### [toTopPage](../../README.md)
-###### [toREADME](../README.md)
+###### [toTopPage](../README.md)
+###### [toREADME](./README.md)
 # 01_academy-courses-claude-101
 
 このまとまりのページ。`ledger.csv` から作る。

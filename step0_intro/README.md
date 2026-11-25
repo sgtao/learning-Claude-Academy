@@ -1,5 +1,5 @@
 ###### [toTopPage](../README.md)
-###### [toREADME](../README.md)
+###### [toREADME](./README.md)
 # 11_step0 — ステップ 0：入口（講義メモ・解説スライド）
 
 学習メモ（[02_learning-memo.md](../../01_sources/11_ref-effective-Claude-Learning/02_learning-memo.md)）のステップ 0。`/learning` を開き、Intro to Claude と Cowork の最初の 3 本を読み、Claude 101 の入口を確かめる。

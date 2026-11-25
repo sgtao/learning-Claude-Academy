@@ -1,5 +1,5 @@
-###### [toTopPage](../../../../README.md)
-###### [toREADME](../../README.md)
+###### [toTopPage](../../README.md)
+###### [toREADME](../README.md)
 # 0-6 Claudeをカスタマイズする（Customize Claude）
 - 元ページ: https://academy.claude.com/ja/tutorials/customize-claude-cowork（取得: 2026-11-15／取得手段: Academy 日本語版を url-to-md で変換、`direct`）
 - 所要（ページ表示）: 7 分（`/learning` の表示＝0-1 と学習メモ。**取得した本文には分数が無い**）　内容の種類: 技術・ハウツー　状態: 完了

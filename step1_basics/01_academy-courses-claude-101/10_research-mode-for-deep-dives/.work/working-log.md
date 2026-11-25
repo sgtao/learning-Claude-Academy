@@ -1,5 +1,5 @@
-###### [toTopPage](../../../../README.md)
-###### [toREADME](../../README.md)
+###### [toTopPage](../../README.md)
+###### [toREADME](../README.md)
 # 1-10 深掘り調査のためのリサーチ機能（Claude 101 レッスン 10）
 - 元ページ: https://academy.claude.com/ja/courses/claude-101/research-mode-for-deep-dives（取得: 2026-11-15／取得手段: Academy 日本語版を url-to-md で変換、`direct`）
 - 所要（ページ表示）: 10 分（学習メモの値。**取得した本文には分数が無い**。本文の「数分かそれ以上」は 1 回のリサーチにかかる時間で、レッスンの所要ではない）　内容の種類: 学習・ビジネス　状態: 完了

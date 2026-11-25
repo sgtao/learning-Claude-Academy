@@ -1,5 +1,5 @@
-###### [toTopPage](../../../../README.md)
-###### [toREADME](../../README.md)
+###### [toTopPage](../../README.md)
+###### [toREADME](../README.md)
 # 0-3 Claudeを使い始める（Intro to Claude）
 - 元ページ: https://academy.claude.com/ja/tutorials/getting-started-with-claude（取得: 2026-11-15／取得手段: Academy 日本語版を url-to-md で変換、`direct`）
 - 所要（ページ表示）: 約 5 分（学習メモの値。**取得した本文には分数が無い**）　内容の種類: 技術・ハウツー　状態: 完了

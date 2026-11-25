@@ -1,5 +1,5 @@
-###### [toTopPage](../../../README.md)
-###### [toREADME](../README.md)
+###### [toTopPage](../README.md)
+###### [toREADME](./README.md)
 # 4-4 Claude for personal use（コレクション）
 - 元ページ: https://academy.claude.com/collections/claude-for-you（取得: 2026-11-24）
 - 所要: 本文に書かれていない　内容の種類: 学習・ビジネス　状態: 薄いページ（現在の状態は[台帳](../../../00_index.md)が正）

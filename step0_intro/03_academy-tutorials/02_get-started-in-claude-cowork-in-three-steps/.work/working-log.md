@@ -1,5 +1,5 @@
-###### [toTopPage](../../../../README.md)
-###### [toREADME](../../README.md)
+###### [toTopPage](../../README.md)
+###### [toREADME](../README.md)
 # 0-4 Claude Coworkを3つのステップで始める（Get started with Claude in three steps）
 - 元ページ: https://academy.claude.com/ja/tutorials/get-started-in-claude-cowork-in-three-steps（取得: 2026-11-15／取得手段: Academy 日本語版を url-to-md で変換、`direct`）
 - 所要（ページ表示）: 4 分（`/learning` の一覧の表示＝0-1。**取得した本文には分数が無い**）　内容の種類: 技術・ハウツー　状態: 完了

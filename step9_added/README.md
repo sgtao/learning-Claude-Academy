@@ -1,5 +1,5 @@
 ###### [toTopPage](../README.md)
-###### [toREADME](../README.md)
+###### [toREADME](./README.md)
 # step9_added — ステップ 9：追加（台帳の対象外で、URL を渡して作ったもの）
 
 このステップのページの台帳。`ledger.csv` から作る（表は自動で更新される。外の文章は手で書いてよい）。

@@ -1,5 +1,5 @@
-###### [toTopPage](../../README.md)
-###### [toREADME](../README.md)
+###### [toTopPage](../README.md)
+###### [toREADME](./README.md)
 # 01_claude-ai-learning — `claude.ai/learning`（入口ページ）
 
 学習ページの入口 1 ページ。`claude.ai/learning` は curl では HTTP 403 で取得できないため、Claude in Chrome で本文を読んで起こした（ボタンは押していない）。

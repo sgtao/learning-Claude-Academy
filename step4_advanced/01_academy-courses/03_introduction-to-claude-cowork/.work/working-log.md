@@ -1,5 +1,5 @@
-###### [toTopPage](../../../../README.md)
-###### [toREADME](../../README.md)
+###### [toTopPage](../../README.md)
+###### [toREADME](../README.md)
 # 4-3 Introduction to Claude Cowork
 - 元ページ: https://academy.claude.com/ja/courses/introduction-to-claude-cowork（取得: 2026-11-24）
 - 所要: 150 分（学習メモの値。本文に分数が無いことがある）　内容の種類: 学習・ビジネス　状態: 取得済（現在の状態は[台帳](../../../../00_index.md)が正）

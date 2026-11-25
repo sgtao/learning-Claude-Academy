@@ -1,5 +1,5 @@
-###### [toTopPage](../../README.md)
-###### [toREADME](../README.md)
+###### [toTopPage](../README.md)
+###### [toREADME](./README.md)
 # 01_academy-tutorials — 共通チュートリアル（ステップ 2）
 
 | ページ | 状態 | リンク |

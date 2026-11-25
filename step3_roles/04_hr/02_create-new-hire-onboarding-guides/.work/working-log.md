@@ -1,5 +1,5 @@
-###### [toTopPage](../../../../README.md)
-###### [toREADME](../../README.md)
+###### [toTopPage](../../README.md)
+###### [toREADME](../README.md)
 # 3-04-02 人事：オンボーディングガイド（★1）
 - 元ページ: https://academy.claude.com/ja/use-cases/create-new-hire-onboarding-guides（取得: 2026-11-24）
 - 所要: 15 分（学習メモの値。本文に分数が無いことがある）　内容の種類: 技術・ハウツー　状態: 完了（現在の状態は[台帳](../../../../00_index.md)が正）

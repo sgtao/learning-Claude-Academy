@@ -1,5 +1,5 @@
-###### [toTopPage](../../../../README.md)
-###### [toREADME](../../README.md)
+###### [toTopPage](../../README.md)
+###### [toREADME](../README.md)
 # 1-13 次のステップ（Claude 101 レッスン 13）
 - 元ページ: https://academy.claude.com/ja/courses/claude-101/what-s-next（取得: 2026-11-15／取得手段: Academy 日本語版を url-to-md で変換、`direct`）
 - 所要（学習メモの値）: 2 分（本文には分数が無い）　内容の種類: 学習・ビジネス　状態: [台帳](../../../../00_index.md)を見る

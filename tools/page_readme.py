@@ -32,9 +32,7 @@ DEFAULT_UNVERIFIED = ["原本のリンク先の中身、画像・動画", "手�
 # ------------------------------------------------------------ 解説メモが無いページの README（従来どおり）
 
 def nav(page):
-    top = os.path.relpath(ROOT / "README.md", page)
-    up = os.path.relpath(page.parent / "README.md", page)
-    return f"###### [toTopPage]({top})\n###### [toREADME]({up})\n"
+    return NAV_NEW + "\n"                                # toTopPage＝../README.md、toREADME＝./README.md（ページのフォルダ）
 
 
 def head(r, page):

@@ -1,5 +1,5 @@
-###### [toTopPage](../../../../README.md)
-###### [toREADME](../../README.md)
+###### [toTopPage](../../README.md)
+###### [toREADME](../README.md)
 # 9-add-073 configuration-and-multi-file-skills
 - 元ページ: https://academy.claude.com/ja/tutorials/configuration-and-multi-file-skills（取得: 2026-11-24）
 - 所要: 本文に書かれていない　内容の種類: 技術・ハウツー　状態: 取得済（現在の状態は[台帳](../../../../00_index.md)が正）

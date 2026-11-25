@@ -1,5 +1,5 @@
-###### [toTopPage](../../../../README.md)
-###### [toREADME](../../README.md)
+###### [toTopPage](../../README.md)
+###### [toREADME](../README.md)
 # 2-3 Skillsを使ってClaudeにあなたの仕事の進め方を教える
 
 - 状態：完了（2026-11-24。M1 の実例）

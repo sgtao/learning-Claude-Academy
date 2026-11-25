@@ -1,5 +1,5 @@
-###### [toTopPage](../../../README.md)
-###### [toREADME](../README.md)
+###### [toTopPage](../README.md)
+###### [toREADME](./README.md)
 # 1-14 コースクイズ（Claude 101）
 - 元ページ: https://academy.claude.com/ja/courses/claude-101/certificate-of-completion（取得: 2026-11-15／取得手段: Academy 日本語版を url-to-md で変換、`direct`）
 - 所要（ページ表示）: 8 分（学習メモ・ページの「クイズ 8 分」）　内容の種類: 学習・ビジネス　状態: **薄いページ（解説メモ・スライドは作っていない）**
