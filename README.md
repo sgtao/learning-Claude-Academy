@@ -3,6 +3,8 @@
 Claude の公式学習ページ（claude.ai/learning、実体は Claude Academy）を、ページごとに学び、まとめた成果物のリポジトリ。
 ページごとに「原本 → 解説メモ 5 本 → 解説スライド」があり、全体は台帳と索引で管理する。
 
+**公開ページ（ブラウザで読む）：<https://sgtao.github.io/learning-Claude-Academy/>**
+
 ## まず見る場所
 | 知りたいこと | 開くもの |
 |---|---|
@@ -72,7 +74,7 @@ python3 tools/test_site.py
 - 表紙の「解説スライド」は新しいタブでスライド（HTML）を開く。「スライド原稿」（`docs/*-slides.md`）は、サイトには出さないので、GitHub 上のファイルを開く（VitePress は `.html` へのリンクを自分のページとして処理し、同名の原稿 MD を出してしまうため、リンクの描画で振り分けている）。
 - ページを足したら、台帳を更新（`tools/ledger.py refresh`）すれば、サイドバーに出る。設定は `.vitepress/config.mjs`。
 
-**GitHub Pages**：`main` に push すると `.github/workflows/pages.yml` がビルドして公開する。公開先は `https://<ユーザー名>.github.io/<リポジトリ名>/`。
+**GitHub Pages**：`main` に push すると `.github/workflows/pages.yml` がビルドして公開する。公開先は <https://sgtao.github.io/learning-Claude-Academy/>（`https://<ユーザー名>.github.io/<リポジトリ名>/`）。
 最初の 1 回だけ、リポジトリの Settings → Pages → Build and deployment → Source を「GitHub Actions」にする（コマンドなら下）。
 
 ```bash
