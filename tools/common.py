@@ -34,7 +34,8 @@ NAV_NEW = "###### [toTopPage](../README.md)\n###### [toREADME](./README.md)"
 NAV_CHECKER = "###### [toTopPage](./README.md)\n###### [toREADME](./README.md)"   # check_docs が決め打ちしている形
 SLIDES_START, SLIDES_END = "<!-- slides:start -->", "<!-- slides:end -->"
 SEP_LINES = "-----\n[toTop](#totoppage)\n"
-SLIDES_BLOCK_RE = re.compile(re.escape(SLIDES_START) + r".*?" + re.escape(SLIDES_END) + r"\n\n" + re.escape(SEP_LINES), re.S)
+# 解説資料の節。後ろの区切りは、あってもなくてもよい（版によって違うため）
+SLIDES_BLOCK_RE = re.compile(re.escape(SLIDES_START) + r".*?" + re.escape(SLIDES_END) + r"\n(?:\n?" + re.escape(SEP_LINES) + r")?", re.S)
 
 
 def checker_view_text(text):

@@ -59,13 +59,3 @@ Claude Academy のチュートリアル。何度も Claude に説明している
 
 -----
 [toTop](#totoppage)
-<!-- page-status:start -->
-## 状態と関連資料
-- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 9 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
-- 原本: [00_originals/teach-claude-your-way-of-working-using-skills.md](./00_originals/teach-claude-your-way-of-working-using-skills.md)
-- 確認していないこと（要約）: 原本のリンク先／手順を実際に自分のアカウントで操作した結果（Skill を作って動かす）／読み合わせは作成者（AI）が行ったもの（第三者の確認ではない）
-- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
-<!-- page-status:end -->
-
------
-[toTop](#totoppage)

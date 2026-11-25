@@ -183,7 +183,7 @@ class MigrationTests(unittest.TestCase):
 
 
 class CoverTests(unittest.TestCase):
-    """表紙末尾の「状態と関連資料」と作業ログの「検査の結果」。検査（page_status）は固定の値に差し替える。"""
+    """表紙（解説資料の節）と作業ログの「検査の結果」。検査（page_status）は固定の値に差し替える。"""
 
     FAKE = {"memo": "12 PASS", "slides": "10 枚／lint 0", "numbers_missing": [], "links_broken": 0}
 
@@ -211,16 +211,14 @@ class CoverTests(unittest.TestCase):
     def log(self):
         return (self.page / ".work/working-log.md").read_text(encoding="utf-8")
 
-    def test_block_added_at_end_and_file_still_ends_with_separator(self):
+    def test_cover_has_no_status_section(self):
+        """「状態と関連資料」は表紙に置かない（作業ログを見る）。残りの本文は変えない。"""
         page_readme.update_cover(self.row, self.page)
         t = self.cover()
-        self.assertTrue(t.endswith(SEP + "\n"))
-        self.assertIn("## 状態と関連資料", t)
-        self.assertIn("- 状態: 検査済み", t)
-        self.assertIn("- [解説スライド](./docs/alpha-explained-slides.html)", t)
-        self.assertIn("- [スライド原稿](./docs/alpha-explained-slides.md)", t)
-        self.assertIn("[.work/working-log.md](./.work/working-log.md)", t)
-        self.assertIn("OVERVIEW", t)                                                    # 元の本文は残る
+        self.assertNotIn("状態と関連資料", t)
+        self.assertNotIn("page-status", t)
+        self.assertTrue(t.endswith("<!-- slides:end -->\n"))                          # 解説資料が最後
+        self.assertIn("OVERVIEW", t)                                                   # 元の本文は残る
 
     def test_nav_links_unified_in_all_five_files(self):
         """toTopPage＝../README.md、toREADME＝./README.md（README 自身も自分を指す）。5 本すべて。"""
@@ -230,33 +228,31 @@ class CoverTests(unittest.TestCase):
             self.assertEqual(head, ["###### [toTopPage](../README.md)", "###### [toREADME](./README.md)"], n)
         self.assertEqual((self.page / "02_explanation_memo.md").read_text(encoding="utf-8").split("\n", 2)[2], "【補足】x 【推測】y")   # 本文は変えない
 
-    SLIDES = ("<!-- slides:start -->\n## 解説資料\n- [解説スライド](./docs/alpha-explained-slides.html)\n"
+    SLIDES = ("<!-- slides:start -->\n## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）\n- [解説スライド](./docs/alpha-explained-slides.html)\n"
               "- [スライド原稿](./docs/alpha-explained-slides.md)\n<!-- slides:end -->\n")
     SEPN = "-----\n[toTop](#totoppage)\n"
 
-    def test_cover_ends_with_slides_then_status_at_the_very_bottom(self):
-        """並び：…LLM 用プロンプト → 解説資料 → 状態と関連資料（最下段）。"""
+    def test_cover_ends_with_slides(self):
+        """並び：…LLM 用プロンプト → 解説資料（最後）。"""
         page_readme.update_cover(self.row, self.page)
         t = self.cover()
         heads = [l for l in t.split("\n") if l.startswith("## ")]
-        self.assertEqual(heads[-2:], ["## 解説資料", "## 状態と関連資料"], heads)
+        self.assertEqual(len(heads[-1:]), 1, heads)
+        self.assertTrue(heads[-1].startswith("## 解説資料"), heads)
         self.assertEqual(t.count("## 解説資料"), 1)
-        self.assertEqual(t.count("## 状態と関連資料"), 1)
-        self.assertIn(self.SEPN + self.SLIDES + "\n" + self.SEPN + "<!-- page-status:start -->", t)
-        self.assertTrue(t.endswith("<!-- page-status:end -->\n\n" + self.SEPN), t[-200:])
-        status = t[t.index("page-status:start"):t.index("page-status:end")]
-        self.assertNotIn("解説スライド", status)                                            # 状態ブロックには、スライドのリンクを重ねて書かない
+        self.assertIn(self.SEPN + self.SLIDES, t)
+        self.assertTrue(t.endswith(self.SLIDES), t[-200:])                             # 解説資料が最後
 
     def test_sections_move_from_old_positions_to_the_bottom(self):
-        """以前の版の並び（解説資料が先頭近く／解説資料が状態の後ろ）から更新しても、同じ結果（解説資料 → 状態）になる。"""
-        from common import SLIDES_BLOCK_RE, SLIDES_START, SLIDES_END
+        """以前の版の並び（解説資料が先頭近く／解説資料が以前の「状態と関連資料」の後ろ）から更新しても、同じ結果になる。"""
+        from common import SLIDES_START, SLIDES_END
         page_readme.update_cover(self.row, self.page)
         t = self.cover()
         slides = t[t.index(SLIDES_START):t.index(SLIDES_END) + len(SLIDES_END)]
-        base = SLIDES_BLOCK_RE.sub("", t, count=1)                                          # 解説資料の無い表紙（状態ブロックは末尾）
+        base = page_readme.apply_cover_sections(t, None)                                  # 解説資料の無い表紙
         self.assertNotIn("解説資料", base)
         old_top = base.replace(self.SEPN + "## セクション", self.SEPN + slides + "\n\n" + self.SEPN + "## セクション", 1)
-        old_after_status = base.rstrip("\n") + "\n" + slides + "\n\n" + self.SEPN
+        old_after_status = base.rstrip("\n") + "\n" + slides + "\n\n" + self.SEPN + "<!-- page-status:start -->\n## 状態と関連資料\n- 古い\n<!-- page-status:end -->\n\n" + self.SEPN
         for old in (old_top, old_after_status):
             self.assertNotEqual(old, t)
             (self.page / "README.md").write_text(old, encoding="utf-8")
@@ -270,7 +266,7 @@ class CoverTests(unittest.TestCase):
         page_readme.update_cover(self.row, self.page)
         t = self.cover()
         self.assertNotIn("解説資料", t)
-        self.assertTrue(t.endswith("<!-- page-status:end -->\n\n-----\n[toTop](#totoppage)\n"))   # 状態ブロックと末尾の区切りだけ
+        self.assertTrue(t.endswith(SEP + "\n"))                                       # 解説資料が無くなったら、末尾は区切りだけ
 
     def test_checker_view_restores_what_check_docs_expects(self):
         """check_docs には、冒頭リンクと「解説資料」の節だけを元に戻した写しを渡す。それ以外は変えない。"""
@@ -280,8 +276,8 @@ class CoverTests(unittest.TestCase):
         self.assertTrue(v.startswith("###### [toTopPage](./README.md)\n###### [toREADME](./README.md)\n# 資料："))
         self.assertNotIn("解説資料", v)
         self.assertNotIn("slides:start", v)
-        self.assertIn("page-status:start", v)                                              # 状態ブロックは残す（これも検査の対象）
-        self.assertTrue(v.endswith("<!-- page-status:end -->\n\n-----\n[toTop](#totoppage)\n"))
+        self.assertNotIn("page-status", v)
+        self.assertTrue(v.endswith(SEP + "\n"))
         orig = "###### [toTopPage](./README.md)\n###### [toREADME](./README.md)\n# 資料：アルファ\n- `title`: アルファ\n\n-----\n[toTop](#totoppage)\n## セクション\n分割なし\n\n-----\n[toTop](#totoppage)\n## 概要\nOVERVIEW\n\n"
         self.assertTrue(v.startswith(orig))                                                # 元のファイルと、冒頭と節以外は同じ
 
@@ -298,13 +294,8 @@ class CoverTests(unittest.TestCase):
         a, b = self.cover(), self.log()
         page_readme.update_cover(self.row, self.page)
         self.assertEqual((self.cover(), self.log()), (a, b))
-        self.assertEqual(self.cover().count("page-status:start"), 1)
+        self.assertEqual(self.cover().count("page-status"), 0)
         self.assertEqual(self.log().count("checks:start"), 1)
-
-    def test_state_words(self):
-        for status, learned, want in (("完了", "", "検査済み"), ("完了", "2026-11-25", "確定"),
-                                     ("要確認", "", "作成中"), ("作成中", "2026-11-25", "作成中")):
-            self.assertEqual(page_readme.state_word({"status": status, "learned_on": learned}, {}), want)
 
     def test_log_created_with_checks_and_manual_text_survives_update(self):
         page_readme.update_cover(self.row, self.page)
@@ -316,21 +307,14 @@ class CoverTests(unittest.TestCase):
         self.assertIn("手書きの経緯", self.log())
         self.assertIn("11 PASS／1 FAIL", self.log())
         self.assertNotIn("12 PASS", self.log())
-        self.assertIn("11 PASS／1 FAIL", self.cover())
+        self.assertNotIn("11 PASS", self.cover())                                       # 表紙には状態を書かない（作業ログが正）
 
     def test_migrated_log_gets_checks_block_before_first_section(self):
         w(self.page / ".work/working-log.md", "# 1-7 アルファ\n- 元ページ: u\n\n## 成果物\n| x |\n\n## 確認していないこと\n- 動画の中身（字幕なし）\n- 画像\n")
         page_readme.update_cover(self.row, self.page)
         t = self.log()
         self.assertLess(t.index("checks:start"), t.index("## 成果物"))
-        self.assertIn("確認していないこと（要約）: 動画の中身（字幕なし）／画像", self.cover())      # 作業ログの項目が要約される
-
-    def test_unverified_summary(self):
-        long_ = "あ" * 30 + "（かっこ内は落とす）" + "い" * 20           # 40 字を超える → 最初の「（」で切る
-        log = f"## 確認していないこと\n- 短い項目（かっこ内もそのまま）\n- {long_}\n- C。D\n- E\n\n## 次\n- Z\n"
-        self.assertEqual(page_readme.unverified_summary(log), "短い項目（かっこ内もそのまま）／" + "あ" * 30 + "／C。Dほか")
-        self.assertIn("原本のリンク先", page_readme.unverified_summary("見出しなし"))      # 無ければ既定の 3 件
-        self.assertTrue(page_readme.unverified_summary("## 確認していないこと\n- " + "あ" * 80).endswith("…"))
+        self.assertNotIn("確認していないこと（要約）", self.cover())                       # 表紙には要約を書かない（作業ログが正）
 
     def test_cover_without_trailing_separator_is_refused(self):
         w(self.page / "README.md", "# 解説メモの表紙ではない\n本文\n")

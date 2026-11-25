@@ -2,8 +2,8 @@
 """ページの README.md と、作業ログ（.work/working-log.md）を作る・更新する。
 
 ページのフォルダの形（解説メモがあるページ）:
-  README.md        表紙（解説メモの入口。ced-craft-explanation-docs が作る）。冒頭のリンクを直し、末尾に「状態と関連資料」と、
-                   「解説資料」（スライドの HTML と原稿 MD へのリンク）と、最下段の「状態と関連資料」を足す（このスクリプト）
+  README.md        表紙（解説メモの入口。ced-craft-explanation-docs が作る）。冒頭のリンクを直し、末尾に
+                   「解説資料」（スライドの HTML と原稿 MD へのリンク）を足す（このスクリプト）。「状態と関連資料」は置かない（作業ログを見る）
   解説メモ 5 本    冒頭は toTopPage＝../README.md（1 つ上のまとまりの README）、toREADME＝./README.md（README 自身も自分を指す）
   .work/working-log.md   状態・検査の結果・確認していないこと・作業の経緯（検査の結果の節は、このスクリプトが更新する）
 解説メモが無いページ（薄いページ・失敗・重複・取得済み）は、README.md をこのスクリプトの render が作る（ページ README）。
@@ -126,55 +126,6 @@ def update_log(r, page, st):
     return text
 
 
-def unverified_summary(log_text, limit=3, width=40):
-    """作業ログの「確認していないこと」の箇条書きを、1 行に要約する。
-    各項目は、width 字以内ならそのまま。長いときだけ、最初の「（」「。」で切り、それでも長ければ「…」で切る。"""
-    items, on = [], False
-    for ln in log_text.split("\n"):
-        if re.match(r"^#{2,6}\s*確認していないこと", ln):
-            on = True; continue
-        if on and re.match(r"^#{1,6}\s", ln):
-            break
-        if on and ln.startswith("- "):
-            items.append(ln[2:].strip())
-    if not items:
-        items = DEFAULT_UNVERIFIED
-    short = []
-    for x in items[:limit]:
-        if len(x) > width:
-            x = re.split(r"[（(。]", x)[0].strip()
-            if len(x) > width:
-                x = x[:width] + "…"
-        short.append(x)
-    return "／".join(short) + ("ほか" if len(items) > limit else "")
-
-
-# ------------------------------------------------------------ 表紙の末尾
-
-def state_word(r, st):
-    ok = r["status"] == "完了"
-    if ok and (r.get("learned_on") or "").strip():
-        return "確定"
-    return "検査済み" if ok else "作成中"
-
-
-def status_block(r, page, st, summary):
-    # 表紙のリンクは、ページのフォルダの中だけにする（check_docs の C-5 が、外を指すリンクを不合格にする）
-    page = Path(page)
-    w = state_word(r, st)
-    nums = len(st.get("numbers_missing") or [])
-    line = (f"- 状態: {w}（{today()} 時点。解説メモ {st.get('memo') or '未実施'}／スライド {st.get('slides') or '未実施'}"
-            f"／出典の無い数字 {nums} 件／リンク切れ {st.get('links_broken')} 件。今の状態は台帳 00_index.md が正）")
-    o = sorted((page / "00_originals").glob("*.md"))
-    L = [STATUS_START, "## 状態と関連資料", line]
-    if o:
-        L.append(f"- 原本: [00_originals/{o[0].name}](./00_originals/{o[0].name})")
-    L.append(f"- 確認していないこと（要約）: {summary}")
-    L.append(f"- 詳細・経緯・検査の記録: [.work/{LOG_NAME}](./.work/{LOG_NAME})")
-    L.append(STATUS_END)
-    return "\n".join(L)
-
-
 def normalize_nav(page):
     """解説メモ 5 本の冒頭リンクをそろえる（toTopPage＝../README.md、toREADME＝./README.md）。変えたファイル名を返す。"""
     changed = []
@@ -194,7 +145,7 @@ def slides_block(page):
     sh, sm = slide_htmls(page), slide_mds(page)
     if not sh and not sm:
         return None
-    L = [SLIDES_START, "## 解説資料"]
+    L = [SLIDES_START, "## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）"]
     if sh:
         L.append(f"- [解説スライド](./docs/{sh[0].name})")
     if sm:
@@ -206,28 +157,27 @@ def slides_block(page):
 STATUS_BLOCK_RE = re.compile(re.escape(STATUS_START) + r".*?" + re.escape(STATUS_END) + r"\n\n" + re.escape(SEP_LINES), re.S)
 
 
-def apply_cover_sections(text, slides, status):
-    """表紙の最後に、「解説資料」→「状態と関連資料」の順に置く（状態と関連資料が最下段）。何度でも同じ結果。
-    すでにある 2 つの節（以前の位置を含む）はいったん外してから、末尾に付け直す。slides が None なら「解説資料」は置かない。"""
-    text = STATUS_BLOCK_RE.sub("", SLIDES_BLOCK_RE.sub("", text))
+def apply_cover_sections(text, slides):
+    """表紙の末尾に「解説資料」の節を置く。何度でも同じ結果。以前の版の「状態と関連資料」の節が残っていれば外す。
+    slides が None なら「解説資料」は置かない。"""
+    text = STATUS_BLOCK_RE.sub("", text)
+    text = SLIDES_BLOCK_RE.sub("", text)
     body = text.rstrip("\n")
     if not body.endswith(SEP):
         raise ValueError("表紙の末尾が区切り（-----／[toTop](#totoppage)）で終わっていない。解説メモの表紙ではない？")
-    for blk in (slides, status):
-        if blk:
-            body += "\n" + blk + "\n\n" + SEP
-    return body + "\n"
+    if slides:
+        body += "\n" + slides + "\n"
+    return body if slides else body + "\n"
 
 
 def update_cover(r, page):
-    """解説メモがあるページ：作業ログと、表紙（README.md）の最後の 2 節（解説資料・状態と関連資料）を更新する。"""
+    """解説メモがあるページ：作業ログと、表紙（README.md）の末尾の「解説資料」の節を更新する。"""
     page = Path(page)
     st = page_status(page)
     log_text = update_log(r, page, st)
-    block = status_block(r, page, st, unverified_summary(log_text))
     normalize_nav(page)                                # 5 本の冒頭リンク
     f = page / "README.md"
-    new = apply_cover_sections(f.read_text(encoding="utf-8"), slides_block(page), block)   # 解説資料 → 状態と関連資料（最下段）
+    new = apply_cover_sections(f.read_text(encoding="utf-8"), slides_block(page))
     f.write_text(new, encoding="utf-8")
     return st
 

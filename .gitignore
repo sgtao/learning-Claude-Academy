@@ -53,6 +53,7 @@ build/
 !**/.work/working-log.md
 # 構造の移行スクリプト（一度きり。記録として追跡する）
 !/.work/migrate-page-structure.sh
+!/.work/remove-page-status.py
 
 # ---- VitePress ----
 .vitepress/cache/

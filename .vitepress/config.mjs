@@ -78,7 +78,7 @@ export default defineConfig({
   cleanUrls: true,
   lastUpdated: false,
 
-  // 読む人向けのものだけを出す。作業ログ（.work/working-log.md）は表紙からリンクがあるので出す。
+  // 読む人向けのものだけを出す。作業ログ（.work/）は表紙からのリンクを外したので、サイトには出ない（ドット始まりのフォルダは読まれない）。
   // 中間ファイル・中断した作業・取得の記録・依存・スライドの原稿（MD。スライドは HTML で出す）は出さない
   srcExclude: ['catalog/**', '**/.work/intermediate/**', '**/.work/aborted/**', 'node_modules/**', '**/docs/*-explained-slides.md'],
 

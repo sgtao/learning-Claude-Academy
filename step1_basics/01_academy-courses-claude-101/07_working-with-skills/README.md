@@ -59,13 +59,3 @@ Claude 101 のレッスン 7「スキルを活用する」の本文です。ス�
 
 -----
 [toTop](#totoppage)
-<!-- page-status:start -->
-## 状態と関連資料
-- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
-- 原本: [00_originals/working-with-skills.md](./00_originals/working-with-skills.md)
-- 確認していないこと（要約）: 動画／【推測】の当否（スキルが見当たらない理由、ネットワーク許可の表示条件）／本文に動画キャプションの行が 2 回続けて残っている
-- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
-<!-- page-status:end -->
-
------
-[toTop](#totoppage)

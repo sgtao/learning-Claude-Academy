@@ -51,12 +51,6 @@ class SiteTests(unittest.TestCase):
         html = (self.out / "index.html").read_text(encoding="utf-8")
         self.assertIn('href="/learning-Claude-Academy/', html)
 
-    def test_working_log_links_point_to_github(self):
-        html = (self.out / "step1_basics/01_academy-courses-claude-101/07_working-with-skills/README.html").read_text(encoding="utf-8")
-        m = re.search(r'href="(https://github\.com/[^"]*working-log\.md)"', html)
-        self.assertTrue(m, "作業ログへのリンクが GitHub を指していない")
-        self.assertIn("/blob/main/step1_basics/01_academy-courses-claude-101/07_working-with-skills/.work/working-log.md", m.group(1))
-
     PAGE = "step1_basics/01_academy-courses-claude-101/07_working-with-skills"
 
     def test_slide_html_link_bypasses_the_router_and_manuscript_link_goes_to_github(self):
@@ -70,10 +64,11 @@ class SiteTests(unittest.TestCase):
         self.assertTrue(g, "スライド原稿のリンクが GitHub を指していない")
         self.assertIn(f"/blob/main/{self.PAGE}/docs/", g.group(1))
 
-    def test_cover_ends_with_slides_then_status(self):
+    def test_cover_ends_with_slides_and_has_no_status_section(self):
         html = (self.out / self.PAGE / "README.html").read_text(encoding="utf-8")
         heads = re.findall(r"<h2 id=\"([^\"]+)\"", html)
-        self.assertEqual(heads[-2:], ["解説資料", "状態と関連資料"], heads)
+        self.assertTrue(heads[-1].startswith("解説資料"), heads)
+        self.assertNotIn("状態と関連資料", html)
 
     def test_sidebar_lists_every_page(self):
         sample = (self.out / "step3_roles/10_engineering/02_design-doc/README.html").read_text(encoding="utf-8")

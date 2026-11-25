@@ -60,13 +60,3 @@ Claude のプロジェクトを紹介する入門ページ。プロジェクト�
 
 -----
 [toTop](#totoppage)
-<!-- page-status:start -->
-## 状態と関連資料
-- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
-- 原本: [00_originals/introduction-to-projects.md](./00_originals/introduction-to-projects.md)
-- 確認していないこと（要約）: 動画の字幕・画像・リンク先（プロジェクトのページ・ヘルプセンター）の中身／【推測】の当否／Claude for Work 以外のプランでのプロジェクトの利用可否ほか
-- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
-<!-- page-status:end -->
-
------
-[toTop](#totoppage)

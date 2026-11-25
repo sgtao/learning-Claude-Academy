@@ -59,13 +59,3 @@ Claude 101 のレッスン 1 の本文。Claude は単なるチャットボッ�
 
 -----
 [toTop](#totoppage)
-<!-- page-status:start -->
-## 状態と関連資料
-- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 9 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
-- 原本: [00_originals/what-is-claude.md](./00_originals/what-is-claude.md)
-- 確認していないこと（要約）: 動画・画像・各リンク先の中身／【推測】の当否（偏りチェックなど）／このレッスンの所要時間（本文に無い。スライド 6 に要確認）
-- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
-<!-- page-status:end -->
-
------
-[toTop](#totoppage)

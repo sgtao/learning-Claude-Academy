@@ -59,13 +59,3 @@
 
 -----
 [toTop](#totoppage)
-<!-- page-status:start -->
-## 状態と関連資料
-- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 8 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
-- 原本: [00_originals/claude-in-action-use-cases-by-role.md](./00_originals/claude-in-action-use-cases-by-role.md)
-- 確認していないこと（要約）: リンク先のユースケース 15 件／【推測】の当否／本文に件数の記載は無い（「15 件」は原本のリンクを数えた補足）
-- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
-<!-- page-status:end -->
-
------
-[toTop](#totoppage)

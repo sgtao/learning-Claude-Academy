@@ -67,13 +67,3 @@ Claude の学習ページ（claude.ai/learning）の入口を起こした資料�
 
 -----
 [toTop](#totoppage)
-<!-- page-status:start -->
-## 状態と関連資料
-- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 8 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
-- 原本: [00_originals/learning.md](./00_originals/learning.md)
-- 確認していないこと（要約）: ページ内の「作成」3 つとチェックインの実際の動作／リンク先／ログイン状態による表示の違い（取得時の表示のみ）
-- 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
-<!-- page-status:end -->
-
------
-[toTop](#totoppage)
