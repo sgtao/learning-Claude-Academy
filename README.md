@@ -33,7 +33,7 @@ Claude の公式学習ページ（claude.ai/learning、実体は Claude Academy�
 step1_basics/                          ← ステップ
 └── 01_academy-courses-claude-101/     ← まとまり（関連するページ。README に一覧）
     └── 07_working-with-skills/        ← ページ（1 ページ分）
-        ├── README.md                  表紙（タイトル、解説資料＝スライド HTML・原稿 MD へのリンク、概要、AI の総括、各資料へのリンク、状態 1 行、確認していないことの要約）
+        ├── README.md                  表紙（タイトル、概要、AI の総括、各資料へのリンク、解説資料＝スライド HTML・原稿 MD へのリンク、最下段に状態 1 行と確認していないことの要約）
         ├── 00_originals/              原本（取得したままの本文。frontmatter 付き）
         ├── 01_source.md               解説メモ一式（本文の複製）
         ├── 02_explanation_memo.md     解説メモ
@@ -69,7 +69,7 @@ python3 tools/test_site.py
 - コマンドは 1 行ずつ貼り付ける（行末の `# …` を付けて実行しない。zsh は `#` 以降を引数にして、`npm run docs:dev # …` だと表示されないことがある）。
 - 出るもの：ステップ・まとまり・ページの README と解説メモ・FAQ・LLM 用プロンプト・原本、スライド（HTML）、`tools/README.md`。出ないもの：`.work/` の中間ファイル、スライドの原稿 MD、`catalog/`。
 - 表紙の「詳細・経緯・検査の記録」（`.work/working-log.md`）のリンクは、GitHub 上のファイルを開く（`.work/` は VitePress のページにならないため）。
-- 表紙の「原稿」（`docs/*-slides.md`）のリンクは、スライド（HTML）を開く（同じ名前の HTML が出るため）。
+- 表紙の「解説スライド」は新しいタブでスライド（HTML）を開く。「スライド原稿」（`docs/*-slides.md`）は、サイトには出さないので、GitHub 上のファイルを開く（VitePress は `.html` へのリンクを自分のページとして処理し、同名の原稿 MD を出してしまうため、リンクの描画で振り分けている）。
 - ページを足したら、台帳を更新（`tools/ledger.py refresh`）すれば、サイドバーに出る。設定は `.vitepress/config.mjs`。
 
 **GitHub Pages**：`main` に push すると `.github/workflows/pages.yml` がビルドして公開する。公開先は `https://<ユーザー名>.github.io/<リポジトリ名>/`。

@@ -2,8 +2,8 @@
 """ページの README.md と、作業ログ（.work/working-log.md）を作る・更新する。
 
 ページのフォルダの形（解説メモがあるページ）:
-  README.md        表紙（解説メモの入口。ced-craft-explanation-docs が作る）。冒頭のリンクを直し、「解説資料」（スライドへのリンク）と
-                   末尾の「状態と関連資料」を足す（このスクリプト）
+  README.md        表紙（解説メモの入口。ced-craft-explanation-docs が作る）。冒頭のリンクを直し、末尾に「状態と関連資料」と、
+                   「解説資料」（スライドの HTML と原稿 MD へのリンク）と、最下段の「状態と関連資料」を足す（このスクリプト）
   解説メモ 5 本    冒頭は toTopPage＝../README.md（1 つ上のまとまりの README）、toREADME＝./README.md（README 自身も自分を指す）
   .work/working-log.md   状態・検査の結果・確認していないこと・作業の経緯（検査の結果の節は、このスクリプトが更新する）
 解説メモが無いページ（薄いページ・失敗・重複・取得済み）は、README.md をこのスクリプトの render が作る（ページ README）。
@@ -205,37 +205,31 @@ def slides_block(page):
     return "\n".join(L)
 
 
-def apply_slides_section(text, block):
-    """表紙に「解説資料」の節を、最初の区切りの直後（## セクション の前）に置く。何度でも同じ結果。block が None なら外す。"""
-    if SLIDES_START in text:
-        if block is None:
-            return SLIDES_BLOCK_RE.sub("", text, count=1)
-        new = _replace_between(text, SLIDES_START, SLIDES_END, block)
-        return new
-    if block is None:
-        return text
-    i = text.find(SEP_LINES)
-    if i < 0:
-        raise ValueError("表紙に最初の区切り（-----／[toTop](#totoppage)）が無い。解説メモの表紙ではない？")
-    j = i + len(SEP_LINES)
-    return text[:j] + block + "\n\n" + SEP_LINES + text[j:]
+STATUS_BLOCK_RE = re.compile(re.escape(STATUS_START) + r".*?" + re.escape(STATUS_END) + r"\n\n" + re.escape(SEP_LINES), re.S)
+
+
+def apply_cover_sections(text, slides, status):
+    """表紙の最後に、「解説資料」→「状態と関連資料」の順に置く（状態と関連資料が最下段）。何度でも同じ結果。
+    すでにある 2 つの節（以前の位置を含む）はいったん外してから、末尾に付け直す。slides が None なら「解説資料」は置かない。"""
+    text = STATUS_BLOCK_RE.sub("", SLIDES_BLOCK_RE.sub("", text))
+    body = text.rstrip("\n")
+    if not body.endswith(SEP):
+        raise ValueError("表紙の末尾が区切り（-----／[toTop](#totoppage)）で終わっていない。解説メモの表紙ではない？")
+    for blk in (slides, status):
+        if blk:
+            body += "\n" + blk + "\n\n" + SEP
+    return body + "\n"
 
 
 def update_cover(r, page):
-    """解説メモがあるページ：作業ログと、表紙（README.md）末尾の「状態と関連資料」を更新する。"""
+    """解説メモがあるページ：作業ログと、表紙（README.md）の最後の 2 節（解説資料・状態と関連資料）を更新する。"""
     page = Path(page)
     st = page_status(page)
     log_text = update_log(r, page, st)
     block = status_block(r, page, st, unverified_summary(log_text))
     normalize_nav(page)                                # 5 本の冒頭リンク
     f = page / "README.md"
-    text = apply_slides_section(f.read_text(encoding="utf-8"), slides_block(page))   # 表紙の「解説資料」
-    new = _replace_between(text, STATUS_START, STATUS_END, block)
-    if new is None:
-        body = text.rstrip("\n")
-        if not body.endswith(SEP):
-            raise ValueError(f"{f}: 末尾が区切り（{SEP!r}）で終わっていない。解説メモの表紙ではない？")
-        new = body + "\n" + block + "\n\n" + SEP + "\n"
+    new = apply_cover_sections(f.read_text(encoding="utf-8"), slides_block(page), block)   # 解説資料 → 状態と関連資料（最下段）
     f.write_text(new, encoding="utf-8")
     return st
 

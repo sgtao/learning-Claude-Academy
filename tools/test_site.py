@@ -57,11 +57,67 @@ class SiteTests(unittest.TestCase):
         self.assertTrue(m, "作業ログへのリンクが GitHub を指していない")
         self.assertIn("/blob/main/step1_basics/01_academy-courses-claude-101/07_working-with-skills/.work/working-log.md", m.group(1))
 
+    PAGE = "step1_basics/01_academy-courses-claude-101/07_working-with-skills"
+
+    def test_slide_html_link_bypasses_the_router_and_manuscript_link_goes_to_github(self):
+        """VitePress のルーターは .html へのリンクを自分のページとして処理し、同名の原稿 MD を出してしまう。
+        target 属性があるリンクにはルーターが介入しないので、スライドの HTML は新しいタブで直接開く。"""
+        html = (self.out / self.PAGE / "README.html").read_text(encoding="utf-8")
+        m = re.search(r'<a [^>]*href="[^"]*working-with-skills-explained-slides\.html"[^>]*>', html)
+        self.assertTrue(m, "解説スライドのリンクが無い")
+        self.assertIn('target="_blank"', m.group(0))
+        g = re.search(r'<a [^>]*href="(https://github\.com/[^"]*working-with-skills-explained-slides\.md)"', html)
+        self.assertTrue(g, "スライド原稿のリンクが GitHub を指していない")
+        self.assertIn(f"/blob/main/{self.PAGE}/docs/", g.group(1))
+
+    def test_cover_ends_with_slides_then_status(self):
+        html = (self.out / self.PAGE / "README.html").read_text(encoding="utf-8")
+        heads = re.findall(r"<h2 id=\"([^\"]+)\"", html)
+        self.assertEqual(heads[-2:], ["解説資料", "状態と関連資料"], heads)
+
     def test_sidebar_lists_every_page(self):
         sample = (self.out / "step3_roles/10_engineering/02_design-doc/README.html").read_text(encoding="utf-8")
         for r in self.rows:
             if r["step"] == "3" and r["group"] == "10_engineering":
                 self.assertIn(f"/{r['page_dir']}/README", sample, r["id"])
+
+
+@unittest.skipUnless(HAVE, "node か node_modules が無い（npm ci を先に）")
+class DevServerTests(unittest.TestCase):
+    """dev サーバーでも、スライドの URL（.html）は、原稿 MD ではなくスライドの HTML を返す。"""
+
+    PAGE = "step1_basics/01_academy-courses-claude-101/07_working-with-skills"
+
+    def test_dev_server_serves_slide_html_not_the_manuscript(self):
+        import socket, time, urllib.request
+        with socket.socket() as sk:
+            sk.bind(("127.0.0.1", 0)); port = sk.getsockname()[1]
+        p = subprocess.Popen(["npx", "vitepress", "dev", ".", "--host", "127.0.0.1", "--port", str(port), "--strictPort"], cwd=ROOT,
+                             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True)
+        try:
+            url = f"http://127.0.0.1:{port}/{self.PAGE}/docs/working-with-skills-explained-slides.html"
+            body = None
+            for _ in range(60):
+                try:
+                    with urllib.request.urlopen(url, timeout=3) as r:
+                        body = r.read().decode("utf-8")
+                        ctype = r.headers.get("Content-Type", "")
+                    break
+                except Exception:
+                    time.sleep(0.5)
+            self.assertIsNotNone(body, "dev サーバーが起動しない")
+            self.assertTrue(body.lower().startswith("<!doctype html"), body[:80])
+            self.assertIn("text/html", ctype)
+            self.assertIn("data-view", body)                      # スライド（mdss の HTML）の印。VitePress の外枠ではない
+            self.assertNotIn("/@vite/client", body)
+            with urllib.request.urlopen(f"http://127.0.0.1:{port}/{self.PAGE}/README", timeout=5) as r:
+                self.assertEqual(r.status, 200)                   # ふつうのページは、これまでどおり VitePress が出す
+        finally:
+            import os, signal
+            try:
+                os.killpg(os.getpgid(p.pid), signal.SIGTERM)
+            except Exception:
+                p.terminate()
 
 
 if __name__ == "__main__":

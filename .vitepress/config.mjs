@@ -1,27 +1,32 @@
 // VitePress の設定。Markdown はこのフォルダ（03_outputs/）をそのまま読む（コピーしない）。
 // ローカル:  npm run docs:dev      ビルド:  npm run docs:build      GitHub Pages: .github/workflows/pages.yml
 import { defineConfig } from 'vitepress'
-import { cpSync, existsSync, mkdirSync, readdirSync } from 'node:fs'
-import { dirname, join, posix, relative } from 'node:path'
+import { cpSync, createReadStream, existsSync, mkdirSync, readdirSync, statSync } from 'node:fs'
+import { dirname, join, posix, relative, resolve, sep } from 'node:path'
 import { ROOT, buildNav, buildSidebar } from './ledger.mjs'
 
 // GitHub Pages の公開先は https://<user>.github.io/<リポジトリ名>/ なので、ビルド時に base を渡す（ローカルは '/'）
 const base = process.env.VITEPRESS_BASE || '/'
 
-// 作業ログ（.work/working-log.md）はドット始まりのフォルダにあり、VitePress のページにならない。
-// 表紙からのリンクは、GitHub 上のファイルを指すように、描画のときに書き換える
+// 表紙のリンクのうち、VitePress のページにならないものを、描画のときに書き換える（Markdown のリンクは変えない）。
+//  - 作業ログ（.work/working-log.md）：ドット始まりのフォルダにあり、ページにならない → GitHub 上のファイルを開く
+//  - スライドの原稿（docs/*-explained-slides.md）：サイトには出さない → GitHub 上のファイルを開く
+//  - スライドの HTML（docs/*-explained-slides.html）：VitePress のルーターは、.html へのリンクを自分のページとして処理し、
+//    同名の原稿 MD をページとして出してしまう。target 属性があるリンクにはルーターが介入しないので、新しいタブで HTML を直接開く
 const repo = process.env.GITHUB_REPOSITORY || 'sgtao/learning-Claude-Academy'
 const blob = `https://github.com/${repo}/blob/main`
-function workLogLinks(md) {
-  md.core.ruler.push('worklog-link-to-github', state => {
+function rewriteLinks(md) {
+  md.core.ruler.push('rewrite-non-page-links', state => {
     const rel = state.env.relativePath // 例: step1_basics/.../README.md
     if (!rel) return
     for (const t of state.tokens) {
       for (const c of t.children || []) {
         if (c.type !== 'link_open') continue
         const href = c.attrGet('href') || ''
-        if (/(^|\/)\.work\/working-log\.md$/.test(href)) {
+        if (/(^|\/)\.work\/working-log\.md$/.test(href) || /-explained-slides\.md$/.test(href)) {
           c.attrSet('href', `${blob}/${posix.normalize(posix.join(posix.dirname(rel), href))}`)
+          c.attrSet('target', '_blank'); c.attrSet('rel', 'noopener')
+        } else if (/-explained-slides\.html$/.test(href)) {
           c.attrSet('target', '_blank'); c.attrSet('rel', 'noopener')
         }
       }
@@ -46,6 +51,23 @@ function slideHtmls() {
   return out
 }
 
+// dev サーバー用：スライドの HTML を、そのまま返す。
+// 同じ名前の原稿 MD（*-explained-slides.md）があると、dev サーバーは .html の URL にも MD をページとして出してしまう。
+// （公開用のビルドでは、原稿 MD をページにしないので、この問題は起きない）
+const slideDevServer = {
+  name: 'serve-slide-html',
+  configureServer(server) {
+    server.middlewares.use((req, res, next) => {
+      const path = decodeURIComponent((req.url || '').split('?')[0])
+      if (!/^\/step\d+_[^/]+\/[^/]+\/[^/]+\/docs\/[^/]+-explained-slides\.html$/.test(path)) return next()
+      const file = resolve(ROOT, '.' + path)
+      if (!file.startsWith(ROOT + sep) || !existsSync(file) || !statSync(file).isFile()) return next()
+      res.setHeader('Content-Type', 'text/html; charset=utf-8')
+      createReadStream(file).pipe(res)
+    })
+  },
+}
+
 export default defineConfig({
   lang: 'ja',
   title: 'Claude Academy 学習メモ',
@@ -64,7 +86,8 @@ export default defineConfig({
   // - 01_sources/ は、このリポジトリの外（親のリポジトリ）を指すリンク
   ignoreDeadLinks: [/-explained-slides$/, /(^|\/)01_sources\//],
 
-  markdown: { config: workLogLinks },
+  markdown: { config: rewriteLinks },
+  vite: { plugins: [slideDevServer] },
 
   themeConfig: {
     nav: buildNav(),

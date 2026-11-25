@@ -7,7 +7,7 @@
 <!-- checks:start -->
 ## 検査の結果（`tools/page_readme.py` が更新する。最新）
 - 確認日: 2026-11-25
-- 解説メモ: `check_docs.py`（`--out-dir .work/intermediate`）で 11 PASS／1 FAIL
+- 解説メモ: `check_docs.py`（`--out-dir .work/intermediate`）で 12 PASS
 - スライド: 10 枚／lint 0
 - 数字の照合: 出典の無い数字 0 件
 - リンク切れ: 0 件

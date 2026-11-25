@@ -10,14 +10,6 @@
 
 -----
 [toTop](#totoppage)
-<!-- slides:start -->
-## 解説資料
-- [解説スライド](./docs/customize-claude-cowork-explained-slides.html)
-- [スライド原稿](./docs/customize-claude-cowork-explained-slides.md)
-<!-- slides:end -->
-
------
-[toTop](#totoppage)
 ## セクション
 入力の見出しによる区切りです。
 
@@ -61,9 +53,17 @@ Claude をカスタマイズし、自分のシステムとチームのやり方�
 
 -----
 [toTop](#totoppage)
+<!-- slides:start -->
+## 解説資料
+- [解説スライド](./docs/customize-claude-cowork-explained-slides.html)
+- [スライド原稿](./docs/customize-claude-cowork-explained-slides.md)
+<!-- slides:end -->
+
+-----
+[toTop](#totoppage)
 <!-- page-status:start -->
 ## 状態と関連資料
-- 状態: 検査済み（2026-11-25 時点。解説メモ 11 PASS／1 FAIL／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
+- 状態: 検査済み（2026-11-25 時点。解説メモ 12 PASS／スライド 10 枚／lint 0／出典の無い数字 0 件／リンク切れ 0 件。今の状態は台帳 00_index.md が正）
 - 原本: [00_originals/customize-claude-cowork.md](./00_originals/customize-claude-cowork.md)
 - 確認していないこと（要約）: リンク先・動画・画像の中身／【推測】の当否／有料プラン・権限の条件
 - 詳細・経緯・検査の記録: [.work/working-log.md](./.work/working-log.md)
