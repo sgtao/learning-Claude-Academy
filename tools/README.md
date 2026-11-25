@@ -7,7 +7,7 @@
 | `ledger.py seed` | 台帳 `ledger.csv` を作る（71 ページ） | 初回だけ |
 | `ledger.py refresh` | フォルダのあるページを検査し直し、台帳の検査結果と状態を更新（薄いページ・重複・失敗は手で決めた状態なので変えない） | ページを作った・直したあと |
 | `ledger.py learned <ID> [日付]` | 学習済みの日を入れる | 学んだとき |
-| `build_index.py` | 台帳から `00_index.md` と、各ステップ・まとまりの README の表を作る（`--check` で古さだけ確かめる） | 台帳を変えたあと |
+| `build_index.py` | 台帳から、`00_index.md` の「## ステップ N：」の節の表と、各ステップ・まとまりの README の表だけを作り直す（表の外の文章は触らない。手で直してよい。`--check` で古さだけ確かめる）。索引が無いときだけ、ひな形から作る | 台帳を変えたあと |
 | `check_index.py` | 台帳と索引の検査（状態の値・完了の条件・台帳に無いページ・索引の古さ） | 毎回の最後 |
 | `check_numbers.py <ページ>` | スライド（`docs/`）の数字が原本か解説メモにあるか | ページを作ったとき |
 | `check_links.py [フォルダ]` | Markdown の相対リンク切れ | 毎回の最後 |
@@ -22,6 +22,7 @@
 | `memo.py info PAGE [--json]` | 表紙 `README.md` のフロントマター（題名・URL・取得日など。無いページは原本の frontmatter） | ページの素性を確かめるとき |
 | `memo.py show PAGE [--only ...]` | 表紙 `README.md`・`.work/intermediate/09_input-memo.md`・`12_LLM_prompts_as_guide.md` を表示（09 か 12 が無いページは README と `01_source`、解説メモが無いページはページの README と原本） | 解説メモを読む・LLM に渡すとき |
 | `test_docs.py` | README のコマンド例の検査（行末にコメントを付けない・行頭に空白を付けない・npm スクリプトはルート `.` を明示）。貼り付けて動くようにするため | README を直したとき |
+| `test_index.py` | 索引の更新の検査（表の外の手書きは変わらない・台帳が変わった行だけ変わる・今の索引が毎回更新されない） | 索引の仕組みを変えたとき |
 | `test_site.py` | VitePress のサイトの検査（ビルドできる・リンク切れ 0・台帳の全ページが出る・スライドがコピーされる・`.work/` が出ない・base が効く。Node と `npm ci` が要る） | サイトの設定を直したとき、公開の前 |
 | `test_memo.py` | `memo.py` の検査（見本の木と実物の木） | `memo.py` を直したとき |
 
