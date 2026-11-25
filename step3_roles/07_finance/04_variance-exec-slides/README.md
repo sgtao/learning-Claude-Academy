@@ -52,7 +52,7 @@ Cowork を使い、月次の差異分析ワークブックから経営層向け�
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
+## 解説資料（別タブで開きます）
 - [解説スライド](./docs/variance-exec-slides-explained-slides.html)
 - [スライド原稿](./docs/variance-exec-slides-explained-slides.md)
 <!-- slides:end -->

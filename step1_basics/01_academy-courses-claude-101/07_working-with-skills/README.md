@@ -52,7 +52,7 @@ Claude 101 のレッスン 7「スキルを活用する」の本文です。ス�
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
+## 解説資料（別タブで開きます）
 - [解説スライド](./docs/working-with-skills-explained-slides.html)
 - [スライド原稿](./docs/working-with-skills-explained-slides.md)
 <!-- slides:end -->

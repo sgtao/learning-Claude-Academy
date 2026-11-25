@@ -52,7 +52,7 @@ Claude Academy の人事向けの役割ページを Chrome で読み、テキス
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
+## 解説資料（別タブで開きます）
 - [解説スライド](./docs/roles-hr-explained-slides.html)
 - [スライド原稿](./docs/roles-hr-explained-slides.md)
 <!-- slides:end -->

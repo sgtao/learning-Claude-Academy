@@ -52,7 +52,7 @@ Claudeのリサーチ機能の解説です。リサーチ機能は、Claudeが�
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
+## 解説資料（別タブで開きます）
 - [解説スライド](./docs/research-mode-for-deep-dives-explained-slides.html)
 - [スライド原稿](./docs/research-mode-for-deep-dives-explained-slides.md)
 <!-- slides:end -->

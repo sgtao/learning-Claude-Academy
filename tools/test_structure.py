@@ -217,7 +217,7 @@ class CoverTests(unittest.TestCase):
         t = self.cover()
         self.assertNotIn("状態と関連資料", t)
         self.assertNotIn("page-status", t)
-        self.assertTrue(t.endswith("<!-- slides:end -->\n"))                          # 解説資料が最後
+        self.assertTrue(t.endswith("<!-- slides:end -->\n\n" + SEP + "\n"))         # 解説資料のあとに区切りが 1 つ（実際の表紙の形）
         self.assertIn("OVERVIEW", t)                                                   # 元の本文は残る
 
     def test_nav_links_unified_in_all_five_files(self):
@@ -228,8 +228,8 @@ class CoverTests(unittest.TestCase):
             self.assertEqual(head, ["###### [toTopPage](../README.md)", "###### [toREADME](./README.md)"], n)
         self.assertEqual((self.page / "02_explanation_memo.md").read_text(encoding="utf-8").split("\n", 2)[2], "【補足】x 【推測】y")   # 本文は変えない
 
-    SLIDES = ("<!-- slides:start -->\n## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）\n- [解説スライド](./docs/alpha-explained-slides.html)\n"
-              "- [スライド原稿](./docs/alpha-explained-slides.md)\n<!-- slides:end -->\n")
+    SLIDES = ("<!-- slides:start -->\n## 解説資料（別タブで開きます）\n- [解説スライド](./docs/alpha-explained-slides.html)\n"
+              "- [スライド原稿](./docs/alpha-explained-slides.md)\n<!-- slides:end -->\n\n-----\n[toTop](#totoppage)\n")   # 実際の表紙：解説資料のあとにも区切り
     SEPN = "-----\n[toTop](#totoppage)\n"
 
     def test_cover_ends_with_slides(self):
@@ -242,6 +242,18 @@ class CoverTests(unittest.TestCase):
         self.assertEqual(t.count("## 解説資料"), 1)
         self.assertIn(self.SEPN + self.SLIDES, t)
         self.assertTrue(t.endswith(self.SLIDES), t[-200:])                             # 解説資料が最後
+
+    def test_slides_heading_is_new_tab_note_and_old_heading_is_replaced(self):
+        """見出しは「解説資料（別タブで開きます）」。以前の見出し（Ctrl+Shift+クリック…）の表紙も、更新で置き換わる。"""
+        page_readme.update_cover(self.row, self.page)
+        t = self.cover()
+        self.assertIn("\n## 解説資料（別タブで開きます）\n", t)
+        self.assertNotIn("Ctrl+Shift", t)
+        old = t.replace("## 解説資料（別タブで開きます）", "## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）")
+        self.assertNotEqual(old, t)
+        (self.page / "README.md").write_text(old, encoding="utf-8")
+        page_readme.update_cover(self.row, self.page)
+        self.assertEqual(self.cover(), t)
 
     def test_sections_move_from_old_positions_to_the_bottom(self):
         """以前の版の並び（解説資料が先頭近く／解説資料が以前の「状態と関連資料」の後ろ）から更新しても、同じ結果になる。"""

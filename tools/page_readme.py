@@ -145,7 +145,7 @@ def slides_block(page):
     sh, sm = slide_htmls(page), slide_mds(page)
     if not sh and not sm:
         return None
-    L = [SLIDES_START, "## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）"]
+    L = [SLIDES_START, "## 解説資料（別タブで開きます）"]
     if sh:
         L.append(f"- [解説スライド](./docs/{sh[0].name})")
     if sm:
@@ -166,8 +166,8 @@ def apply_cover_sections(text, slides):
     if not body.endswith(SEP):
         raise ValueError("表紙の末尾が区切り（-----／[toTop](#totoppage)）で終わっていない。解説メモの表紙ではない？")
     if slides:
-        body += "\n" + slides + "\n"
-    return body if slides else body + "\n"
+        body += "\n" + slides + "\n\n" + SEP                  # 実際の表紙の形：解説資料のあとにも区切りを 1 つ置く
+    return body + "\n"
 
 
 def update_cover(r, page):

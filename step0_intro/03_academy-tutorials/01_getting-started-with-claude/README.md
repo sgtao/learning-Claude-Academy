@@ -52,7 +52,7 @@ Claudeを使い始める最初の日に知っておくことを紹介するチ�
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
+## 解説資料（別タブで開きます）
 - [解説スライド](./docs/getting-started-with-claude-explained-slides.html)
 - [スライド原稿](./docs/getting-started-with-claude-explained-slides.md)
 <!-- slides:end -->

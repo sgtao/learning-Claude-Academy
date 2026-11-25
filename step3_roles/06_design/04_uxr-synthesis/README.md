@@ -52,7 +52,7 @@ Claude Cowork でユーザーインタビューの文字起こしを統合し、
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
+## 解説資料（別タブで開きます）
 - [解説スライド](./docs/uxr-synthesis-explained-slides.html)
 - [スライド原稿](./docs/uxr-synthesis-explained-slides.md)
 <!-- slides:end -->

@@ -52,7 +52,7 @@ Claude Cowork を使い、ウェビナー 1 件の素材（トランスクリプ
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
+## 解説資料（別タブで開きます）
 - [解説スライド](./docs/repurpose-content-explained-slides.html)
 - [スライド原稿](./docs/repurpose-content-explained-slides.md)
 <!-- slides:end -->

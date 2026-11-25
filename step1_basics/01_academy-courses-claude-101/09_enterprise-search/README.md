@@ -52,7 +52,7 @@ Claude 101 のレッスン 9。Enterprise Search は、サイドバーに「{組
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
+## 解説資料（別タブで開きます）
 - [解説スライド](./docs/enterprise-search-explained-slides.html)
 - [スライド原稿](./docs/enterprise-search-explained-slides.md)
 <!-- slides:end -->

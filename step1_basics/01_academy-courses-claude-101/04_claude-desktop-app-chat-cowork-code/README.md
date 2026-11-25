@@ -52,7 +52,7 @@ Claudeデスクトップアプリでの仕事を、ターンごとのやり取�
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
+## 解説資料（別タブで開きます）
 - [解説スライド](./docs/claude-desktop-app-chat-cowork-code-explained-slides.html)
 - [スライド原稿](./docs/claude-desktop-app-chat-cowork-code-explained-slides.md)
 <!-- slides:end -->

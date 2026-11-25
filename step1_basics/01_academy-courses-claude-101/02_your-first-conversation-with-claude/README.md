@@ -52,7 +52,7 @@ Claude.ai を使い始める人向けのレッスン本文。サイドバー（�
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
+## 解説資料（別タブで開きます）
 - [解説スライド](./docs/your-first-conversation-with-claude-explained-slides.html)
 - [スライド原稿](./docs/your-first-conversation-with-claude-explained-slides.md)
 <!-- slides:end -->

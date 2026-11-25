@@ -52,7 +52,7 @@ Claude Coworkで新しい採用ポジションを開くときの進め方を紹�
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
+## 解説資料（別タブで開きます）
 - [解説スライド](./docs/open-new-role-explained-slides.html)
 - [スライド原稿](./docs/open-new-role-explained-slides.md)
 <!-- slides:end -->

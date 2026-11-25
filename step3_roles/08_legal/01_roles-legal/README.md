@@ -52,7 +52,7 @@ Claude Academy の法務の役割ページを Chrome で読み、文字だけを
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
+## 解説資料（別タブで開きます）
 - [解説スライド](./docs/roles-legal-explained-slides.html)
 - [スライド原稿](./docs/roles-legal-explained-slides.md)
 <!-- slides:end -->

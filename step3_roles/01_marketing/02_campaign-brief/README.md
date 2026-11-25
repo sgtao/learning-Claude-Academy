@@ -53,7 +53,7 @@ Claude の Marketing プラグイン、コネクタ、作業フォルダを使�
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
+## 解説資料（別タブで開きます）
 - [解説スライド](./docs/campaign-brief-explained-slides.html)
 - [スライド原稿](./docs/campaign-brief-explained-slides.md)
 <!-- slides:end -->

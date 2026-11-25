@@ -60,7 +60,7 @@ Claude の学習ページ（claude.ai/learning）の入口を起こした資料�
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
+## 解説資料（別タブで開きます）
 - [解説スライド](./docs/learning-explained-slides.html)
 - [スライド原稿](./docs/learning-explained-slides.md)
 <!-- slides:end -->
