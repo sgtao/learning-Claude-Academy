@@ -51,7 +51,7 @@ AI 活用力（AI Fluency）のフレームワーク（委任力・記述力・�
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料
+## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
 - [解説スライド](./docs/ai-fluency-framework-foundations-explained-slides.html)
 - [スライド原稿](./docs/ai-fluency-framework-foundations-explained-slides.md)
 <!-- slides:end -->

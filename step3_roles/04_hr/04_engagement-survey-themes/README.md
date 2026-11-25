@@ -52,7 +52,7 @@
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料
+## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
 - [解説スライド](./docs/engagement-survey-themes-explained-slides.html)
 - [スライド原稿](./docs/engagement-survey-themes-explained-slides.md)
 <!-- slides:end -->

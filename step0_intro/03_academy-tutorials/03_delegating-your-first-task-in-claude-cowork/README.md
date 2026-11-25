@@ -52,7 +52,7 @@ Claude Cowork（Claude Desktop アプリの Cowork タブ）に、完全なタ�
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料
+## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
 - [解説スライド](./docs/delegating-your-first-task-in-claude-cowork-explained-slides.html)
 - [スライド原稿](./docs/delegating-your-first-task-in-claude-cowork-explained-slides.md)
 <!-- slides:end -->

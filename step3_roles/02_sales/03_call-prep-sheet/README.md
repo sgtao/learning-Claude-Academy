@@ -52,7 +52,7 @@
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料
+## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
 - [解説スライド](./docs/call-prep-sheet-explained-slides.html)
 - [スライド原稿](./docs/call-prep-sheet-explained-slides.md)
 <!-- slides:end -->

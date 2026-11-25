@@ -52,7 +52,7 @@ Claude 101 のレッスン 1 の本文。Claude は単なるチャットボッ�
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料
+## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
 - [解説スライド](./docs/what-is-claude-explained-slides.html)
 - [スライド原稿](./docs/what-is-claude-explained-slides.md)
 <!-- slides:end -->

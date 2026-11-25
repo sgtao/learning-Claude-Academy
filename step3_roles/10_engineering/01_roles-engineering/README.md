@@ -52,7 +52,7 @@ Claude Academy のエンジニアリングの役割ページを、Chrome で読�
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料
+## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
 - [解説スライド](./docs/roles-engineering-explained-slides.html)
 - [スライド原稿](./docs/roles-engineering-explained-slides.md)
 <!-- slides:end -->

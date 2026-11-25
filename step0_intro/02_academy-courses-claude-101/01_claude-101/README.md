@@ -52,7 +52,7 @@ Claude 101 はコースのトップページの本文で、本文は短く、概
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料
+## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
 - [解説スライド](./docs/claude-101-explained-slides.html)
 - [スライド原稿](./docs/claude-101-explained-slides.md)
 <!-- slides:end -->

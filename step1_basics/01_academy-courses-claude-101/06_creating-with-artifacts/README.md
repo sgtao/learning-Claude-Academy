@@ -52,7 +52,7 @@ Claude と一緒に作る成果物「アーティファクト」の解説（Clau
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料
+## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
 - [解説スライド](./docs/creating-with-artifacts-explained-slides.html)
 - [スライド原稿](./docs/creating-with-artifacts-explained-slides.md)
 <!-- slides:end -->

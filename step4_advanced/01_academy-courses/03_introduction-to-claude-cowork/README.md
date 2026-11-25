@@ -52,7 +52,7 @@ Claude Cowork の使い方を、初回起動から日常の使いこなしまで
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料
+## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
 - [解説スライド](./docs/introduction-to-claude-cowork-explained-slides.html)
 - [スライド原稿](./docs/introduction-to-claude-cowork-explained-slides.md)
 <!-- slides:end -->

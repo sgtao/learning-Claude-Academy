@@ -52,7 +52,7 @@ Claude Academy のユースケース記事で、非営利団体の担当者が�
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料
+## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
 - [解説スライド](./docs/workflow-improvement-planner-explained-slides.html)
 - [スライド原稿](./docs/workflow-improvement-planner-explained-slides.md)
 <!-- slides:end -->

@@ -52,7 +52,7 @@ Claude Cowork を使い、インシデント後のポストモーテムのドラ
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料
+## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
 - [解説スライド](./docs/incident-postmortem-explained-slides.html)
 - [スライド原稿](./docs/incident-postmortem-explained-slides.md)
 <!-- slides:end -->

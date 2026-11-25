@@ -51,7 +51,7 @@ AI の能力と限界を、4 つの特性（次トークン予測・知識・作
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料
+## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
 - [解説スライド](./docs/ai-capabilities-and-limitations-explained-slides.html)
 - [スライド原稿](./docs/ai-capabilities-and-limitations-explained-slides.md)
 <!-- slides:end -->

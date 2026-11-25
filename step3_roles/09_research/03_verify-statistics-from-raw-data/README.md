@@ -52,7 +52,7 @@ Claudeに論文の原稿と補足データファイルを渡し、報告され�
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料
+## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
 - [解説スライド](./docs/verify-statistics-from-raw-data-explained-slides.html)
 - [スライド原稿](./docs/verify-statistics-from-raw-data-explained-slides.md)
 <!-- slides:end -->

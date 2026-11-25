@@ -53,7 +53,7 @@ Salesプラグインの /call-summary を出発点に、通話のトランスク
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料
+## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
 - [解説スライド](./docs/transcript-themes-explained-slides.html)
 - [スライド原稿](./docs/transcript-themes-explained-slides.md)
 <!-- slides:end -->

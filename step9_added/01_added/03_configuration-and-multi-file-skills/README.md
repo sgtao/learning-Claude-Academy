@@ -51,7 +51,7 @@ Claude Code で skill を設定する方法と、マルチファイルの skill 
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料
+## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
 - [解説スライド](./docs/configuration-and-multi-file-skills-explained-slides.html)
 - [スライド原稿](./docs/configuration-and-multi-file-skills-explained-slides.md)
 <!-- slides:end -->

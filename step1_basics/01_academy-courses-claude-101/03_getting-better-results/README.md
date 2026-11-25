@@ -52,7 +52,7 @@ Claudeの回答が期待と少し違うときの課題5種（一般的すぎる�
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料
+## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
 - [解説スライド](./docs/getting-better-results-explained-slides.html)
 - [スライド原稿](./docs/getting-better-results-explained-slides.md)
 <!-- slides:end -->

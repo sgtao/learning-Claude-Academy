@@ -54,7 +54,7 @@ Claude をカスタマイズし、自分のシステムとチームのやり方�
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料
+## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
 - [解説スライド](./docs/customize-claude-cowork-explained-slides.html)
 - [スライド原稿](./docs/customize-claude-cowork-explained-slides.md)
 <!-- slides:end -->

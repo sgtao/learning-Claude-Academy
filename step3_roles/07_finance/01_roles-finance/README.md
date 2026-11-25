@@ -52,7 +52,7 @@ Claude Academy の財務の役割ページを、Chrome で読んでテキスト�
 -----
 [toTop](#totoppage)
 <!-- slides:start -->
-## 解説資料
+## 解説資料（`Ctrl+Shift+クリック`で開くことをお勧めします）
 - [解説スライド](./docs/roles-finance-explained-slides.html)
 - [スライド原稿](./docs/roles-finance-explained-slides.md)
 <!-- slides:end -->
